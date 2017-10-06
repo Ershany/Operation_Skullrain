@@ -131,8 +131,11 @@ namespace arcane { namespace graphics {
 
 			if (!skip) {
 				Texture texture;
+				bool isSRGB = false;
+				if (typeName == "texture_diffuse")
+					isSRGB = true;
 				
-				texture.id = opengl::Utility::loadTextureFromFile((m_Directory + "/" + std::string(str.C_Str())).c_str()); // Assumption made: material stuff is located in the same directory as the model object
+				texture.id = opengl::Utility::loadTextureFromFile((m_Directory + "/" + std::string(str.C_Str())).c_str(), false, isSRGB); // Assumption made: material stuff is located in the same directory as the model object
 				texture.type = typeName;
 				texture.path = str;
 				textures.push_back(texture);

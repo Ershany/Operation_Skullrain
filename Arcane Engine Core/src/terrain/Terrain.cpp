@@ -59,19 +59,19 @@ namespace arcane { namespace terrain {
 
 		// Textures
 		graphics::Texture texture;
-		texture.id = opengl::Utility::loadTextureFromFile("res/terrain/grass.png");
+		texture.id = opengl::Utility::loadTextureFromFile("res/terrain/grass.png", false, true);
 		texture.type = "texture_diffuse";
 		textures.push_back(texture);
 
-		texture.id = opengl::Utility::loadTextureFromFile("res/terrain/dirt.png");
+		texture.id = opengl::Utility::loadTextureFromFile("res/terrain/dirt.png", false, true);
 		texture.type = "texture_diffuse";
 		textures.push_back(texture);
 
-		texture.id = opengl::Utility::loadTextureFromFile("res/terrain/sand.png");
+		texture.id = opengl::Utility::loadTextureFromFile("res/terrain/sand.png", false, true);
 		texture.type = "texture_diffuse";
 		textures.push_back(texture);
 
-		texture.id = opengl::Utility::loadTextureFromFile("res/terrain/stone.png");
+		texture.id = opengl::Utility::loadTextureFromFile("res/terrain/stone.png", false, true);
 		texture.type = "texture_diffuse";
 		textures.push_back(texture);
 

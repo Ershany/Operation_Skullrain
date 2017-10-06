@@ -4,22 +4,33 @@
 
 namespace arcane { namespace opengl {
 
-	GLuint Utility::loadTextureFromFile(const char *path, bool containsTransparencyOnSides) {
+	GLuint Utility::loadTextureFromFile(const char *path, bool containsTransparencyOnSides, bool isSRGB) {
+		//isSRGB = false;
 		GLuint textureID;
 		glGenTextures(1, &textureID);
 
 		int width, height, nrComponents;
 		unsigned char *data = stbi_load(path, &width, &height, &nrComponents, 0);
 		if (data) {
+			GLenum internalFormat;
 			GLenum format;
 			switch (nrComponents) {
-			case 1: format = GL_RED;  break;
-			case 3: format = GL_RGB;  break;
-			case 4: format = GL_RGBA; break;
+			case 1: internalFormat = GL_RED;  break;
+			case 3: internalFormat = GL_RGB;  break;
+			case 4: internalFormat = GL_RGBA; break;
+			}
+			format = internalFormat;
+
+			// If isSRGB, make sure the internalFormat is read as SRGB
+			if (isSRGB) {
+				if (internalFormat == GL_RGB)
+					internalFormat = GL_SRGB;
+				else if (internalFormat == GL_RGBA)
+					internalFormat = GL_SRGB_ALPHA;
 			}
 
 			glBindTexture(GL_TEXTURE_2D, textureID);
-			glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
+			glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, format, GL_UNSIGNED_BYTE, data);
 			glGenerateMipmap(GL_TEXTURE_2D);
 
 			// Texture wrapping
@@ -64,7 +75,7 @@ namespace arcane { namespace opengl {
 		for (unsigned int i = 0; i < 6; ++i) {
 			unsigned char *data = stbi_load(filePaths[i], &width, &height, &nrComponents, 0);
 			if (data) {
-				glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+				glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_SRGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
 				stbi_image_free(data);
 			}
 			else {

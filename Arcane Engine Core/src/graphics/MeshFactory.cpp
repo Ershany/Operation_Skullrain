@@ -18,7 +18,7 @@ namespace arcane { namespace graphics {
 
 		// Load textures
 		Texture texture;
-		texture.id = opengl::Utility::loadTextureFromFile(path, true); // Specifies that are texture may contain transparency
+		texture.id = opengl::Utility::loadTextureFromFile(path, true, true); // Specifies that are texture may contain transparency
 		texture.type = "texture_diffuse";
 		textures.push_back(texture);
 

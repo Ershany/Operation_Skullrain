@@ -28,6 +28,11 @@ int main() {
 	arcane::graphics::MeshFactory meshFactory;
 	arcane::graphics::Mesh *colourBufferMesh = meshFactory.CreateScreenQuad(blitFramebuffer.getColourBufferTexture());
 
+	framebufferShader.enable();
+	framebufferShader.setUniform2f("readOffset", glm::vec2(1.0f / window.getWidth(), 1.0f / window.getHeight()));
+	framebufferShader.setUniform1f("gamma", 1.0f);
+	framebufferShader.disable();
+
 	arcane::Timer fpsTimer;
 	int frames = 0;
 
@@ -35,6 +40,7 @@ int main() {
 	bool firstMove = true;
 	GLfloat lastX = window.getMouseX();
 	GLfloat lastY = window.getMouseY();
+	GLfloat currGamma = 1.0f;
 	while (!window.closed()) {
 		glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 		window.clear();
@@ -65,6 +71,14 @@ int main() {
 			camera.processKeyboard(arcane::graphics::DOWNWARDS, deltaTime.getDeltaTime());
 		camera.processMouseScroll(window.getScrollY() * 6);
 		window.resetScroll();
+
+		framebufferShader.enable();
+		if (window.isKeyPressed(GLFW_KEY_UP))
+			currGamma += 0.01f;
+		if (window.isKeyPressed(GLFW_KEY_DOWN))
+			currGamma -= 0.01f;
+		framebufferShader.setUniform1f("gamma", currGamma);
+		framebufferShader.disable();
 		
 		// Draw the scene to our custom multisampled framebuffer
 		framebuffer.bind();
@@ -79,15 +93,18 @@ int main() {
 
 		// Draw to the default framebuffer buffer
 		framebuffer.unbind();
+		//glEnable(GL_FRAMEBUFFER_SRGB);
 		window.clear();
 		framebufferShader.enable();
 		colourBufferMesh->Draw(framebufferShader);
 		framebufferShader.disable();
+		//glDisable(GL_FRAMEBUFFER_SRGB);
 		
 
 		window.update();
 		if (fpsTimer.elapsed() >= 1) {
 			std::cout << "FPS: " << frames << std::endl;
+			std::cout << "Current Gamma: " << currGamma << std::endl;
 			frames = 0;
 			fpsTimer.reset();
 		}

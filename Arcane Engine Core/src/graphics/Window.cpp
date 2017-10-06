@@ -31,6 +31,7 @@ namespace arcane { namespace graphics {
 
 		// Anti-aliasing
 		glfwWindowHint(GLFW_SAMPLES, MSAA_SAMPLE_AMOUNT);
+		glfwWindowHint(GLFW_SRGB_CAPABLE, 1);
 
 		// Create the window
 		if (FULLSCREEN_MODE) {

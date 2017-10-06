@@ -13,7 +13,10 @@ namespace arcane { namespace opengl {
 
 	class Utility {
 	public:
-		static GLuint loadTextureFromFile(const char *path, bool containsTransparencyOnSides = false);
+		// isSRGB should be true for any textures that explicitly define colours for objects. This will make all of the colour values linear which is what we need in order to model lighting in the real world
+		// At the end of all of the rendering passes, colour correction will be applied
+		static GLuint loadTextureFromFile(const char *path, bool containsTransparencyOnSides = false, bool isSRGB = false);
+
 		static GLuint loadCubemapFromFiles(const std::vector<const char*> &vec);
 	};
 
