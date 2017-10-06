@@ -55,11 +55,18 @@ void main() {
 
 	vec3 colour = vec3(0.0);
 
-	// Apply the kernel
+	// Apply the kernel (post-processing effect)
 	for(int i = 0; i < 9; ++i) {
 		colour += texture(texture_diffuse1, TexCoord + readOffsets[i]).rgb * kernel[i];
 	}
 	
+<<<<<<< HEAD
 	// Finally apply the gamma correction
 	FragColour = vec4(pow(colour, vec3(1.0 / gamma)), 1.0);
+=======
+	FragColour = vec4(colour, 1.0);
+	// Finally apply the gamma correction
+	//float gamma = 2.2f;
+	//FragColour = vec4(pow(colour, vec3(1.0 / gamma)), 1.0);
+>>>>>>> master
 }
