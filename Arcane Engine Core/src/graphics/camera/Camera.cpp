@@ -51,6 +51,8 @@ namespace arcane {	namespace graphics {
 			m_Position -= m_WorldUp * velocity;
 			break;
 		}
+
+		//std::cout << "X:" << m_Position.x << " Y:" << m_Position.y << " Z:" << m_Position.z << std::endl;
 	}
 
 	void Camera::processMouseMovement(GLfloat xOffset, GLfloat yOffset, GLboolean constrainPitch = true) {
