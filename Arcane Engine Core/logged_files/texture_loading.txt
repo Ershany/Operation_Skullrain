@@ -1,2 +1,1 @@
-(texture load (OpenGL) fail path:): res/3D_Models/Helicopter/map_Kd black.png
 (texture load (OpenGL) fail path:): res/3D_Models/Helicopter/land.jpg
