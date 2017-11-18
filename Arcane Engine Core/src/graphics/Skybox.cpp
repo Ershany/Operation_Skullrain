@@ -53,7 +53,7 @@ namespace arcane { namespace graphics {
 		glBindTexture(GL_TEXTURE_CUBE_MAP, m_SkyboxCubemap);
 
 		m_SkyboxShader.setUniformMat4("view", m_Camera->getViewMatrix());
-		m_SkyboxShader.setUniformMat4("projection", glm::perspective(glm::radians(m_Camera->getFOV()), (float)m_Window->getWidth() / (float)m_Window->getHeight(), 0.1f, 1000.0f));
+		m_SkyboxShader.setUniformMat4("projection", glm::perspective(glm::radians(m_Camera->getFOV()), (float)m_Window->getWidth() / (float)m_Window->getHeight(), 0.1f, 2000.0f));
 
 		// Since the vertex shader is gonna make the depth value 1.0, and the default value in the depth buffer is 1.0 so this is needed to draw the skybox
 		glDepthFunc(GL_LEQUAL);

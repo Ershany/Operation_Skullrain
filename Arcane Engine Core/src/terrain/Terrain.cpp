@@ -26,7 +26,7 @@ namespace arcane { namespace terrain {
 		// Map Information
 		m_VertexSideCount = mapWidth;
 		m_TerrainSize = 4;
-		m_HeightMapScale = 150;
+		m_HeightMapScale = 120;
 
 		// Vertex generation
 		for (GLuint z = 0; z < m_VertexSideCount; z++) {
@@ -59,7 +59,7 @@ namespace arcane { namespace terrain {
 
 		// Textures
 		graphics::Texture texture;
-		texture.id = opengl::Utility::loadTextureFromFile("res/terrain/grass.png");
+		texture.id = opengl::Utility::loadTextureFromFile("res/terrain/sand.png");
 		texture.type = "texture_diffuse";
 		textures.push_back(texture);
 
@@ -67,7 +67,7 @@ namespace arcane { namespace terrain {
 		texture.type = "texture_diffuse";
 		textures.push_back(texture);
 
-		texture.id = opengl::Utility::loadTextureFromFile("res/terrain/sand.png");
+		texture.id = opengl::Utility::loadTextureFromFile("res/terrain/grass.png");
 		texture.type = "texture_diffuse";
 		textures.push_back(texture);
 

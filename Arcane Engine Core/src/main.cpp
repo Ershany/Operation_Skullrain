@@ -72,7 +72,7 @@ int main() {
 		scene.onUpdate(deltaTime.getDeltaTime());
 		scene.onRender();
 
-		// Blit the multisampled framebuffer over to a non-multisampled buffer
+		// Blit the multisampled framebuffer over to a non-multisampled framebuffer
 		glBindFramebuffer(GL_READ_FRAMEBUFFER, framebuffer.getFramebuffer());
 		glBindFramebuffer(GL_DRAW_FRAMEBUFFER, blitFramebuffer.getFramebuffer());
 		glBlitFramebuffer(0, 0, window.getWidth(), window.getHeight(), 0, 0, window.getWidth(), window.getHeight(), GL_COLOR_BUFFER_BIT, GL_NEAREST);
