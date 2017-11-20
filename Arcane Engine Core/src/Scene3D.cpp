@@ -30,12 +30,17 @@ namespace arcane {
 		std::vector<graphics::Mesh> meshes;
 		meshes.push_back(*m_meshFactory.CreateQuad("res/textures/window.png", false));
 
+		graphics::Renderable3D *playerRenderable = new graphics::Renderable3D(glm::vec3(90.0f, -10.0f, 90.0f), glm::vec3(6.0f, 6.0f, 6.0f), glm::vec3(1.0f, 0.0f, 0.0f), glm::radians(-90.0f), new arcane::graphics::Model("res/3D_Models/Helicopter/uh60.obj"), false, true);
+
 		Add(new graphics::Renderable3D(glm::vec3(30.0f, -10.0f, 30.0f), glm::vec3(0.2f, 0.2f, 0.2f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, new arcane::graphics::Model("res/3D_Models/Overwatch/Reaper/Reaper.obj"), false));
 		Add(new graphics::Renderable3D(glm::vec3(60.0f, -10.0f, 60.0f), glm::vec3(0.2f, 0.2f, 0.2f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, new arcane::graphics::Model("res/3D_Models/Overwatch/McCree/McCree.obj"), false));
-		Add(new graphics::Renderable3D(glm::vec3(90.0f, -10.0f, 90.0f), glm::vec3(6.0f, 6.0f, 6.0f), glm::vec3(1.0f, 0.0f, 0.0f), glm::radians(-90.0f), new arcane::graphics::Model("res/3D_Models/Helicopter/uh60.obj"), false, true));
+		Add(playerRenderable);
 		Add(new graphics::Renderable3D(glm::vec3(40, 20, 40), glm::vec3(15, 15, 15), glm::vec3(1.0, 0.0, 0.0), glm::radians(90.0f), new graphics::Model(meshes), false, true));
 		Add(new graphics::Renderable3D(glm::vec3(80, 20, 80), glm::vec3(15, 15, 15), glm::vec3(1.0, 0.0, 0.0), glm::radians(90.0f), new graphics::Model(meshes), false, true));
 		Add(new graphics::Renderable3D(glm::vec3(120, 20, 120), glm::vec3(15, 15, 15), glm::vec3(1.0, 0.0, 0.0), glm::radians(90.0f), new graphics::Model(meshes), false, true));
+
+		// Load entities
+		m_Player = new game::Player(playerRenderable);
 
 		// Terrain shader
 		m_TerrainShader.enable();
@@ -92,8 +97,9 @@ namespace arcane {
 		m_Skybox = new graphics::Skybox(skyboxFilePaths, m_Camera, m_Window);
 	}
 
-	void Scene3D::onUpdate(float deltaTime) {
+	void Scene3D::onUpdate(double deltaTime) {
 		//m_Renderables[0]->setRadianRotation(3.14159);
+		m_Player->update(deltaTime);
 	}
 
 	void Scene3D::onRender() {

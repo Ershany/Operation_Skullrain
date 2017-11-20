@@ -78,6 +78,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\game\Entity.cpp" />
+    <ClCompile Include="src\game\Player.cpp" />
     <ClCompile Include="src\graphics\camera\Camera.cpp" />
     <ClCompile Include="src\graphics\Mesh.cpp" />
     <ClCompile Include="src\graphics\MeshFactory.cpp" />
@@ -102,6 +104,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Defs.h" />
+    <ClInclude Include="src\game\Entity.h" />
+    <ClInclude Include="src\game\Player.h" />
     <ClInclude Include="src\graphics\camera\Camera.h" />
     <ClInclude Include="src\graphics\Mesh.h" />
     <ClInclude Include="src\graphics\MeshFactory.h" />
