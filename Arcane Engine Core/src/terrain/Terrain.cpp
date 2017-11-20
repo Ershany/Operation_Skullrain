@@ -25,8 +25,8 @@ namespace arcane { namespace terrain {
 
 		// Map Information
 		m_VertexSideCount = mapWidth;
-		m_TerrainSize = 4;
-		m_HeightMapScale = 120;
+		m_TerrainSize = 10;
+		m_HeightMapScale = 300;
 
 		// Vertex generation
 		for (GLuint z = 0; z < m_VertexSideCount; z++) {

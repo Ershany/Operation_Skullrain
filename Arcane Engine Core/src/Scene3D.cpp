@@ -45,7 +45,7 @@ namespace arcane {
 		// Terrain shader
 		m_TerrainShader.enable();
 		m_TerrainShader.setUniform1f("material.shininess", 128.0f);
-		m_TerrainShader.setUniform3f("dirLight.direction", glm::vec3(-0.3f, -1.0f, -0.3f));
+		m_TerrainShader.setUniform3f("dirLight.direction", glm::vec3(0.0f, -1.0f, 0.0f));
 		m_TerrainShader.setUniform3f("dirLight.ambient", glm::vec3(0.1f, 0.1f, 0.1f));
 		m_TerrainShader.setUniform3f("dirLight.diffuse", glm::vec3(0.6f, 0.6f, 0.6f));
 		m_TerrainShader.setUniform3f("dirLight.specular", glm::vec3(0.5f, 0.5f, 0.5f));
@@ -67,7 +67,7 @@ namespace arcane {
 		// Model shader
 		m_ModelShader.enable();
 		m_ModelShader.setUniform1f("material.shininess", 128.0f);
-		m_ModelShader.setUniform3f("dirLight.direction", glm::vec3(-0.3f, -1.0f, -0.3f));
+		m_ModelShader.setUniform3f("dirLight.direction", glm::vec3(0.0f, -1.0f, 0.0f));
 		m_ModelShader.setUniform3f("dirLight.ambient", glm::vec3(0.1f, 0.1f, 0.1f));
 		m_ModelShader.setUniform3f("dirLight.diffuse", glm::vec3(0.6f, 0.6f, 0.6f));
 		m_ModelShader.setUniform3f("dirLight.specular", glm::vec3(0.5f, 0.5f, 0.5f));
@@ -106,13 +106,13 @@ namespace arcane {
 		// Setup
 		m_OutlineShader.enable();
 		m_OutlineShader.setUniformMat4("view", m_Camera->getViewMatrix());
-		m_OutlineShader.setUniformMat4("projection", glm::perspective(glm::radians(m_Camera->getFOV()), (float)m_Window->getWidth() / (float)m_Window->getHeight(), 0.1f, 2000.0f));
+		m_OutlineShader.setUniformMat4("projection", glm::perspective(glm::radians(m_Camera->getFOV()), (float)m_Window->getWidth() / (float)m_Window->getHeight(), 0.1f, 3000.0f));
 
 		// Reflection Shader
 		m_ModelReflectionShader.enable();
 		m_ModelReflectionShader.setUniform3f("cameraPos", m_Camera->getPosition());
 		m_ModelReflectionShader.setUniformMat4("view", m_Camera->getViewMatrix());
-		m_ModelReflectionShader.setUniformMat4("projection", glm::perspective(glm::radians(m_Camera->getFOV()), (float)m_Window->getWidth() / (float)m_Window->getHeight(), 0.1f, 2000.0f));
+		m_ModelReflectionShader.setUniformMat4("projection", glm::perspective(glm::radians(m_Camera->getFOV()), (float)m_Window->getWidth() / (float)m_Window->getHeight(), 0.1f, 3000.0f));
 
 		// Models
 		m_ModelShader.enable();
@@ -121,7 +121,7 @@ namespace arcane {
 		m_ModelShader.setUniform3f("spotLight.direction", m_Camera->getFront());
 		m_ModelShader.setUniform3f("viewPos", m_Camera->getPosition());
 		m_ModelShader.setUniformMat4("view", m_Camera->getViewMatrix());
-		m_ModelShader.setUniformMat4("projection", glm::perspective(glm::radians(m_Camera->getFOV()), (float)m_Window->getWidth() / (float)m_Window->getHeight(), 0.1f, 2000.0f));
+		m_ModelShader.setUniformMat4("projection", glm::perspective(glm::radians(m_Camera->getFOV()), (float)m_Window->getWidth() / (float)m_Window->getHeight(), 0.1f, 3000.0f));
 
 		std::vector<graphics::Renderable3D*>::iterator iter = m_Renderables.begin();
 		while (iter != m_Renderables.end()) {
@@ -154,7 +154,7 @@ namespace arcane {
 		modelMatrix = glm::translate(modelMatrix, m_Terrain->getPosition());
 		m_TerrainShader.setUniformMat4("model", modelMatrix);
 		m_TerrainShader.setUniformMat4("view", m_Camera->getViewMatrix());
-		m_TerrainShader.setUniformMat4("projection", glm::perspective(glm::radians(m_Camera->getFOV()), (float)m_Window->getWidth() / (float)m_Window->getHeight(), 0.1f, 2000.0f));
+		m_TerrainShader.setUniformMat4("projection", glm::perspective(glm::radians(m_Camera->getFOV()), (float)m_Window->getWidth() / (float)m_Window->getHeight(), 0.1f, 3000.0f));
 		m_Terrain->Draw(m_TerrainShader);
 
 		// Skybox
