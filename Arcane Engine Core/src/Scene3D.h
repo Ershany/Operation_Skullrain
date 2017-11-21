@@ -38,6 +38,8 @@ namespace arcane {
 		void onUpdate(double deltaTime);
 		void onRender();
 
+		void buttonPressed(unsigned int keycode);
+
 		inline graphics::Renderer* getRenderer() const { return m_Renderer; }
 		inline graphics::Camera* getCamera() const { return m_Camera; }
 	private:

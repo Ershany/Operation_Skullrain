@@ -12,7 +12,9 @@ namespace arcane { namespace game {
 		~Entity();
 
 		virtual void update(double deltaTime) = 0;
-	private:
+
+
+	protected:
 		graphics::Renderable3D *m_Renderable;
 	};
 

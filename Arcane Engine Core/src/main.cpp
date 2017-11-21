@@ -51,18 +51,30 @@ int main() {
 		camera.processMouseMovement(window.getMouseX() - lastX, lastY - window.getMouseY(), true);
 		lastX = window.getMouseX();
 		lastY = window.getMouseY();
-		if (window.isKeyPressed(GLFW_KEY_W))
+		if (window.isKeyPressed(GLFW_KEY_W)) {
 			camera.processKeyboard(arcane::graphics::FORWARD, deltaTime.getDeltaTime());
-		if (window.isKeyPressed(GLFW_KEY_S))
+			scene.buttonPressed(GLFW_KEY_W);
+		}
+		if (window.isKeyPressed(GLFW_KEY_S)) {
 			camera.processKeyboard(arcane::graphics::BACKWARD, deltaTime.getDeltaTime());
-		if (window.isKeyPressed(GLFW_KEY_A))
+			scene.buttonPressed(GLFW_KEY_S);
+		}
+		if (window.isKeyPressed(GLFW_KEY_A)) {
 			camera.processKeyboard(arcane::graphics::LEFT, deltaTime.getDeltaTime());
-		if (window.isKeyPressed(GLFW_KEY_D))
+			scene.buttonPressed(GLFW_KEY_A);
+		}
+		if (window.isKeyPressed(GLFW_KEY_D)) {
 			camera.processKeyboard(arcane::graphics::RIGHT, deltaTime.getDeltaTime());
-		if (window.isKeyPressed(GLFW_KEY_SPACE))
+			scene.buttonPressed(GLFW_KEY_D);
+		}
+		if (window.isKeyPressed(GLFW_KEY_SPACE)) {
 			camera.processKeyboard(arcane::graphics::UPWARDS, deltaTime.getDeltaTime());
-		if (window.isKeyPressed(GLFW_KEY_LEFT_CONTROL))
+			scene.buttonPressed(GLFW_KEY_SPACE);
+		}
+		if (window.isKeyPressed(GLFW_KEY_LEFT_CONTROL)) {
 			camera.processKeyboard(arcane::graphics::DOWNWARDS, deltaTime.getDeltaTime());
+			scene.buttonPressed(GLFW_KEY_LEFT_CONTROL);
+		}
 		camera.processMouseScroll(window.getScrollY() * 6);
 		window.resetScroll();
 		

@@ -12,6 +12,8 @@ namespace arcane { namespace graphics {
 
 		void draw(Shader &shader) const;
 
+		void addPosition(glm::vec3 &other);
+
 
 		inline const glm::vec3& getPosition() const { return m_Position; }
 		inline const glm::vec3& getScale() const { return m_Scale; }

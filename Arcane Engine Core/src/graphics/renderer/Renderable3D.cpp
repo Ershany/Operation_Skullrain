@@ -15,4 +15,8 @@ namespace arcane { namespace graphics {
 		m_Model->Draw(shader);
 	}
 
+	void Renderable3D::addPosition(glm::vec3 &other) {
+		m_Position += other;
+	}
+
 } }

@@ -171,4 +171,8 @@ namespace arcane {
 		m_Renderables.push_back(renderable);
 	}
 
+	void Scene3D::buttonPressed(unsigned int keycode) {
+		m_Player->buttonPressed(keycode);
+	}
+
 }

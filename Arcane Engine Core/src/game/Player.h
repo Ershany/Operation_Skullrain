@@ -2,6 +2,9 @@
 
 #include "Entity.h"
 
+#include <GL\glew.h>
+#include <GLFW\glfw3.h>
+
 namespace arcane { namespace game {
 
 	class Player : public Entity {
@@ -10,8 +13,10 @@ namespace arcane { namespace game {
 		~Player();
 
 		virtual void update(double deltaTime) override;
-	private:
 
+		void buttonPressed(unsigned int keycode);
+	private:
+		glm::vec3 m_Velocity;
 	};
 
 } }
