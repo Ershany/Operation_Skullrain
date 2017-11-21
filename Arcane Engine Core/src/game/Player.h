@@ -16,7 +16,7 @@ namespace arcane { namespace game {
 
 		void buttonPressed(unsigned int keycode);
 	private:
-		glm::vec3 m_Velocity;
+		glm::vec3 m_Velocity, m_Front, m_Up;
 	};
 
 } }
