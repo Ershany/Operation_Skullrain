@@ -30,7 +30,8 @@ namespace arcane { namespace terrain {
 		GLfloat getVertexHeight(int x, int y);
 
 		inline const glm::vec3& getPosition() const { return m_Position; }
-		inline const GLuint getWidthHeight() const { return m_VertexSideCount * m_TerrainSize; }
+		inline const GLuint getVertexSideCount() const { return m_VertexSideCount; }
+		inline const GLuint getTerrainScale() const { return m_TerrainSize; }
 	private:
 		glm::vec3 calculateNormal(int x, int z);
 	};

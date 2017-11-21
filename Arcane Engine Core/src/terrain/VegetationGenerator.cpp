@@ -20,18 +20,17 @@ namespace arcane { namespace terrain {
 	}
 
 	void VegetationGenerator::load() {
+		glm::vec3 repositionVec = glm::vec3(0.0f, 12.0f, 0.0f);
+		int borderBoundary = 2;
+
 		graphics::Model *treeModel = new arcane::graphics::Model("res/3D_Models/Tree/lowpolytree.obj");
 
 		for (unsigned int i = 0; i < m_NumTrees; ++i) {
-			float x = rand() % m_Terrain->getWidthHeight() + 1;
-			float z = rand() % m_Terrain->getWidthHeight() + 1;
+			float x = rand() % (m_Terrain->getVertexSideCount() - borderBoundary) + (borderBoundary / 2);
+			float z = rand() % (m_Terrain->getVertexSideCount() - borderBoundary) + (borderBoundary / 2);
 
-			//float terrainHeight = m_Terrain->getWidthHeight();
-			//int testx = x / m_Terrain->getWidthHeight();
-			//int testz = z / m_Terrain->getWidthHeight();
-			//float test = m_Terrain->getVertexHeight(testx, testz);
-
-			glm::vec3 pos(x, m_Terrain->getVertexHeight(x / m_Terrain->getWidthHeight(), z / m_Terrain->getWidthHeight()), z);
+			glm::vec3 pos(x * m_Terrain->getTerrainScale(), m_Terrain->getVertexHeight(x, z), z * m_Terrain->getTerrainScale());
+			pos += repositionVec;
 			graphics::Renderable3D *currentTree = new graphics::Renderable3D(pos, glm::vec3(15.0f, 20.0f, 15.0f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, treeModel);
 
 			m_Trees.push_back(currentTree);

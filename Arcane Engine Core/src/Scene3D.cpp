@@ -12,7 +12,7 @@ namespace arcane {
 	{
 		m_Renderer = new graphics::Renderer(camera);
 		m_Terrain = new terrain::Terrain(glm::vec3(0.0f, -20.0f, 0.0f));
-		m_VegGenerator = new terrain::VegetationGenerator(m_Terrain, 300);
+		m_VegGenerator = new terrain::VegetationGenerator(m_Terrain, 500);
 
 		init();
 	}
