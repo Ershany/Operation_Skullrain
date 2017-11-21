@@ -12,6 +12,7 @@ namespace arcane {
 	{
 		m_Renderer = new graphics::Renderer(camera);
 		m_Terrain = new terrain::Terrain(glm::vec3(0.0f, -20.0f, 0.0f));
+		m_VegGenerator = new terrain::VegetationGenerator(m_Terrain, 300);
 
 		init();
 	}
@@ -26,18 +27,18 @@ namespace arcane {
 		glEnable(GL_STENCIL_TEST);
 		glEnable(GL_CULL_FACE);
 
-		// Load models
-		std::vector<graphics::Mesh> meshes;
-		meshes.push_back(*m_meshFactory.CreateQuad("res/textures/window.png", false));
-
+		// Load Renderables
 		graphics::Renderable3D *playerRenderable = new graphics::Renderable3D(glm::vec3(90.0f, -10.0f, 90.0f), glm::vec3(6.0f, 6.0f, 6.0f), glm::vec3(1.0f, 0.0f, 0.0f), glm::radians(-90.0f), new arcane::graphics::Model("res/3D_Models/Helicopter/uh60.obj"), false, true);
 
-		Add(new graphics::Renderable3D(glm::vec3(30.0f, -10.0f, 30.0f), glm::vec3(0.2f, 0.2f, 0.2f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, new arcane::graphics::Model("res/3D_Models/Overwatch/Reaper/Reaper.obj"), false));
-		Add(new graphics::Renderable3D(glm::vec3(60.0f, -10.0f, 60.0f), glm::vec3(0.2f, 0.2f, 0.2f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, new arcane::graphics::Model("res/3D_Models/Overwatch/McCree/McCree.obj"), false));
 		Add(playerRenderable);
-		Add(new graphics::Renderable3D(glm::vec3(40, 20, 40), glm::vec3(15, 15, 15), glm::vec3(1.0, 0.0, 0.0), glm::radians(90.0f), new graphics::Model(meshes), false, true));
-		Add(new graphics::Renderable3D(glm::vec3(80, 20, 80), glm::vec3(15, 15, 15), glm::vec3(1.0, 0.0, 0.0), glm::radians(90.0f), new graphics::Model(meshes), false, true));
-		Add(new graphics::Renderable3D(glm::vec3(120, 20, 120), glm::vec3(15, 15, 15), glm::vec3(1.0, 0.0, 0.0), glm::radians(90.0f), new graphics::Model(meshes), false, true));
+		Add(new graphics::Renderable3D(glm::vec3(30.0f, -10.0f, 30.0f), glm::vec3(0.05f, 0.05f, 0.05f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, new arcane::graphics::Model("res/3D_Models/Overwatch/Reaper/Reaper.obj")));
+		Add(new graphics::Renderable3D(glm::vec3(60.0f, -10.0f, 60.0f), glm::vec3(0.05f, 0.05f, 0.05f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, new arcane::graphics::Model("res/3D_Models/Overwatch/McCree/McCree.obj")));
+
+		auto iter = m_VegGenerator->getTreesBegin();
+		while (iter != m_VegGenerator->getTreesEnd()) {
+			Add((*iter));
+			iter++;
+		}
 
 		// Load entities
 		m_Player = new game::Player(playerRenderable);
@@ -99,7 +100,7 @@ namespace arcane {
 
 	void Scene3D::onUpdate(double deltaTime) {
 		//m_Renderables[0]->setRadianRotation(3.14159);
-		m_Player->update(deltaTime);
+		//m_Player->update(deltaTime);
 	}
 
 	void Scene3D::onRender() {
@@ -136,12 +137,6 @@ namespace arcane {
 			iter++;
 		}
 
-		/*m_ModelReflectionShader.enable();
-		m_ModelReflectionShader.setUniform1i("environmentMap", 0);
-		glBindTexture(GL_TEXTURE_CUBE_MAP, m_Skybox->getSkyboxCubemap());
-		m_Renderer->flushOpaque(m_ModelReflectionShader, m_OutlineShader);*/
-		m_Renderer->flushOpaque(m_ModelShader, m_OutlineShader);
-
 		// Terrain
 		glStencilMask(0x00); // Don't update the stencil buffer
 		glEnable(GL_CULL_FACE);
@@ -156,6 +151,13 @@ namespace arcane {
 		m_TerrainShader.setUniformMat4("view", m_Camera->getViewMatrix());
 		m_TerrainShader.setUniformMat4("projection", glm::perspective(glm::radians(m_Camera->getFOV()), (float)m_Window->getWidth() / (float)m_Window->getHeight(), 0.1f, 3000.0f));
 		m_Terrain->Draw(m_TerrainShader);
+
+		m_ModelShader.enable();
+		/*m_ModelReflectionShader.enable();
+		m_ModelReflectionShader.setUniform1i("environmentMap", 0);
+		glBindTexture(GL_TEXTURE_CUBE_MAP, m_Skybox->getSkyboxCubemap());
+		m_Renderer->flushOpaque(m_ModelReflectionShader, m_OutlineShader);*/
+		m_Renderer->flushOpaque(m_ModelShader, m_OutlineShader);
 
 		// Skybox
 		m_Skybox->Draw();
