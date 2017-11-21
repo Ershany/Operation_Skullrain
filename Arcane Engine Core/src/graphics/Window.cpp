@@ -6,6 +6,8 @@ namespace arcane { namespace graphics {
 		m_Title = title;
 		m_Width = width;
 		m_Height = height;
+		scrollX = 0.0f;
+		scrollY = 0.0f;
 
 		if (!init()) {
 			utils::Logger::getInstance().error("logged_files/window_creation.txt", "Window Initialization", "Could not initialize window class");
