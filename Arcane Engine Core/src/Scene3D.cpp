@@ -11,7 +11,7 @@ namespace arcane {
 		  m_OutlineShader("src/shaders/basic.vert", "src/shaders/basic.frag"), m_ModelReflectionShader("src/shaders/basic.vert", "src/shaders/modelReflection.frag")
 	{
 		m_Renderer = new graphics::Renderer(camera);
-		m_Terrain = new terrain::Terrain(glm::vec3(0.0f, -20.0f, 0.0f));
+		m_Terrain = new terrain::Terrain(glm::vec3(-1280.0f, -20.0f, -1280.0f)); // Make it so the center of the terrain is on the origin
 		m_VegGenerator = new terrain::VegetationGenerator(m_Terrain, 500);
 
 		init();
@@ -152,11 +152,11 @@ namespace arcane {
 		m_TerrainShader.setUniformMat4("projection", glm::perspective(glm::radians(m_Camera->getFOV()), (float)m_Window->getWidth() / (float)m_Window->getHeight(), 0.1f, 3000.0f));
 		m_Terrain->Draw(m_TerrainShader);
 
-		m_ModelShader.enable();
 		/*m_ModelReflectionShader.enable();
 		m_ModelReflectionShader.setUniform1i("environmentMap", 0);
 		glBindTexture(GL_TEXTURE_CUBE_MAP, m_Skybox->getSkyboxCubemap());
 		m_Renderer->flushOpaque(m_ModelReflectionShader, m_OutlineShader);*/
+		m_ModelShader.enable();
 		m_Renderer->flushOpaque(m_ModelShader, m_OutlineShader);
 
 		// Skybox

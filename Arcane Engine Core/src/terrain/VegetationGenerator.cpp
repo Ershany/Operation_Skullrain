@@ -6,7 +6,7 @@ namespace arcane { namespace terrain {
 		m_Terrain = terrain;
 		m_NumTrees = numTrees;
 		m_Trees.reserve(m_NumTrees);
-		srand(time(NULL));
+		srand(3);
 
 		load();
 	}
@@ -29,7 +29,7 @@ namespace arcane { namespace terrain {
 			float x = rand() % (m_Terrain->getVertexSideCount() - borderBoundary) + (borderBoundary / 2);
 			float z = rand() % (m_Terrain->getVertexSideCount() - borderBoundary) + (borderBoundary / 2);
 
-			glm::vec3 pos(x * m_Terrain->getTerrainScale(), m_Terrain->getVertexHeight(x, z), z * m_Terrain->getTerrainScale());
+			glm::vec3 pos((x * m_Terrain->getTerrainScale()) + m_Terrain->getPosition().x, m_Terrain->getVertexHeight(x, z), (z * m_Terrain->getTerrainScale()) + m_Terrain->getPosition().z);
 			pos += repositionVec;
 			graphics::Renderable3D *currentTree = new graphics::Renderable3D(pos, glm::vec3(15.0f, 20.0f, 15.0f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, treeModel);
 
