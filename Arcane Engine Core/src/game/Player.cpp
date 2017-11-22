@@ -4,7 +4,7 @@ namespace arcane { namespace game {
 
 	Player::Player(graphics::Renderable3D *renderable) : Entity(renderable) {
 		m_Velocity = glm::vec3(0.0f, 0.0f, 0.0f);
-		m_Front = glm::vec3(1.0f, 0.0f, 0.0f);
+		m_Front = glm::vec3(0.0f, 0.0f, -1.0f);
 		m_Up = glm::vec3(0.0f, 1.0f, 0.0f);
 	}
 
