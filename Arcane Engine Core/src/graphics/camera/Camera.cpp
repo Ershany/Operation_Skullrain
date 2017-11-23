@@ -29,7 +29,10 @@ namespace arcane {	namespace graphics {
 
 	void Camera::updateCamera(game::Player *player) {
 		if (m_ThirdPerson) {
+			m_Pitch = 0.0f;
 			m_Position = player->getPosition() - (player->getFront() * 54.0f) + (m_WorldUp * 34.0f);
+			m_Position = (glm::toMat3(glm::angleAxis(glm::radians(-m_Yaw), player->getUp())) * (m_Position - player->getPosition())) + player->getPosition(); // orbit the camera around the player
+			m_Front = glm::normalize(player->getPosition() - m_Position);
 		}
 		else {
 			m_Position = player->getPosition() + (player->getFront() * 11.6f) + (m_WorldUp * 2.7f) - (player->getRight() * 2.7f);
@@ -40,21 +43,21 @@ namespace arcane {	namespace graphics {
 		return glm::lookAt(m_Position, m_Position + m_Front, m_Up);
 	}
 
-	void Camera::processMouseMovement(GLfloat xOffset, GLfloat yOffset, GLboolean constrainPitch = true) {
+	void Camera::processMouseMovement(GLfloat xOffset, GLfloat yOffset, game::Player *player) {
 		xOffset *= m_MouseSensitivity;
 		yOffset *= m_MouseSensitivity;
 
 		m_Yaw += xOffset;
-		m_Pitch += yOffset;
+
+		if(!m_ThirdPerson)
+			m_Pitch += yOffset;
 
 		// Constrain the pitch
-		if (constrainPitch) {
-			if (m_Pitch > 89.0f) {
-				m_Pitch = 89.0f;
-			}
-			else if (m_Pitch < -89.0f) {
-				m_Pitch = -89.0f;
-			}
+		if (m_Pitch > 45.0f) {
+			m_Pitch = 45.0f;
+		}
+		else if (m_Pitch < -45.0f) {
+			m_Pitch = -45.0f;
 		}
 
 		updateCameraVectors();

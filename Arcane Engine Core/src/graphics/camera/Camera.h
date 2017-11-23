@@ -72,9 +72,8 @@ namespace arcane { namespace graphics {
 		*
 		* @param xOffset The value that is added to the x-offset
 		* @param yOffset The value that is added to the y-offset
-		* @param constrainPitch Optional. Option to constrain the pitch. Default is true
 		*/
-		void processMouseMovement(GLfloat xOffset, GLfloat yOffset, GLboolean constrainPitch);
+		void processMouseMovement(GLfloat xOffset, GLfloat yOffset, game::Player *player);
 
 		/**
 		* Changes the camera's Field of View

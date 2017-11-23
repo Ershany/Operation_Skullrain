@@ -117,7 +117,7 @@ namespace arcane {
 		}
 
 		// Camera Update
-		m_Camera->processMouseMovement(m_Window->getMouseX() - lastX, lastY - m_Window->getMouseY(), true);
+		m_Camera->processMouseMovement(m_Window->getMouseX() - lastX, lastY - m_Window->getMouseY(), m_Player);
 		lastX = m_Window->getMouseX();
 		lastY = m_Window->getMouseY();
 

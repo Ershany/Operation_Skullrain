@@ -4,6 +4,7 @@
 
 #include <GL\glew.h>
 #include <GLFW\glfw3.h>
+#include <glm\gtx\norm.hpp>
 
 namespace arcane { namespace game {
 
@@ -17,12 +18,16 @@ namespace arcane { namespace game {
 		void buttonPressed(unsigned int keycode, float deltaTime);
 
 		// Getters
-		inline glm::vec3 getFront() { return m_Orientation * m_InitialFront; }
-		inline glm::vec3 getUp() { return m_Orientation * m_InitialUp; }
-		inline glm::vec3 getRight() { return m_Orientation * glm::cross(m_InitialFront, m_InitialUp); }
+		inline const glm::vec3& getFront() { return m_Orientation * m_InitialFront; }
+		inline const glm::vec3& getUp() { return m_Orientation * m_InitialUp; }
+		inline const glm::vec3& getRight() { return glm::normalize(glm::cross(getFront(), getUp())); }
+		inline const glm::quat& getOrientation() { return m_Orientation; }
 	private:
 		glm::quat m_Orientation;
+
 		glm::vec3 m_Velocity;
+		GLfloat m_TerminalVelocity, m_TerminalVelocitySquared;
+
 		glm::vec3 m_InitialFront, m_InitialUp;
 	};
 
