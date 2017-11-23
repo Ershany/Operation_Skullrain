@@ -6,19 +6,27 @@
 
 namespace arcane {
 
-	Scene3D::Scene3D(graphics::Camera *camera, graphics::Window *window)
-		: m_TerrainShader("src/shaders/basic.vert", "src/shaders/terrain.frag"), m_ModelShader("src/shaders/basic.vert", "src/shaders/model.frag"), m_Camera(camera), m_Window(window),
+	Scene3D::Scene3D(graphics::Window *window)
+		: m_TerrainShader("src/shaders/basic.vert", "src/shaders/terrain.frag"), m_ModelShader("src/shaders/basic.vert", "src/shaders/model.frag"), m_Window(window),
 		  m_OutlineShader("src/shaders/basic.vert", "src/shaders/basic.frag"), m_ModelReflectionShader("src/shaders/basic.vert", "src/shaders/modelReflection.frag")
 	{
-		m_Renderer = new graphics::Renderer(camera);
+		m_Camera = new graphics::Camera(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -90.0f, 0.0f);
+		m_Renderer = new graphics::Renderer(m_Camera);
 		m_Terrain = new terrain::Terrain(glm::vec3(-1280.0f, -20.0f, -1280.0f)); // Make it so the center of the terrain is on the origin
 		m_VegGenerator = new terrain::VegetationGenerator(m_Terrain, 500);
+
+		firstMove = true;
+		lastX = m_Window->getMouseX();
+		lastY = m_Window->getMouseY();
 
 		init();
 	}
 
 	Scene3D::~Scene3D() {
-
+		delete m_Camera;
+		delete m_Renderer;
+		delete m_Terrain;
+		delete m_VegGenerator;
 	}
 
 	void Scene3D::init() {
@@ -28,11 +36,11 @@ namespace arcane {
 		glEnable(GL_CULL_FACE);
 
 		// Load Renderables
-		graphics::Renderable3D *playerRenderable = new graphics::Renderable3D(glm::vec3(90.0f, -10.0f, 90.0f), glm::vec3(6.0f, 6.0f, 6.0f), glm::vec3(1.0f, 0.0f, 0.0f), glm::radians(-90.0f), new arcane::graphics::Model("res/3D_Models/Helicopter/uh60.obj"), false, true);
+		graphics::Renderable3D *playerRenderable = new graphics::Renderable3D(glm::vec3(90.0f, -10.0f, 90.0f), glm::vec3(4.0f, 4.0f, 4.0f), glm::vec3(1.0f, 0.0f, 0.0f), glm::radians(-90.0f), new arcane::graphics::Model("res/3D_Models/Helicopter/uh60.obj"), false, true);
 
 		Add(playerRenderable);
-		Add(new graphics::Renderable3D(glm::vec3(30.0f, -10.0f, 30.0f), glm::vec3(0.05f, 0.05f, 0.05f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, new arcane::graphics::Model("res/3D_Models/Overwatch/Reaper/Reaper.obj")));
-		Add(new graphics::Renderable3D(glm::vec3(60.0f, -10.0f, 60.0f), glm::vec3(0.05f, 0.05f, 0.05f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, new arcane::graphics::Model("res/3D_Models/Overwatch/McCree/McCree.obj")));
+		Add(new graphics::Renderable3D(glm::vec3(30.0f, -40.0f, 30.0f), glm::vec3(0.05f, 0.05f, 0.05f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, new arcane::graphics::Model("res/3D_Models/Overwatch/Reaper/Reaper.obj")));
+		Add(new graphics::Renderable3D(glm::vec3(60.0f, -40.0f, 60.0f), glm::vec3(0.05f, 0.05f, 0.05f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, new arcane::graphics::Model("res/3D_Models/Overwatch/McCree/McCree.obj")));
 
 		auto iter = m_VegGenerator->getTreesBegin();
 		while (iter != m_VegGenerator->getTreesEnd()) {
@@ -98,9 +106,25 @@ namespace arcane {
 		m_Skybox = new graphics::Skybox(skyboxFilePaths, m_Camera, m_Window);
 	}
 
-	void Scene3D::onUpdate(double deltaTime) {
-		//m_Renderables[0]->setRadianRotation(3.14159);
-		//m_Player->update(deltaTime);
+	void Scene3D::onUpdate(float deltaTime) {
+		m_Player->update(deltaTime);
+
+		// Check to see if the mouse hasn't been moved yet
+		if (firstMove && (lastX != m_Window->getMouseX() || lastY != m_Window->getMouseY())) {
+			lastX = m_Window->getMouseX();
+			lastY = m_Window->getMouseY();
+			firstMove = false;
+		}
+
+		// Camera Update
+		m_Camera->processMouseMovement(m_Window->getMouseX() - lastX, lastY - m_Window->getMouseY(), true);
+		lastX = m_Window->getMouseX();
+		lastY = m_Window->getMouseY();
+
+		m_Camera->processMouseScroll(m_Window->getScrollY() * 6);
+		m_Window->resetScroll();
+		
+		m_Camera->updateCamera(m_Player);
 	}
 
 	void Scene3D::onRender() {
@@ -171,8 +195,15 @@ namespace arcane {
 		m_Renderables.push_back(renderable);
 	}
 
-	void Scene3D::buttonPressed(unsigned int keycode) {
-		m_Player->buttonPressed(keycode);
+	void Scene3D::buttonPressed(unsigned int keycode, float deltaTime) {
+		m_Player->buttonPressed(keycode, deltaTime);
+
+		if (keycode == GLFW_KEY_C) {
+			m_Camera->setThirdPerson(false);
+		}
+		if (keycode == GLFW_KEY_V) {
+			m_Camera->setThirdPerson(true);
+		}
 	}
 
 }

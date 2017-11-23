@@ -11,9 +11,9 @@ namespace arcane { namespace game {
 		Entity(graphics::Renderable3D *renderable);
 		~Entity();
 
-		virtual void update(double deltaTime) = 0;
+		virtual void update(float deltaTime) = 0;
 
-
+		inline glm::vec3 getPosition() { return m_Renderable->getPosition(); }
 	protected:
 		graphics::Renderable3D *m_Renderable;
 	};

@@ -6,34 +6,36 @@ namespace arcane { namespace game {
 		m_Velocity = glm::vec3(0.0f, 0.0f, 0.0f);
 		m_Front = glm::vec3(0.0f, 0.0f, -1.0f);
 		m_Up = glm::vec3(0.0f, 1.0f, 0.0f);
+		m_Orientation = glm::angleAxis(glm::radians(0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 	}
 
 	Player::~Player() {
 
 	}
 
-	void Player::update(double deltaTime) {
-
+	void Player::update(float deltaTime) {
+		m_Renderable->addPosition(m_Velocity);
+		m_Renderable->compositeRotation(glm::angleAxis(0.01f, glm::vec3(0.0f, 1.0f, 0.0f)));
 	}
 
-	void Player::buttonPressed(unsigned int keycode) {
+	void Player::buttonPressed(unsigned int keycode, float deltaTime) {
 		if (keycode == GLFW_KEY_SPACE) {
-			m_Renderable->addPosition(m_Up);
+			m_Velocity += (m_Orientation * m_Up) * deltaTime;
 		}
 		if (keycode == GLFW_KEY_W) {
-			m_Renderable->addPosition(m_Front);
+			m_Velocity += (m_Orientation * m_Front) * deltaTime;
 		}
 		if (keycode == GLFW_KEY_S) {
-			m_Renderable->addPosition(-m_Front);
+			m_Velocity += (m_Orientation  * -m_Front) * deltaTime;
 		}
 		if (keycode == GLFW_KEY_A) {
-			m_Renderable->addPosition(-glm::cross(m_Front, m_Up));
+			m_Velocity += (m_Orientation  * -glm::cross(m_Front, m_Up)) * deltaTime;
 		}
 		if (keycode == GLFW_KEY_D) {
-			m_Renderable->addPosition(glm::cross(m_Front, m_Up));
+			m_Velocity += (m_Orientation * glm::cross(m_Front, m_Up)) * deltaTime;
 		}
 		if (keycode == GLFW_KEY_LEFT_CONTROL) {
-			m_Renderable->addPosition(-m_Up);
+			m_Velocity += (m_Orientation  * -m_Up) * deltaTime;
 		}
 	}
 

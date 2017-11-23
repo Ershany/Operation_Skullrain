@@ -12,6 +12,7 @@ namespace arcane {	namespace graphics {
 		m_Up = up;
 		m_Yaw = yaw;
 		m_Pitch = pitch;
+		m_ThirdPerson = true;
 		updateCameraVectors();
 	}
 
@@ -22,37 +23,21 @@ namespace arcane {	namespace graphics {
 		m_WorldUp = glm::vec3(xUp, yUp, zUp);
 		m_Yaw = yaw;
 		m_Pitch = pitch;
+		m_ThirdPerson = true;
 		updateCameraVectors();
+	}
+
+	void Camera::updateCamera(game::Player *player) {
+		if (m_ThirdPerson) {
+			m_Position = player->getPosition() - (player->getFront() * 54.0f) + (m_WorldUp * 34.0f);
+		}
+		else {
+			m_Position = player->getPosition() + (player->getFront() * 11.6f) + (m_WorldUp * 2.7f) - (player->getRight() * 2.7f);
+		}
 	}
 
 	glm::mat4 Camera::getViewMatrix() {
 		return glm::lookAt(m_Position, m_Position + m_Front, m_Up);
-	}
-
-	void Camera::processKeyboard(Camera_Movement direction, GLfloat deltaTime) {
-		GLfloat velocity = m_MovementSpeed * deltaTime;
-		switch (direction) {
-		case FORWARD:
-			m_Position += m_Front * velocity;
-			break;
-		case BACKWARD:
-			m_Position -= m_Front * velocity;
-			break;
-		case LEFT:
-			m_Position -= m_Right * velocity;
-			break;
-		case RIGHT:
-			m_Position += m_Right * velocity;
-			break;
-		case UPWARDS:
-			m_Position += m_WorldUp * velocity;
-			break;
-		case DOWNWARDS:
-			m_Position -= m_WorldUp * velocity;
-			break;
-		}
-
-		//std::cout << "X:" << m_Position.x << " Y:" << m_Position.y << " Z:" << m_Position.z << std::endl;
 	}
 
 	void Camera::processMouseMovement(GLfloat xOffset, GLfloat yOffset, GLboolean constrainPitch = true) {

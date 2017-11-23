@@ -5,16 +5,9 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-namespace arcane { namespace graphics {
+#include "../../game/Player.h"
 
-	enum Camera_Movement {
-		FORWARD,
-		BACKWARD,
-		LEFT,
-		RIGHT,
-		UPWARDS,
-		DOWNWARDS
-	};
+namespace arcane { namespace graphics {
 
 	// Default Camera Values
 	const GLfloat YAW = -90.0f;
@@ -27,6 +20,7 @@ namespace arcane { namespace graphics {
 	private:
 		// Camera Attributes
 		glm::vec3 m_Position, m_Front, m_Up, m_Right, m_WorldUp;
+		bool m_ThirdPerson;
 
 		// Euler Angles
 		GLfloat m_Yaw;
@@ -63,7 +57,7 @@ namespace arcane { namespace graphics {
 		*/
 		Camera(GLfloat xPos, GLfloat yPos, GLfloat zPos, GLfloat xUp, GLfloat yUp, GLfloat zUp, GLfloat yaw, GLfloat pitch);
 		
-
+		void updateCamera(game::Player *player);
 
 		/**
 		* Returns the view matrix for the camera's position, yaw, and pitch
@@ -71,14 +65,6 @@ namespace arcane { namespace graphics {
 		* @return returns the view matrix for the camera
 		*/
 		glm::mat4 getViewMatrix();
-
-		/**
-		* Translates the position of the camera
-		*
-		* @param direction Enumeration type for the direction to move the camera
-		* @param deltaTime Delta time since the last update
-		*/
-		void processKeyboard(Camera_Movement direction, GLfloat deltaTime);
 
 		/**
 		* Changes what the camera is looking at, by adding the offsets with a sensitivity setting
@@ -105,8 +91,12 @@ namespace arcane { namespace graphics {
 		inline GLfloat getMovementSpeed() const { return m_MovementSpeed; }
 		inline GLfloat getMouseSensitivity() const { return m_MouseSensitivity; }
 		inline GLfloat getFOV() const { return m_FOV; }
+		inline bool getThirdPerson() const { return m_ThirdPerson; }
 		inline const glm::vec3& getFront() const { return m_Front; }
 		inline const glm::vec3& getPosition() const { return m_Position; }
+
+		// Setters
+		void setThirdPerson(bool choice) { m_ThirdPerson = choice; }
 	private:
 		/**
 		* Updates the front, right, and up vectors for the camera

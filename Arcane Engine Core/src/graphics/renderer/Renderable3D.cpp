@@ -3,7 +3,7 @@
 namespace arcane { namespace graphics {
 
 	Renderable3D::Renderable3D(glm::vec3 &position, glm::vec3 &scale, glm::vec3 &rotationAxis, float radianRotation, Model *model, bool shouldOutline, bool transparent)
-		: m_Position(position), m_Scale(scale), m_RotationAxis(rotationAxis), m_RadianRotation(radianRotation), m_Model(model), m_ShouldOutline(shouldOutline), m_Transparent(transparent)
+		: m_Position(position), m_Scale(scale), m_Model(model), m_ShouldOutline(shouldOutline), m_Transparent(transparent), m_Orientation(glm::angleAxis(radianRotation, rotationAxis))
 	{
 	}
 
@@ -17,6 +17,10 @@ namespace arcane { namespace graphics {
 
 	void Renderable3D::addPosition(glm::vec3 &other) {
 		m_Position += other;
+	}
+
+	void Renderable3D::compositeRotation(glm::quat &other) {
+		m_Orientation = other * m_Orientation;
 	}
 
 } }

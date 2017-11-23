@@ -19,9 +19,8 @@
 
 
 int main() {
-	arcane::graphics::Camera camera(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -90.0f, 0.0f);
 	arcane::graphics::Window window("Arcane Engine", 1366, 768);
-	arcane::Scene3D scene(&camera, &window);
+	arcane::Scene3D scene(&window);
 	arcane::opengl::Framebuffer framebuffer(window.getWidth(), window.getHeight());
 	arcane::opengl::Framebuffer blitFramebuffer(window.getWidth(), window.getHeight(), false);
 	arcane::graphics::Shader framebufferShader("src/shaders/framebuffer.vert", "src/shaders/framebuffer.frag");
@@ -32,51 +31,36 @@ int main() {
 	int frames = 0;
 
 	arcane::Time deltaTime;
-	bool firstMove = true;
-	GLfloat lastX = window.getMouseX();
-	GLfloat lastY = window.getMouseY();
 	while (!window.closed()) {
 		glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 		window.clear();
 		deltaTime.update();
 
-		// Check to see if the mouse hasn't been moved yet
-		if (firstMove && (lastX != window.getMouseX() || lastY != window.getMouseY())) {
-			lastX = window.getMouseX();
-			lastY = window.getMouseY();
-			firstMove = false;
-		}
-
-		// Camera Update
-		camera.processMouseMovement(window.getMouseX() - lastX, lastY - window.getMouseY(), true);
-		lastX = window.getMouseX();
-		lastY = window.getMouseY();
+		
 		if (window.isKeyPressed(GLFW_KEY_W)) {
-			camera.processKeyboard(arcane::graphics::FORWARD, deltaTime.getDeltaTime());
-			scene.buttonPressed(GLFW_KEY_W);
+			scene.buttonPressed(GLFW_KEY_W, deltaTime.getDeltaTime());
 		}
 		if (window.isKeyPressed(GLFW_KEY_S)) {
-			camera.processKeyboard(arcane::graphics::BACKWARD, deltaTime.getDeltaTime());
-			scene.buttonPressed(GLFW_KEY_S);
+			scene.buttonPressed(GLFW_KEY_S, deltaTime.getDeltaTime());
 		}
 		if (window.isKeyPressed(GLFW_KEY_A)) {
-			camera.processKeyboard(arcane::graphics::LEFT, deltaTime.getDeltaTime());
-			scene.buttonPressed(GLFW_KEY_A);
+			scene.buttonPressed(GLFW_KEY_A, deltaTime.getDeltaTime());
 		}
 		if (window.isKeyPressed(GLFW_KEY_D)) {
-			camera.processKeyboard(arcane::graphics::RIGHT, deltaTime.getDeltaTime());
-			scene.buttonPressed(GLFW_KEY_D);
+			scene.buttonPressed(GLFW_KEY_D, deltaTime.getDeltaTime());
 		}
 		if (window.isKeyPressed(GLFW_KEY_SPACE)) {
-			camera.processKeyboard(arcane::graphics::UPWARDS, deltaTime.getDeltaTime());
-			scene.buttonPressed(GLFW_KEY_SPACE);
+			scene.buttonPressed(GLFW_KEY_SPACE, deltaTime.getDeltaTime());
 		}
 		if (window.isKeyPressed(GLFW_KEY_LEFT_CONTROL)) {
-			camera.processKeyboard(arcane::graphics::DOWNWARDS, deltaTime.getDeltaTime());
-			scene.buttonPressed(GLFW_KEY_LEFT_CONTROL);
+			scene.buttonPressed(GLFW_KEY_LEFT_CONTROL, deltaTime.getDeltaTime());
 		}
-		camera.processMouseScroll(window.getScrollY() * 6);
-		window.resetScroll();
+		if (window.isKeyPressed(GLFW_KEY_C)) {
+			scene.buttonPressed(GLFW_KEY_C, deltaTime.getDeltaTime());
+		}
+		if (window.isKeyPressed(GLFW_KEY_V)) {
+			scene.buttonPressed(GLFW_KEY_V, deltaTime.getDeltaTime());
+		}
 		
 		// Draw the scene to our custom multisampled framebuffer
 		framebuffer.bind();
