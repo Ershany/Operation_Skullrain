@@ -17,13 +17,12 @@ namespace arcane { namespace game {
 		void buttonPressed(unsigned int keycode, float deltaTime);
 
 		// Getters
-		inline glm::vec3 getFront() { return m_Front; }
-		inline glm::vec3 getUp() { return m_Up; }
-		inline glm::vec3 getRight() { return glm::cross(m_Front, m_Up); }
+		inline glm::vec3 getFront() { return m_Orientation * m_InitialFront; }
+		inline glm::vec3 getUp() { return m_Orientation * m_InitialUp; }
+		inline glm::vec3 getRight() { return m_Orientation * glm::cross(m_InitialFront, m_InitialUp); }
 	private:
 		glm::quat m_Orientation;
 		glm::vec3 m_Velocity;
-		glm::vec3 m_Front, m_Up;
 		glm::vec3 m_InitialFront, m_InitialUp;
 	};
 
