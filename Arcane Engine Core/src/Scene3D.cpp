@@ -36,11 +36,16 @@ namespace arcane {
 		glEnable(GL_CULL_FACE);
 
 		// Load Renderables
-		graphics::Renderable3D *playerRenderable = new graphics::Renderable3D(glm::vec3(90.0f, -10.0f, 90.0f), glm::vec3(4.0f, 4.0f, 4.0f), glm::vec3(1.0f, 0.0f, 0.0f), glm::radians(-90.0f), new arcane::graphics::Model("res/3D_Models/Helicopter/uh60.obj"), false, true);
+		graphics::Renderable3D *player_helicopter_body = new graphics::Renderable3D(glm::vec3(90.0f, -10.0f, 90.0f),glm::vec3(4.0f, 4.0f, 4.0f), glm::vec3(1.0f, 0.0f, 0.0f), glm::radians(-90.0f), new arcane::graphics::Model("res/3D_Models/Helicopter/body.obj"), nullptr, false, true);
+		graphics::Renderable3D *player_helicopter_main_rotor = new graphics::Renderable3D(glm::vec3(90.0f, -10.0f, 90.0f), glm::vec3(4.0f, 4.0f, 4.0f), glm::vec3(1.0f, 0.0f, 0.0f), glm::radians(-90.0f), new arcane::graphics::Model("res/3D_Models/Helicopter/main_rotor.obj"), player_helicopter_body, false, true);
+		graphics::Renderable3D *player_helicopter_back_rotor = new graphics::Renderable3D(glm::vec3(90.0f, -10.0f, 90.0f), glm::vec3(4.0f, 4.0f, 4.0f), glm::vec3(1.0f, 0.0f, 0.0f), glm::radians(-90.0f), new arcane::graphics::Model("res/3D_Models/Helicopter/back_rotor.obj"), player_helicopter_body, false, true);
 
-		Add(playerRenderable);
-		Add(new graphics::Renderable3D(glm::vec3(30.0f, -40.0f, 30.0f), glm::vec3(0.05f, 0.05f, 0.05f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, new arcane::graphics::Model("res/3D_Models/Overwatch/Reaper/Reaper.obj")));
-		Add(new graphics::Renderable3D(glm::vec3(60.0f, -40.0f, 60.0f), glm::vec3(0.05f, 0.05f, 0.05f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, new arcane::graphics::Model("res/3D_Models/Overwatch/McCree/McCree.obj")));
+		Add(player_helicopter_body);
+		Add(player_helicopter_main_rotor);
+		Add(player_helicopter_back_rotor);
+
+		Add(new graphics::Renderable3D(glm::vec3(30.0f, -40.0f, 30.0f), glm::vec3(0.05f, 0.05f, 0.05f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, new arcane::graphics::Model("res/3D_Models/Overwatch/Reaper/Reaper.obj"), nullptr));
+		Add(new graphics::Renderable3D(glm::vec3(60.0f, -40.0f, 60.0f), glm::vec3(0.05f, 0.05f, 0.05f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, new arcane::graphics::Model("res/3D_Models/Overwatch/McCree/McCree.obj"), nullptr));
 
 		auto iter = m_VegGenerator->getTreesBegin();
 		while (iter != m_VegGenerator->getTreesEnd()) {
@@ -49,7 +54,7 @@ namespace arcane {
 		}
 
 		// Load entities
-		m_Player = new game::Player(playerRenderable);
+		m_Player = new game::Player(player_helicopter_body);
 
 		// Terrain shader
 		m_TerrainShader.enable();

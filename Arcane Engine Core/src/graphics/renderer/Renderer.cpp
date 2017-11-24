@@ -33,7 +33,14 @@ namespace arcane { namespace graphics {
 			glm::mat4 translate = glm::translate(glm::mat4(1.0f), current->getPosition());
 			glm::mat4 rotate = glm::toMat4(current->getOrientation());
 			glm::mat4 scale = glm::scale(glm::mat4(1.0f), current->getScale());
-			model = translate * rotate * scale;
+
+			if (current->getParent != nullptr) {
+				model = translate * rotate * scale;
+			}
+			else {
+				model = current->getParent.getPosition * current->getParent.getOrientation * translate * rotate * scale;
+			}
+
 			shader.setUniformMat4("model", model);
 			current->draw(shader);
 
@@ -42,12 +49,12 @@ namespace arcane { namespace graphics {
 				glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
 
 				outlineShader.enable();
-				model = glm::mat4(1);
+				body = glm::mat4(1);
 				translate = glm::translate(glm::mat4(1.0f), current->getPosition());
 				rotate = glm::toMat4(current->getOrientation());
 				scale = glm::scale(glm::mat4(1.0f), current->getScale() + glm::vec3(0.025f, 0.025f, 0.025f));
-				model = translate * rotate * scale;
-				outlineShader.setUniformMat4("model", model);
+				body = translate * rotate * scale;
+				outlineShader.setUniformMat4("model", body);
 				current->draw(outlineShader);
 				outlineShader.disable();
 

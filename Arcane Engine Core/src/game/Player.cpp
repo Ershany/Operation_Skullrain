@@ -18,7 +18,7 @@ namespace arcane { namespace game {
 	void Player::update(float deltaTime) {
 		m_Renderable->addPosition(m_Velocity);
 		m_Renderable->compositeRotation(glm::angleAxis(0.25f * deltaTime, glm::vec3(0.0f, 1.0f, 0.0f)));
-		m_Orientation = glm::angleAxis(0.25f * deltaTime, glm::vec3(0.0f, 1.0f, 0.0f)) * m_Orientation;
+		m_Orientation = glm::angleAxis(0.25f * deltaTime, glm::vec3(0.0f, 0.0f, 0.0f)) * m_Orientation;
 
 		// Restrict vector size
 		if (glm::length2(m_Velocity) > m_TerminalVelocitySquared) {
