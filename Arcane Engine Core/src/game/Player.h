@@ -10,7 +10,7 @@ namespace arcane { namespace game {
 
 	class Player : public Entity {
 	public:
-		Player(graphics::Renderable3D *renderable);
+		Player(graphics::Renderable3D *renderable, graphics::Renderable3D *main_rotor, graphics::Renderable3D *back_rotor);
 		~Player();
 
 		virtual void update(float deltaTime) override;
@@ -26,9 +26,17 @@ namespace arcane { namespace game {
 		glm::quat m_Orientation;
 
 		glm::vec3 m_Velocity;
+		glm::vec3 m_Lift;
+		glm::vec3 m_RotorRotation, m_RotorRotationAccel;
+
+		float m_Tilt, m_TiltAmount;
+
 		GLfloat m_TerminalVelocity, m_TerminalVelocitySquared;
 
 		glm::vec3 m_InitialFront, m_InitialUp;
+
+		graphics::Renderable3D *m_MainRotor, *m_BackRotor;
+
 	};
 
 } }
