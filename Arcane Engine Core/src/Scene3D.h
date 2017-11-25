@@ -8,7 +8,7 @@
 #include "graphics\MeshFactory.h"
 #include "graphics\Skybox.h"
 #include "game\Player.h"
-#include "terrain\VegetationGenerator.h"
+#include "terrain\VegetationSpawner.h"
 
 namespace arcane {
 	
@@ -18,7 +18,7 @@ namespace arcane {
 		graphics::Camera *m_Camera;
 		graphics::Renderer *m_Renderer;
 		terrain::Terrain *m_Terrain;
-		terrain::VegetationGenerator *m_VegGenerator;
+		terrain::VegetationSpawner *m_VegSpawner;
 		graphics::MeshFactory m_meshFactory;
 		graphics::Skybox *m_Skybox;
 

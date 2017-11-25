@@ -13,7 +13,7 @@ namespace arcane {
 		m_Camera = new graphics::Camera(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -90.0f, 0.0f);
 		m_Renderer = new graphics::Renderer(m_Camera);
 		m_Terrain = new terrain::Terrain(glm::vec3(-1280.0f, -20.0f, -1280.0f)); // Make it so the center of the terrain is on the origin
-		m_VegGenerator = new terrain::VegetationGenerator(m_Terrain, 500);
+		m_VegSpawner = new terrain::VegetationSpawner(m_Terrain, 500);
 
 		firstMove = true;
 		lastX = m_Window->getMouseX();
@@ -26,7 +26,7 @@ namespace arcane {
 		delete m_Camera;
 		delete m_Renderer;
 		delete m_Terrain;
-		delete m_VegGenerator;
+		delete m_VegSpawner;
 	}
 
 	void Scene3D::init() {
@@ -42,9 +42,9 @@ namespace arcane {
 		Add(new graphics::Renderable3D(glm::vec3(30.0f, -40.0f, 30.0f), glm::vec3(0.05f, 0.05f, 0.05f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, new arcane::graphics::Model("res/3D_Models/Overwatch/Reaper/Reaper.obj")));
 		Add(new graphics::Renderable3D(glm::vec3(60.0f, -40.0f, 60.0f), glm::vec3(0.05f, 0.05f, 0.05f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, new arcane::graphics::Model("res/3D_Models/Overwatch/McCree/McCree.obj")));
 
-		auto iter = m_VegGenerator->getTreesBegin();
-		while (iter != m_VegGenerator->getTreesEnd()) {
-			Add((*iter));
+		auto iter = m_VegSpawner->getBegin();
+		while (iter != m_VegSpawner->getEnd()) {
+			Add((*iter)->getRenderable());
 			iter++;
 		}
 
