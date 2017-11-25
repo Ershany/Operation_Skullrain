@@ -31,6 +31,7 @@ namespace arcane { namespace graphics {
 			// Draw the renderable 3d
 			glm::mat4 model(1);
 			glm::mat4 translate = glm::translate(glm::mat4(1.0f), current->getPosition());
+			glm::mat4 back = glm::translate(glm::mat4(-1.0f), current->getPosition());
 			glm::mat4 rotate = glm::toMat4(current->getOrientation());
 			glm::mat4 scale = glm::scale(glm::mat4(1.0f), current->getScale());
 

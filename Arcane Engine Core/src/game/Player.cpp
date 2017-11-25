@@ -28,8 +28,8 @@ namespace arcane { namespace game {
 
 		//std::cout << m_Tilt << std::endl;
 
-		m_MainRotor->compositeRotation(glm::angleAxis(0.25f * deltaTime, glm::vec3(0.0f, 1.0f, 0.0f)));
-		m_BackRotor->compositeRotation(glm::angleAxis(0.25f * deltaTime, glm::vec3(1.0f, 0.0f, 0.0f)));
+		m_MainRotor->compositeRotation(glm::angleAxis(0.25f * deltaTime, glm::vec3(0.0f, 100.0f, 0.0f)));
+		m_BackRotor->compositeRotation(glm::angleAxis(0.25f * deltaTime, glm::vec3(100.0f, 0.0f, 0.0f)));
 
 		// Restrict vector size
 		if (glm::length2(m_Velocity) > m_TerminalVelocitySquared) {

@@ -20,7 +20,7 @@ namespace arcane { namespace graphics {
 	}
 
 	void Renderable3D::compositeRotation(glm::quat &other) {
-		m_Orientation = other * m_Orientation;
+		m_Orientation = glm::normalize(other * m_Orientation);
 	}
 
 } }
