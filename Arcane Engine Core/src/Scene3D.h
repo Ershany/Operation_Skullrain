@@ -9,6 +9,7 @@
 #include "graphics\Skybox.h"
 #include "game\Player.h"
 #include "terrain\VegetationSpawner.h"
+#include "game\spawner\NPCSpawner.h"
 
 namespace arcane {
 	
@@ -19,6 +20,7 @@ namespace arcane {
 		graphics::Renderer *m_Renderer;
 		terrain::Terrain *m_Terrain;
 		terrain::VegetationSpawner *m_VegSpawner;
+		game::NPCSpawner *m_NPCSpawner;
 		graphics::MeshFactory m_meshFactory;
 		graphics::Skybox *m_Skybox;
 

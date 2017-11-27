@@ -13,7 +13,9 @@ namespace arcane {
 		m_Camera = new graphics::Camera(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -90.0f, 0.0f);
 		m_Renderer = new graphics::Renderer(m_Camera);
 		m_Terrain = new terrain::Terrain(glm::vec3(-1280.0f, -20.0f, -1280.0f)); // Make it so the center of the terrain is on the origin
+		m_Player = new game::Player(new graphics::Renderable3D(glm::vec3(90.0f, -10.0f, 90.0f), glm::vec3(4.0f, 4.0f, 4.0f), glm::vec3(1.0f, 0.0f, 0.0f), glm::radians(-90.0f), new arcane::graphics::Model("res/3D_Models/Helicopter/uh60.obj"), false, true));
 		m_VegSpawner = new terrain::VegetationSpawner(m_Terrain, 500);
+		m_NPCSpawner = new game::NPCSpawner(m_Terrain, 20, m_Player);
 
 		firstMove = true;
 		lastX = m_Window->getMouseX();
@@ -35,21 +37,19 @@ namespace arcane {
 		glEnable(GL_STENCIL_TEST);
 		glEnable(GL_CULL_FACE);
 
-		// Load Renderables
-		graphics::Renderable3D *playerRenderable = new graphics::Renderable3D(glm::vec3(90.0f, -10.0f, 90.0f), glm::vec3(4.0f, 4.0f, 4.0f), glm::vec3(1.0f, 0.0f, 0.0f), glm::radians(-90.0f), new arcane::graphics::Model("res/3D_Models/Helicopter/uh60.obj"), false, true);
+		Add(m_Player->getRenderable());
 
-		Add(playerRenderable);
-		Add(new graphics::Renderable3D(glm::vec3(30.0f, -40.0f, 30.0f), glm::vec3(0.05f, 0.05f, 0.05f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, new arcane::graphics::Model("res/3D_Models/Overwatch/Reaper/Reaper.obj")));
-		Add(new graphics::Renderable3D(glm::vec3(60.0f, -40.0f, 60.0f), glm::vec3(0.05f, 0.05f, 0.05f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, new arcane::graphics::Model("res/3D_Models/Overwatch/McCree/McCree.obj")));
-
-		auto iter = m_VegSpawner->getBegin();
-		while (iter != m_VegSpawner->getEnd()) {
-			Add((*iter)->getRenderable());
-			iter++;
+		auto vegIter = m_VegSpawner->getBegin();
+		while (vegIter != m_VegSpawner->getEnd()) {
+			Add((*vegIter)->getRenderable());
+			vegIter++;
 		}
 
-		// Load entities
-		m_Player = new game::Player(playerRenderable);
+		auto npcIter = m_NPCSpawner->getBegin();
+		while (npcIter != m_NPCSpawner->getEnd()) {
+			Add((*npcIter)->getRenderable());
+			npcIter++;
+		}
 
 		// Terrain shader
 		m_TerrainShader.enable();

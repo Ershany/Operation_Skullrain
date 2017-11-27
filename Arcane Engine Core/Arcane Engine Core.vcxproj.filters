@@ -87,13 +87,16 @@
     <ClCompile Include="src\game\spawner\Spawner.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\game\Tree.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\terrain\VegetationSpawner.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\game\spawner\NPCSpawner.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game\Tree.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game\NPC.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -173,13 +176,16 @@
     <ClInclude Include="src\game\spawner\Spawner.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\game\Tree.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\terrain\VegetationSpawner.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\game\spawner\NPCSpawner.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game\Tree.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game\NPC.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -79,6 +79,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\game\Entity.cpp" />
+    <ClCompile Include="src\game\NPC.cpp" />
     <ClCompile Include="src\game\Player.cpp" />
     <ClCompile Include="src\game\spawner\NPCSpawner.cpp" />
     <ClCompile Include="src\game\spawner\Spawner.cpp" />
@@ -109,6 +110,7 @@
   <ItemGroup>
     <ClInclude Include="src\Defs.h" />
     <ClInclude Include="src\game\Entity.h" />
+    <ClInclude Include="src\game\NPC.h" />
     <ClInclude Include="src\game\Player.h" />
     <ClInclude Include="src\game\spawner\NPCSpawner.h" />
     <ClInclude Include="src\game\spawner\Spawner.h" />
