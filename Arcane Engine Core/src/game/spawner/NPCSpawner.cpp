@@ -30,7 +30,7 @@ namespace arcane { namespace game {
 			else
 				npc = npcModel2;
 
-			game::NPC *currentNPC = new game::NPC(new graphics::Renderable3D(pos, glm::vec3(0.07f, 0.07f, 0.07f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, npc), m_Player);
+			game::NPC *currentNPC = new game::NPC(new graphics::Renderable3D(pos, glm::vec3(0.07f, 0.07f, 0.07f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, npc), m_Player, m_Terrain);
 
 			m_Entities.push_back(currentNPC);
 		}

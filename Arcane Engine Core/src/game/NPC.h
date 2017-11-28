@@ -11,11 +11,13 @@ namespace arcane { namespace game {
 
 	class NPC : public Entity {
 	public:
-		NPC(graphics::Renderable3D *renderable, Player *player);
+		NPC(graphics::Renderable3D *renderable, Player *player, terrain::Terrain *terrain);
 
 		virtual void update(float deltaTime);
 	private:
 		Player *m_Player;
+		terrain::Terrain *m_Terrain;
+
 		float m_MaxRunSquared, m_MaxPickupSquared;
 		glm::vec3 m_Speed;
 

@@ -41,7 +41,7 @@ namespace arcane {
 
 		auto vegIter = m_VegSpawner->getBegin();
 		while (vegIter != m_VegSpawner->getEnd()) {
-			Add(*vegIter);
+			//Add(*vegIter);
 			vegIter++;
 		}
 

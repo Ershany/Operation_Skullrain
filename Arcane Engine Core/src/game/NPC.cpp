@@ -4,7 +4,8 @@ namespace arcane { namespace game {
 
 	/* NPC position is in terrain space (not world space) */
 
-	NPC::NPC(graphics::Renderable3D *renderable, Player *player) : Entity(renderable), m_Player(player), m_Speed(15.0f, 0.0f, 15.0f) {
+	NPC::NPC(graphics::Renderable3D *renderable, Player *player, terrain::Terrain *terrain) 
+		: Entity(renderable), m_Player(player), m_Speed(15.0f, 0.0f, 15.0f), m_Terrain(terrain) {
 		m_MaxRunSquared = 125.0f * 125.0f;
 		m_MaxPickupSquared = 20.0f * 20.0f;
 	}
@@ -25,7 +26,11 @@ namespace arcane { namespace game {
 	}
 
 	void NPC::runToPlayer(float deltaTime) {
-		m_Renderable->addPosition(glm::normalize(m_Player->getPosition() - m_Renderable->getPosition()) * m_Speed * deltaTime);
+		glm::vec3 worldSpacePos = m_Terrain->getPosition() - m_Renderable->getPosition();
+		glm::vec3 directionToMove = glm::normalize(m_Player->getPosition() - m_Renderable->getPosition()) * m_Speed * deltaTime;
+		
+		float terrainHeight = m_Terrain->getVertexHeight(m_Renderable->getPosition().x / m_Terrain->getTerrainScale(), m_Renderable->getPosition().z / m_Terrain->getTerrainScale());
+		m_Renderable->addPosition(glm::vec3(directionToMove.x, 0.0f, directionToMove.z));
 	}
 
 } }
