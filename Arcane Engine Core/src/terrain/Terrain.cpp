@@ -7,7 +7,7 @@ namespace arcane { namespace terrain {
 
 	Terrain::Terrain(glm::vec3 &worldPosition) : m_Position(worldPosition)
 	{
-		m_ModelMatrix = glm::translate(m_ModelMatrix, worldPosition);
+		m_ModelMatrix = glm::translate(glm::mat4(1.0f), m_Position);
 
 		// Requirements to generate a mesh
 		std::vector<graphics::Vertex> vertices;
@@ -111,6 +111,10 @@ namespace arcane { namespace terrain {
 
 		// Normalize height to [-1, 1] then multiply it by the height map scale
 		return ((heightMapImage[x + (z * m_VertexSideCount)] / 127.5f) - 1) * m_HeightMapScale;
+	}
+	
+	glm::vec3 Terrain::convertWorldToTerrainSpace(const glm::vec3 &worldSpace) {
+		return worldSpace - m_Position;
 	}
 
 } }

@@ -28,7 +28,7 @@ namespace arcane {
 
 		// Some sort of list of entities (tied to models that are in the Renderer (Renderable3D) (should this name be changed to Renderer3D?))
 		//std::vector<Entity*> m_Entities;
-		std::vector<graphics::Renderable3D*> m_Renderables;
+		std::vector<game::Entity*> m_Entities;
 
 		graphics::Shader m_TerrainShader, m_ModelShader, m_OutlineShader, m_ModelReflectionShader;
 
@@ -40,7 +40,7 @@ namespace arcane {
 		Scene3D(graphics::Window *window);
 		~Scene3D();
 		
-		void Add(graphics::Renderable3D *renderable);
+		void Add(game::Entity *entity);
 
 		void onUpdate(float deltaTime);
 		void onRender();

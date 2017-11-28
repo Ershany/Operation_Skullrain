@@ -17,7 +17,7 @@ namespace arcane { namespace terrain {
 		GLuint m_VertexSideCount;
 		GLushort m_HeightMapScale;
 		unsigned char *heightMapImage;
-
+		
 		glm::mat4 m_ModelMatrix;
 		glm::vec3 m_Position;
 		graphics::Mesh *m_Mesh;
@@ -28,6 +28,7 @@ namespace arcane { namespace terrain {
 		void Draw(graphics::Shader &shader) const;
 
 		GLfloat getVertexHeight(int x, int y);
+		glm::vec3 convertWorldToTerrainSpace(const glm::vec3 &worldSpace);
 
 		inline const glm::vec3& getPosition() const { return m_Position; }
 		inline const GLuint getVertexSideCount() const { return m_VertexSideCount; }

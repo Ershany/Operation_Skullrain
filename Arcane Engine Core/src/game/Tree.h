@@ -3,6 +3,8 @@
 #include "Entity.h"
 
 namespace arcane { namespace game {
+	
+	/* Tree position is in terrain space (not world space) */
 
 	class Tree : public Entity {
 	public:

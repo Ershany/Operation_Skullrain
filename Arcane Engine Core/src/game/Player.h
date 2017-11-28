@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Entity.h"
+#include "../terrain/Terrain.h"
 
 #include <GL\glew.h>
 #include <GLFW\glfw3.h>
@@ -10,10 +11,11 @@ namespace arcane { namespace game {
 
 	class Player : public Entity {
 	public:
-		Player(graphics::Renderable3D *renderable);
+		Player(graphics::Renderable3D *renderable, terrain::Terrain *terrain);
 		~Player();
 
 		virtual void update(float deltaTime) override;
+		void pickupNPC();
 
 		void buttonPressed(unsigned int keycode, float deltaTime);
 
@@ -22,6 +24,8 @@ namespace arcane { namespace game {
 		inline const glm::vec3& getUp() { return m_Orientation * m_InitialUp; }
 		inline const glm::vec3& getRight() { return glm::normalize(glm::cross(getFront(), getUp())); }
 		inline const glm::quat& getOrientation() { return m_Orientation; }
+		inline const glm::vec3& getVelocity() { return m_Velocity; }
+		inline bool isGrounded() { return m_IsGrounded; }
 	private:
 		glm::quat m_Orientation;
 
@@ -29,6 +33,10 @@ namespace arcane { namespace game {
 		GLfloat m_TerminalVelocity, m_TerminalVelocitySquared;
 
 		glm::vec3 m_InitialFront, m_InitialUp;
+
+		terrain::Terrain *m_Terrain;
+		bool m_IsGrounded;
+		int m_NPCPickupCount;
 	};
 
 } }
