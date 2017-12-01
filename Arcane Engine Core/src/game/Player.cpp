@@ -64,6 +64,12 @@ namespace arcane { namespace game {
 		}
 	}
 
+	void Player::onRender() {
+		//glActiveTexture(GL_TEXTURE4);
+		//m_PlayerShader.setUniform1i("material.skyboxCubemap", 4);
+		//glBindTexture(GL_TEXTURE_CUBE_MAP, m_Skybox->getSkyboxCubemap());
+	}
+
 	void Player::pickupNPC() {
 		++m_NPCPickupCount;
 		std::cout << "Current NPC Pickup Count: " << m_NPCPickupCount << std::endl;

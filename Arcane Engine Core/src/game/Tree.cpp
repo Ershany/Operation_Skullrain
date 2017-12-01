@@ -10,4 +10,8 @@ namespace arcane { namespace game {
 		
 	}
 
+	void Tree::onRender() {
+
+	}
+
 } }

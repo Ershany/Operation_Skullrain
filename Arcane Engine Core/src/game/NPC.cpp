@@ -25,6 +25,10 @@ namespace arcane { namespace game {
 		}
 	}
 
+	void NPC::onRender() {
+
+	}
+
 	void NPC::runToPlayer(float deltaTime) {
 		glm::vec3 worldSpacePos = m_Terrain->getPosition() - m_Renderable->getPosition();
 		glm::vec3 directionToMove = glm::normalize(m_Player->getPosition() - m_Renderable->getPosition()) * m_Speed * deltaTime;

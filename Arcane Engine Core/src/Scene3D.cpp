@@ -8,7 +8,7 @@ namespace arcane {
 
 	Scene3D::Scene3D(graphics::Window *window)
 		: m_TerrainShader("src/shaders/basic.vert", "src/shaders/terrain.frag"), m_ModelShader("src/shaders/basic.vert", "src/shaders/model.frag"), m_Window(window),
-		  m_OutlineShader("src/shaders/basic.vert", "src/shaders/basic.frag"), m_ModelReflectionShader("src/shaders/basic.vert", "src/shaders/modelReflection.frag")
+		  m_OutlineShader("src/shaders/basic.vert", "src/shaders/basic.frag"), m_PlayerShader("src/shaders/basic.vert", "src/shaders/player.frag")
 	{
 		m_Camera = new graphics::Camera(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -90.0f, 0.0f);
 		m_Renderer = new graphics::Renderer(m_Camera);
@@ -35,6 +35,9 @@ namespace arcane {
 		delete m_Renderer;
 		delete m_Terrain;
 		delete m_VegSpawner;
+		delete m_NPCSpawner;
+		delete m_Player;
+		delete m_Skybox;
 	}
 
 	void Scene3D::init() {
@@ -43,7 +46,17 @@ namespace arcane {
 		glEnable(GL_STENCIL_TEST);
 		glEnable(GL_CULL_FACE);
 
-		Add(m_Player);
+		// Skybox
+		std::vector<const char*> skyboxFilePaths;
+		skyboxFilePaths.push_back("res/skybox/right.png");
+		skyboxFilePaths.push_back("res/skybox/left.png");
+		skyboxFilePaths.push_back("res/skybox/top.png");
+		skyboxFilePaths.push_back("res/skybox/bottom.png");
+		skyboxFilePaths.push_back("res/skybox/back.png");
+		skyboxFilePaths.push_back("res/skybox/front.png");
+		m_Skybox = new graphics::Skybox(skyboxFilePaths, m_Camera, m_Window);
+
+		//Add(m_Player);
 		Add(m_Player->getMainRotor());
 		Add(m_Player->getBackRotor());
 
@@ -103,15 +116,26 @@ namespace arcane {
 		m_ModelShader.setUniform1f("pointLights[0].linear", 0.007);
 		m_ModelShader.setUniform1f("pointLights[0].quadratic", 0.0002);
 
-		// Skybox
-		std::vector<const char*> skyboxFilePaths;
-		skyboxFilePaths.push_back("res/skybox/right.png");
-		skyboxFilePaths.push_back("res/skybox/left.png");
-		skyboxFilePaths.push_back("res/skybox/top.png");
-		skyboxFilePaths.push_back("res/skybox/bottom.png");
-		skyboxFilePaths.push_back("res/skybox/back.png");
-		skyboxFilePaths.push_back("res/skybox/front.png");
-		m_Skybox = new graphics::Skybox(skyboxFilePaths, m_Camera, m_Window);
+		m_PlayerShader.enable();
+		m_PlayerShader.setUniform1f("material.shininess", 128.0f);
+		m_PlayerShader.setUniform3f("dirLight.direction", glm::vec3(0.0f, -1.0f, 0.0f));
+		m_PlayerShader.setUniform3f("dirLight.ambient", glm::vec3(0.1f, 0.1f, 0.1f));
+		m_PlayerShader.setUniform3f("dirLight.diffuse", glm::vec3(0.6f, 0.6f, 0.6f));
+		m_PlayerShader.setUniform3f("dirLight.specular", glm::vec3(0.5f, 0.5f, 0.5f));
+		m_PlayerShader.setUniform3f("spotLight.ambient", glm::vec3(0.2f, 0.2f, 0.2f));
+		m_PlayerShader.setUniform3f("spotLight.diffuse", glm::vec3(1.0f, 1.0f, 1.0f));
+		m_PlayerShader.setUniform3f("spotLight.specular", glm::vec3(1.0f, 1.0f, 1.0f));
+		m_PlayerShader.setUniform1f("spotLight.constant", 1.0f);
+		m_PlayerShader.setUniform1f("spotLight.linear", 0.0014);
+		m_PlayerShader.setUniform1f("spotLight.quadratic", 0.000007);
+		m_PlayerShader.setUniform1f("spotLight.cutOff", glm::cos(glm::radians(12.5f)));
+		m_PlayerShader.setUniform1f("spotLight.outerCutOff", glm::cos(glm::radians(15.0f)));
+		m_PlayerShader.setUniform3f("pointLights[0].ambient", glm::vec3(0.05f, 0.05f, 0.05f));
+		m_PlayerShader.setUniform3f("pointLights[0].diffuse", glm::vec3(0.85f, 0.85f, 0.85f));
+		m_PlayerShader.setUniform3f("pointLights[0].specular", glm::vec3(1.0f, 1.0f, 1.0f));
+		m_PlayerShader.setUniform1f("pointLights[0].constant", 1.0f);
+		m_PlayerShader.setUniform1f("pointLights[0].linear", 0.007);
+		m_PlayerShader.setUniform1f("pointLights[0].quadratic", 0.0002);
 	}
 
 	void Scene3D::onUpdate(float deltaTime) {
@@ -127,6 +151,9 @@ namespace arcane {
 				iter++;
 			}
 		}
+
+		// Player update
+		m_Player->update(deltaTime);
 
 		// Check to see if the mouse hasn't been moved yet
 		if (firstMove && (lastX != m_Window->getMouseX() || lastY != m_Window->getMouseY())) {
@@ -152,11 +179,14 @@ namespace arcane {
 		m_OutlineShader.setUniformMat4("view", m_Camera->getViewMatrix());
 		m_OutlineShader.setUniformMat4("projection", glm::perspective(glm::radians(m_Camera->getFOV()), (float)m_Window->getWidth() / (float)m_Window->getHeight(), 0.1f, 3000.0f));
 
-		// Reflection Shader
-		m_ModelReflectionShader.enable();
-		m_ModelReflectionShader.setUniform3f("cameraPos", m_Camera->getPosition());
-		m_ModelReflectionShader.setUniformMat4("view", m_Camera->getViewMatrix());
-		m_ModelReflectionShader.setUniformMat4("projection", glm::perspective(glm::radians(m_Camera->getFOV()), (float)m_Window->getWidth() / (float)m_Window->getHeight(), 0.1f, 3000.0f));
+		// Models
+		m_PlayerShader.enable();
+		m_PlayerShader.setUniform3f("pointLights[0].position", glm::vec3(200.0f, 215.0f, 100.0f));
+		m_PlayerShader.setUniform3f("spotLight.position", m_Player->getPosition() + (m_Player->getFront() * 15.0f));
+		m_PlayerShader.setUniform3f("spotLight.direction", -m_Player->getUp() + m_Player->getFront());
+		m_PlayerShader.setUniform3f("viewPos", m_Camera->getPosition());
+		m_PlayerShader.setUniformMat4("view", m_Camera->getViewMatrix());
+		m_PlayerShader.setUniformMat4("projection", glm::perspective(glm::radians(m_Camera->getFOV()), (float)m_Window->getWidth() / (float)m_Window->getHeight(), 0.1f, 3000.0f));
 
 		// Models
 		m_ModelShader.enable();
@@ -176,6 +206,7 @@ namespace arcane {
 			else {
 				m_Renderer->submitOpaque(curr);
 			}
+			(*iter)->onRender();
 			
 			iter++;
 		}
@@ -208,10 +239,6 @@ namespace arcane {
 		m_TerrainShader.setUniformMat4("projection", glm::perspective(glm::radians(m_Camera->getFOV()), (float)m_Window->getWidth() / (float)m_Window->getHeight(), 0.1f, 3000.0f));
 		m_Terrain->Draw(m_TerrainShader);
 
-		/*m_ModelReflectionShader.enable();
-		m_ModelReflectionShader.setUniform1i("environmentMap", 0);
-		glBindTexture(GL_TEXTURE_CUBE_MAP, m_Skybox->getSkyboxCubemap());
-		m_Renderer->flushOpaque(m_ModelReflectionShader, m_OutlineShader);*/
 		m_ModelShader.enable();
 		m_Renderer->flushOpaque(m_ModelShader, m_OutlineShader);
 
@@ -221,6 +248,32 @@ namespace arcane {
 		// Transparent objects
 		m_ModelShader.enable();
 		m_Renderer->flushTransparent(m_ModelShader, m_OutlineShader);
+
+
+		// Player rendering (assumes the 4th texture unit is never used. This code will need refactoring but not enough time before demo)
+		// Choose the shader depending if the camera is in 1st or 3rd person
+		graphics::Shader *shaderToUse = &m_ModelShader;
+		if (m_Camera->getThirdPerson()) {
+			shaderToUse = &m_PlayerShader;
+		}
+		shaderToUse->enable();
+		glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
+		glStencilFunc(GL_ALWAYS, 1, 0xFF);
+		glStencilMask(0xFF);
+		glEnable(GL_BLEND); // Enable blending (note: You will still need to sort from back to front when rendering)
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); // Tell OpenGL how to blend, in this case make the new object have the transparency of its alpha and the object in the back is 1-alpha
+		glm::mat4 model(1);
+		glm::mat4 translate = glm::translate(glm::mat4(1.0f), m_Player->getRenderable()->getPosition());
+		glm::mat4 rotate = glm::toMat4(m_Player->getRenderable()->getOrientation());
+		glm::mat4 scale = glm::scale(glm::mat4(1.0f), m_Player->getRenderable()->getScale());
+		model = translate * rotate * scale;
+		shaderToUse->setUniformMat4("model", model);
+		if (m_Camera->getThirdPerson()) {
+			glActiveTexture(GL_TEXTURE4);
+			shaderToUse->setUniform1i("material.skyboxCubemap", 4);
+			glBindTexture(GL_TEXTURE_CUBE_MAP, m_Skybox->getSkyboxCubemap());
+		}
+		m_Player->getRenderable()->draw(*shaderToUse);
 	}
 
 	void Scene3D::Add(game::Entity *entity) {

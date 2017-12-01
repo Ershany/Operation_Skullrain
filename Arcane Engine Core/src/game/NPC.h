@@ -14,6 +14,7 @@ namespace arcane { namespace game {
 		NPC(graphics::Renderable3D *renderable, Player *player, terrain::Terrain *terrain);
 
 		virtual void update(float deltaTime);
+		virtual void onRender();
 	private:
 		Player *m_Player;
 		terrain::Terrain *m_Terrain;

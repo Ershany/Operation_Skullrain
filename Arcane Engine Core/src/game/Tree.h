@@ -11,6 +11,7 @@ namespace arcane { namespace game {
 		Tree(graphics::Renderable3D *renderable);
 	
 		virtual void update(float deltaTime);
+		virtual void onRender();
 	};
 
 } }

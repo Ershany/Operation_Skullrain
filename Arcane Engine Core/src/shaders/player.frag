@@ -77,8 +77,13 @@ void main() {
 	}
 	result += CalcSpotLight(spotLight, norm, FragPos, fragToCam);
 	
+	// Use the environment map (skybox) to add some detail to the body of the player
+	vec3 reflectedVec = reflect(-fragToCam, norm);
+	vec3 reflectedCol = texture(material.skyboxCubemap, reflectedVec).rgb;
+	float reflectStrength = 0.25f;
+
 	// Result
-	color = vec4(result, textureAlpha); // Use the diffuse texture for transparency
+	color = vec4(result + (reflectedCol * reflectStrength), textureAlpha); // Use the diffuse texture for transparency
 }
 
 vec3 CalcDirLight(DirLight light, vec3 normal, vec3 fragToCam) {

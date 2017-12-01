@@ -15,6 +15,8 @@ namespace arcane { namespace game {
 		~Player();
 
 		virtual void update(float deltaTime) override;
+		virtual void onRender();
+
 		void pickupNPC();
 
 		void buttonPressed(unsigned int keycode, float deltaTime);
