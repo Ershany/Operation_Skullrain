@@ -1,6 +1,24 @@
 # 3ds Max Wavefront OBJ Exporter v0.97b - (c)2007 guruware
 # File Created: 23.11.2017 23:03:40
 
+# Opaque Windows
+newmtl Material__24
+	Ka 0.0470588 0.141176 0.196078
+	Kd 0.0470588 0.141176 0.196078
+	Ks 0.9 0.9 0.9
+	illum 2
+	Ns 22.6274
+	d 0.43
+	map_Kd opaqueWindow.png
+	map_bump 
+	bump 
+	map_opacity 
+	map_d 
+	refl 
+	map_kS 
+	map_kA 
+	map_Ns 
+	
 newmtl Material__25
 	Ns 31.0000
 	Ni 1.5000
@@ -15,6 +33,7 @@ newmtl Material__25
 	map_Ka fuselage.jpg
 	map_Kd fuselage.jpg
 
+# Windows
 newmtl Material__26
 	Ns 35.0000
 	Ni 1.5000
@@ -22,6 +41,7 @@ newmtl Material__26
 	Tr 0.5700
 	Tf 0.4300 0.4300 0.4300 
 	illum 2
+	map_Kd black.png
 	Ka 0.0471 0.1412 0.1961
 	Kd 0.0471 0.1412 0.1961
 	Ks 0.7830 0.7830 0.7830
