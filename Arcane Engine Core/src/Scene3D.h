@@ -26,9 +26,9 @@ namespace arcane {
 
 		game::Player *m_Player;
 
-		// Some sort of list of entities (tied to models that are in the Renderer (Renderable3D) (should this name be changed to Renderer3D?))
-		//std::vector<Entity*> m_Entities;
+		// List of entities and renderables. Entities are updated and rendered, but renderables are just rendered
 		std::vector<game::Entity*> m_Entities;
+		std::vector<graphics::Renderable3D*> m_Renderables;
 
 		graphics::Shader m_TerrainShader, m_ModelShader, m_OutlineShader, m_ModelReflectionShader;
 
@@ -41,6 +41,7 @@ namespace arcane {
 		~Scene3D();
 		
 		void Add(game::Entity *entity);
+		void Add(graphics::Renderable3D *renderable);
 
 		void onUpdate(float deltaTime);
 		void onRender();

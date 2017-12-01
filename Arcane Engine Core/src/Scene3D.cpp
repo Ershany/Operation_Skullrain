@@ -13,7 +13,13 @@ namespace arcane {
 		m_Camera = new graphics::Camera(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -90.0f, 0.0f);
 		m_Renderer = new graphics::Renderer(m_Camera);
 		m_Terrain = new terrain::Terrain(glm::vec3(-1280.0f, -20.0f, -1280.0f)); // Make it so the center of the terrain is on the origin
-		m_Player = new game::Player(new graphics::Renderable3D(glm::vec3(90.0f, -10.0f, 90.0f), glm::vec3(4.0f, 4.0f, 4.0f), glm::vec3(1.0f, 0.0f, 0.0f), glm::radians(-90.0f), new arcane::graphics::Model("res/3D_Models/Helicopter/uh60.obj"), false, true), m_Terrain);
+
+		//Low poly heli
+		//graphics::Renderable3D *player_helicopter_body = new graphics::Renderable3D(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(4.0f, 4.0f, 4.0f), glm::vec3(1.0f, 0.0f, 0.0f), glm::radians(0.0f), new arcane::graphics::Model("res/3D_Models/Helicopter/body_low_poly.obj"), nullptr, false);
+		graphics::Renderable3D *player_helicopter_body = new graphics::Renderable3D(glm::vec3(90.0f, -10.0f, 90.0f), glm::vec3(4.0f, 4.0f, 4.0f), glm::vec3(1.0f, 0.0f, 0.0f), glm::radians(0.0f), new arcane::graphics::Model("res/3D_Models/Helicopter/body.obj"), nullptr, false);
+		m_Player = new game::Player(player_helicopter_body,
+			new graphics::Renderable3D(glm::vec3(0.0f, 6.5f, 0.0f), glm::vec3(4.0f, 4.0f, 4.0f), glm::vec3(1.0f, 0.0f, 0.0f), glm::radians(0.0f), new arcane::graphics::Model("res/3D_Models/Helicopter/main_rotor.obj"), player_helicopter_body, false, false),
+			new graphics::Renderable3D(glm::vec3(0.0f, 9.8f, 42.0f), glm::vec3(4.0f, 4.0f, 4.0f), glm::vec3(1.0f, 0.0f, 0.0f), glm::radians(0.0f), new arcane::graphics::Model("res/3D_Models/Helicopter/back_rotor.obj"), player_helicopter_body, false, false), m_Terrain);
 		m_VegSpawner = new terrain::VegetationSpawner(m_Terrain, 500);
 		m_NPCSpawner = new game::NPCSpawner(m_Terrain, 20, m_Player);
 
@@ -38,6 +44,8 @@ namespace arcane {
 		glEnable(GL_CULL_FACE);
 
 		Add(m_Player);
+		Add(m_Player->getMainRotor());
+		Add(m_Player->getBackRotor());
 
 		auto vegIter = m_VegSpawner->getBegin();
 		while (vegIter != m_VegSpawner->getEnd()) {
@@ -159,7 +167,7 @@ namespace arcane {
 		m_ModelShader.setUniformMat4("view", m_Camera->getViewMatrix());
 		m_ModelShader.setUniformMat4("projection", glm::perspective(glm::radians(m_Camera->getFOV()), (float)m_Window->getWidth() / (float)m_Window->getHeight(), 0.1f, 3000.0f));
 
-		std::vector<game::Entity*>::iterator iter = m_Entities.begin();
+		auto iter = m_Entities.begin();
 		while (iter != m_Entities.end()) {
 			graphics::Renderable3D *curr = (*iter)->getRenderable();
 			if (curr->getTransparent()) {
@@ -170,6 +178,19 @@ namespace arcane {
 			}
 			
 			iter++;
+		}
+
+		auto renderableIter = m_Renderables.begin();
+		while (renderableIter != m_Renderables.end()) {
+			graphics::Renderable3D *curr = (*renderableIter);
+			if (curr->getTransparent()) {
+				m_Renderer->submitTransparent(curr);
+			}
+			else {
+				m_Renderer->submitOpaque(curr);
+			}
+
+			renderableIter++;
 		}
 
 		// Terrain
@@ -204,6 +225,10 @@ namespace arcane {
 
 	void Scene3D::Add(game::Entity *entity) {
 		m_Entities.push_back(entity);
+	}
+
+	void Scene3D::Add(graphics::Renderable3D *renderable) {
+		m_Renderables.push_back(renderable);
 	}
 
 	void Scene3D::buttonPressed(unsigned int keycode, float deltaTime) {

@@ -11,7 +11,7 @@ namespace arcane { namespace game {
 
 	class Player : public Entity {
 	public:
-		Player(graphics::Renderable3D *renderable, terrain::Terrain *terrain);
+		Player(graphics::Renderable3D *renderable, graphics::Renderable3D *main_rotor, graphics::Renderable3D *back_rotor, terrain::Terrain *terrain);
 		~Player();
 
 		virtual void update(float deltaTime) override;
@@ -26,10 +26,19 @@ namespace arcane { namespace game {
 		inline const glm::quat& getOrientation() { return m_Orientation; }
 		inline const glm::vec3& getVelocity() { return m_Velocity; }
 		inline bool isGrounded() { return m_IsGrounded; }
+
+		inline graphics::Renderable3D* getMainRotor() { return m_MainRotor; }
+		inline graphics::Renderable3D* getBackRotor() { return m_BackRotor; }
 	private:
 		glm::quat m_Orientation;
 
 		glm::vec3 m_Velocity;
+		glm::vec3 m_Lift;
+		glm::vec3 m_RotorRotation, m_RotorRotationAccel;
+
+		float m_Tilt, m_TiltAmount;
+		float m_MainTilt, m_SideTilt;
+
 		GLfloat m_TerminalVelocity, m_TerminalVelocitySquared;
 
 		glm::vec3 m_InitialFront, m_InitialUp;
@@ -37,6 +46,8 @@ namespace arcane { namespace game {
 		terrain::Terrain *m_Terrain;
 		bool m_IsGrounded;
 		int m_NPCPickupCount;
+
+		graphics::Renderable3D *m_MainRotor, *m_BackRotor;
 	};
 
 } }
