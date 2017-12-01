@@ -1,25 +1,16 @@
-#include "VegetationGenerator.h"
+#include "VegetationSpawner.h"
 
 namespace arcane { namespace terrain {
 
-	VegetationGenerator::VegetationGenerator(Terrain *terrain, int numTrees) {
-		m_Terrain = terrain;
+	VegetationSpawner::VegetationSpawner(Terrain *terrain, int numTrees) : game::Spawner(terrain) {
 		m_NumTrees = numTrees;
-		m_Trees.reserve(m_NumTrees);
+		m_Entities.reserve(m_NumTrees);
 		srand(3);
 
 		load();
 	}
 
-	std::vector<graphics::Renderable3D*>::iterator VegetationGenerator::getTreesBegin() {
-		return m_Trees.begin();
-	}
-
-	std::vector<graphics::Renderable3D*>::iterator VegetationGenerator::getTreesEnd() {
-		return m_Trees.end();
-	}
-
-	void VegetationGenerator::load() {
+	void VegetationSpawner::load() {
 		glm::vec3 repositionVec = glm::vec3(0.0f, 12.0f, 0.0f);
 		int borderBoundary = 2;
 
@@ -31,9 +22,9 @@ namespace arcane { namespace terrain {
 
 			glm::vec3 pos((x * m_Terrain->getTerrainScale()) + m_Terrain->getPosition().x, m_Terrain->getVertexHeight(x, z), (z * m_Terrain->getTerrainScale()) + m_Terrain->getPosition().z);
 			pos += repositionVec;
-			graphics::Renderable3D *currentTree = new graphics::Renderable3D(pos, glm::vec3(15.0f, 20.0f, 15.0f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, treeModel, nullptr);
+			game::Tree *currentTree = new game::Tree(new graphics::Renderable3D(pos, glm::vec3(15.0f, 20.0f, 15.0f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, treeModel, nullptr));
 
-			m_Trees.push_back(currentTree);
+			m_Entities.push_back(currentTree);
 		}
 	}
 

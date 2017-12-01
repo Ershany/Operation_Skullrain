@@ -79,7 +79,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\game\Entity.cpp" />
+    <ClCompile Include="src\game\NPC.cpp" />
     <ClCompile Include="src\game\Player.cpp" />
+    <ClCompile Include="src\game\spawner\NPCSpawner.cpp" />
+    <ClCompile Include="src\game\spawner\Spawner.cpp" />
+    <ClCompile Include="src\game\Tree.cpp" />
     <ClCompile Include="src\graphics\camera\Camera.cpp" />
     <ClCompile Include="src\graphics\Mesh.cpp" />
     <ClCompile Include="src\graphics\MeshFactory.cpp" />
@@ -97,7 +101,7 @@
     <ClCompile Include="src\platform\OpenGL\VertexArray.cpp" />
     <ClCompile Include="src\Scene3D.cpp" />
     <ClCompile Include="src\terrain\Terrain.cpp" />
-    <ClCompile Include="src\terrain\VegetationGenerator.cpp" />
+    <ClCompile Include="src\terrain\VegetationSpawner.cpp" />
     <ClCompile Include="src\utils\FileUtils.cpp" />
     <ClCompile Include="src\utils\Logger.cpp" />
     <ClCompile Include="src\utils\Time.cpp" />
@@ -106,7 +110,11 @@
   <ItemGroup>
     <ClInclude Include="src\Defs.h" />
     <ClInclude Include="src\game\Entity.h" />
+    <ClInclude Include="src\game\NPC.h" />
     <ClInclude Include="src\game\Player.h" />
+    <ClInclude Include="src\game\spawner\NPCSpawner.h" />
+    <ClInclude Include="src\game\spawner\Spawner.h" />
+    <ClInclude Include="src\game\Tree.h" />
     <ClInclude Include="src\graphics\camera\Camera.h" />
     <ClInclude Include="src\graphics\Mesh.h" />
     <ClInclude Include="src\graphics\MeshFactory.h" />
@@ -123,7 +131,7 @@
     <ClInclude Include="src\platform\OpenGL\VertexArray.h" />
     <ClInclude Include="src\Scene3D.h" />
     <ClInclude Include="src\terrain\Terrain.h" />
-    <ClInclude Include="src\terrain\VegetationGenerator.h" />
+    <ClInclude Include="src\terrain\VegetationSpawner.h" />
     <ClInclude Include="src\utils\FileUtils.h" />
     <ClInclude Include="src\utils\Logger.h" />
     <ClInclude Include="src\utils\Singleton.h" />

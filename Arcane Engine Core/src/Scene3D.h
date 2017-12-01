@@ -8,7 +8,8 @@
 #include "graphics\MeshFactory.h"
 #include "graphics\Skybox.h"
 #include "game\Player.h"
-#include "terrain\VegetationGenerator.h"
+#include "terrain\VegetationSpawner.h"
+#include "game\spawner\NPCSpawner.h"
 
 namespace arcane {
 	
@@ -18,14 +19,15 @@ namespace arcane {
 		graphics::Camera *m_Camera;
 		graphics::Renderer *m_Renderer;
 		terrain::Terrain *m_Terrain;
-		terrain::VegetationGenerator *m_VegGenerator;
+		terrain::VegetationSpawner *m_VegSpawner;
+		game::NPCSpawner *m_NPCSpawner;
 		graphics::MeshFactory m_meshFactory;
 		graphics::Skybox *m_Skybox;
 
 		game::Player *m_Player;
 
-		// Some sort of list of entities (tied to models that are in the Renderer (Renderable3D) (should this name be changed to Renderer3D?))
-		//std::vector<Entity*> m_Entities;
+		// List of entities and renderables. Entities are updated and rendered, but renderables are just rendered
+		std::vector<game::Entity*> m_Entities;
 		std::vector<graphics::Renderable3D*> m_Renderables;
 
 		graphics::Shader m_TerrainShader, m_ModelShader, m_OutlineShader, m_ModelReflectionShader;
@@ -38,6 +40,7 @@ namespace arcane {
 		Scene3D(graphics::Window *window);
 		~Scene3D();
 		
+		void Add(game::Entity *entity);
 		void Add(graphics::Renderable3D *renderable);
 
 		void onUpdate(float deltaTime);
