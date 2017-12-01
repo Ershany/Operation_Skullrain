@@ -8,7 +8,7 @@ namespace arcane {
 
 	Scene3D::Scene3D(graphics::Window *window)
 		: m_TerrainShader("src/shaders/basic.vert", "src/shaders/terrain.frag"), m_ModelShader("src/shaders/basic.vert", "src/shaders/model.frag"), m_Window(window),
-		  m_OutlineShader("src/shaders/basic.vert", "src/shaders/basic.frag"), m_PlayerShader("src/shaders/basic.vert", "src/shaders/player.frag")
+		  m_OutlineShader("src/shaders/basic.vert", "src/shaders/basic.frag"), m_PlayerShader("src/shaders/basic.vert", "src/shaders/player.frag", "src/shaders/player.geom")
 	{
 		m_Camera = new graphics::Camera(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -90.0f, 0.0f);
 		m_Renderer = new graphics::Renderer(m_Camera);
