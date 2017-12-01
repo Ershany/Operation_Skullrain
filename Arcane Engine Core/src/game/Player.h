@@ -34,7 +34,10 @@ namespace arcane { namespace game {
 
 		glm::vec3 m_Velocity;
 		glm::vec3 m_Lift;
-		glm::vec3 m_RotorRotation, m_RotorRotationAccel;
+
+		const float m_MaxRotorRotationAmount;
+		const float m_MinRotorRotationAmount;
+		float m_CurrentRotorRotationAmount;
 
 		float m_Tilt, m_TiltAmount;
 		float m_MainTilt, m_SideTilt;

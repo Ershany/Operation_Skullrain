@@ -3,13 +3,14 @@
 namespace arcane { namespace game {
 
 	Player::Player(graphics::Renderable3D *renderable, graphics::Renderable3D *main_rotor, graphics::Renderable3D *back_rotor, terrain::Terrain *terrain) 
-			: Entity(renderable), m_Terrain(terrain) {
+			: Entity(renderable), m_Terrain(terrain), m_MaxRotorRotationAmount(0.4f), m_MinRotorRotationAmount(0.1f) {
 		m_Velocity = glm::vec3(0.0f, 0.0f, 0.0f);
 		m_TerminalVelocity = 10.0f;
 		m_TerminalVelocitySquared = m_TerminalVelocity * m_TerminalVelocity;
 		m_InitialFront = glm::vec3(0.0f, 0.0f, -1.0f);
 		m_InitialUp = glm::vec3(0.0f, 1.0f, 0.0f);
 		m_Orientation = glm::angleAxis(glm::radians(0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		m_CurrentRotorRotationAmount = m_MaxRotorRotationAmount;
 
 		m_NPCPickupCount = 0;
 		m_Tilt = 0.0f;
@@ -28,8 +29,8 @@ namespace arcane { namespace game {
 		m_Renderable->compositeRotation(glm::angleAxis(0.25f * deltaTime, glm::vec3(0.0f, 0.0f, 0.0f)));
 		m_Orientation = glm::angleAxis(0.25f * deltaTime, glm::vec3(0.0f, 0.0f, 0.0f)) * m_Orientation;
 
-		m_MainRotor->compositeRotation(glm::angleAxis(0.25f * deltaTime, glm::vec3(0.0f, 70.0f, 0.0f)));
-		m_BackRotor->compositeRotation(glm::angleAxis(0.25f * deltaTime, glm::vec3(-70.0f, 0.0f, 0.0f)));
+		m_MainRotor->compositeRotation(glm::angleAxis(m_CurrentRotorRotationAmount * deltaTime, glm::vec3(0.0f, 70.0f, 0.0f)));
+		m_BackRotor->compositeRotation(glm::angleAxis(m_CurrentRotorRotationAmount * deltaTime, glm::vec3(-70.0f, 0.0f, 0.0f)));
 
 		// Restrict vector size
 		if (glm::length2(m_Velocity) > m_TerminalVelocitySquared) {
@@ -45,9 +46,21 @@ namespace arcane { namespace game {
 			m_Renderable->setPosition(glm::vec3(m_Renderable->getPosition().x, terrainHeight - heliHeightCorrection, m_Renderable->getPosition().z));
 			m_Velocity.x = 0.0f; m_Velocity.y = 0.0f; m_Velocity.z = 0.0f;
 			m_IsGrounded = true;
+
+			// Rotar rotation decrease
+			m_CurrentRotorRotationAmount -= 0.1f * deltaTime;
+			if (m_CurrentRotorRotationAmount < m_MinRotorRotationAmount) {
+				m_CurrentRotorRotationAmount = m_MinRotorRotationAmount;
+			}
 		}
 		else {
 			m_IsGrounded = false;
+
+			// Rotar rotation increase
+			m_CurrentRotorRotationAmount += 0.2f * deltaTime;
+			if (m_CurrentRotorRotationAmount > m_MaxRotorRotationAmount) {
+				m_CurrentRotorRotationAmount = m_MaxRotorRotationAmount;
+			}
 		}
 	}
 
