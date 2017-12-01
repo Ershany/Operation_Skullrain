@@ -20,21 +20,20 @@ vec3 CalculateTriangleNormal();
 
 void main() {
 	vec3 triangleNormal = CalculateTriangleNormal();
-	float current = timer - 4.0 * floor(timer / 4.0);
 
-	gl_Position = projection * view * (gl_in[0].gl_Position + vec4((current * 100.0f) * (triangleNormal + vec3(0.0, -0.5, 0.0) * current), 0.0));
+	gl_Position = projection * view * (gl_in[0].gl_Position + vec4((timer * 100.0f) * (triangleNormal + vec3(0.0, -0.5, 0.0) * timer), 0.0));
 	aNormal = Normal[0];
 	aFragPos = FragPos[0];
 	aTexCoords = TexCoords[0];
 	EmitVertex();
 
-	gl_Position = projection * view * (gl_in[1].gl_Position + vec4((current * 100.0f) * (triangleNormal + vec3(0.0, -0.5, 0.0) * current), 0.0));
+	gl_Position = projection * view * (gl_in[1].gl_Position + vec4((timer * 100.0f) * (triangleNormal + vec3(0.0, -0.5, 0.0) * timer), 0.0));
 	aNormal = Normal[1];
 	aFragPos = FragPos[1];
 	aTexCoords = TexCoords[1];
 	EmitVertex();
 
-	gl_Position = projection * view * (gl_in[2].gl_Position + vec4((current * 100.0f) * (triangleNormal + vec3(0.0, -0.5, 0.0) * current), 0.0));
+	gl_Position = projection * view * (gl_in[2].gl_Position + vec4((timer * 100.0f) * (triangleNormal + vec3(0.0, -0.5, 0.0) * timer), 0.0));
 	aNormal = Normal[2];
 	aFragPos = FragPos[2];
 	aTexCoords = TexCoords[2];
