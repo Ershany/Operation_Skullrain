@@ -14,6 +14,7 @@ namespace arcane { namespace game {
 
 		m_NPCPickupCount = 0;
 		m_Tilt = 0.0f;
+		m_IsDead = false;
 
 		m_MainRotor = main_rotor;
 		m_BackRotor = back_rotor;
@@ -103,6 +104,12 @@ namespace arcane { namespace game {
 
 		m_MainTilt += (0.5f * m_MainTilt);
 		m_SideTilt += (0.5f * m_SideTilt);
+
+
+		// Debug controls
+		if (keycode == GLFW_KEY_K) {
+			m_IsDead = true;
+		}
 	}
 
 } }
