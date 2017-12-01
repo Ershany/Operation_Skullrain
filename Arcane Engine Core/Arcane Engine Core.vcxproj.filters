@@ -215,6 +215,7 @@
     <None Include="res\3D_Models\Overwatch\Reaper\Reaper.obj.mtl" />
     <None Include="src\shaders\player.frag" />
     <None Include="src\shaders\player.geom" />
+    <None Include="src\shaders\player.vert" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\container.jpg">
