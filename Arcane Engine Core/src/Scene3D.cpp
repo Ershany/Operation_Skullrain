@@ -70,8 +70,8 @@ namespace arcane {
 		m_TerrainShader.setUniform3f("spotLight.diffuse", glm::vec3(1.0f, 1.0f, 1.0f));
 		m_TerrainShader.setUniform3f("spotLight.specular", glm::vec3(1.0f, 1.0f, 1.0f));
 		m_TerrainShader.setUniform1f("spotLight.constant", 1.0f);
-		m_TerrainShader.setUniform1f("spotLight.linear", 0.022);
-		m_TerrainShader.setUniform1f("spotLight.quadratic", 0.0019);
+		m_TerrainShader.setUniform1f("spotLight.linear", 0.0014);
+		m_TerrainShader.setUniform1f("spotLight.quadratic", 0.000007);
 		m_TerrainShader.setUniform1f("spotLight.cutOff", glm::cos(glm::radians(12.5f)));
 		m_TerrainShader.setUniform1f("spotLight.outerCutOff", glm::cos(glm::radians(15.0f)));
 		m_TerrainShader.setUniform3f("pointLight.ambient", glm::vec3(0.05f, 0.05f, 0.05f));
@@ -92,8 +92,8 @@ namespace arcane {
 		m_ModelShader.setUniform3f("spotLight.diffuse", glm::vec3(1.0f, 1.0f, 1.0f));
 		m_ModelShader.setUniform3f("spotLight.specular", glm::vec3(1.0f, 1.0f, 1.0f));
 		m_ModelShader.setUniform1f("spotLight.constant", 1.0f);
-		m_ModelShader.setUniform1f("spotLight.linear", 0.022);
-		m_ModelShader.setUniform1f("spotLight.quadratic", 0.0019);
+		m_ModelShader.setUniform1f("spotLight.linear", 0.0014);
+		m_ModelShader.setUniform1f("spotLight.quadratic", 0.000007);
 		m_ModelShader.setUniform1f("spotLight.cutOff", glm::cos(glm::radians(12.5f)));
 		m_ModelShader.setUniform1f("spotLight.outerCutOff", glm::cos(glm::radians(15.0f)));
 		m_ModelShader.setUniform3f("pointLights[0].ambient", glm::vec3(0.05f, 0.05f, 0.05f));
@@ -161,8 +161,8 @@ namespace arcane {
 		// Models
 		m_ModelShader.enable();
 		m_ModelShader.setUniform3f("pointLights[0].position", glm::vec3(200.0f, 215.0f, 100.0f));
-		m_ModelShader.setUniform3f("spotLight.position", m_Camera->getPosition());
-		m_ModelShader.setUniform3f("spotLight.direction", m_Camera->getFront());
+		m_ModelShader.setUniform3f("spotLight.position", m_Player->getPosition() + (m_Player->getFront() * 15.0f));
+		m_ModelShader.setUniform3f("spotLight.direction", -m_Player->getUp() + m_Player->getFront());
 		m_ModelShader.setUniform3f("viewPos", m_Camera->getPosition());
 		m_ModelShader.setUniformMat4("view", m_Camera->getViewMatrix());
 		m_ModelShader.setUniformMat4("projection", glm::perspective(glm::radians(m_Camera->getFOV()), (float)m_Window->getWidth() / (float)m_Window->getHeight(), 0.1f, 3000.0f));
@@ -198,8 +198,8 @@ namespace arcane {
 		glEnable(GL_CULL_FACE);
 		m_TerrainShader.enable();
 		m_TerrainShader.setUniform3f("pointLight.position", glm::vec3(200.0f, 200.0f, 100.0f));
-		m_TerrainShader.setUniform3f("spotLight.position", m_Camera->getPosition());
-		m_TerrainShader.setUniform3f("spotLight.direction", m_Camera->getFront());
+		m_TerrainShader.setUniform3f("spotLight.position", m_Player->getPosition() + (m_Player->getFront() * 15.0f));
+		m_TerrainShader.setUniform3f("spotLight.direction", -m_Player->getUp() + m_Player->getFront());
 		m_TerrainShader.setUniform3f("viewPos", m_Camera->getPosition());
 		glm::mat4 modelMatrix(1);
 		modelMatrix = glm::translate(modelMatrix, m_Terrain->getPosition());

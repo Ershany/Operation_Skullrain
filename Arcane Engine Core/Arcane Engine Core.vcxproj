@@ -155,6 +155,7 @@
     <None Include="src\shaders\model.frag" />
     <None Include="src\shaders\modelReflection.frag" />
     <None Include="src\shaders\modelRefraction.frag" />
+    <None Include="src\shaders\player.frag" />
     <None Include="src\shaders\pointlight.frag" />
     <None Include="src\shaders\skybox.frag" />
     <None Include="src\shaders\skybox.vert" />

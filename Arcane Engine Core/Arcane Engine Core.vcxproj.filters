@@ -213,6 +213,7 @@
     <None Include="res\3D_Models\Overwatch\McCree\McCree.obj.mtl" />
     <None Include="res\3D_Models\Overwatch\Reaper\Reaper.FBX" />
     <None Include="res\3D_Models\Overwatch\Reaper\Reaper.obj.mtl" />
+    <None Include="src\shaders\player.frag" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\container.jpg">
