@@ -272,6 +272,7 @@ namespace arcane {
 			glActiveTexture(GL_TEXTURE4);
 			shaderToUse->setUniform1i("material.skyboxCubemap", 4);
 			glBindTexture(GL_TEXTURE_CUBE_MAP, m_Skybox->getSkyboxCubemap());
+			shaderToUse->setUniform1f("timer", glfwGetTime());
 		}
 		m_Player->getRenderable()->draw(*shaderToUse);
 	}
