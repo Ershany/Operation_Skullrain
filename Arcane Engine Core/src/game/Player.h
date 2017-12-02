@@ -33,6 +33,8 @@ namespace arcane { namespace game {
 		inline graphics::Renderable3D* getMainRotor() { return m_MainRotor; }
 		inline graphics::Renderable3D* getBackRotor() { return m_BackRotor; }
 	private:
+		void killPlayer();
+	private:
 		glm::quat m_Orientation;
 
 		glm::vec3 m_Velocity;

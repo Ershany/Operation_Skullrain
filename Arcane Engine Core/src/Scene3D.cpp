@@ -186,6 +186,9 @@ namespace arcane {
 		glm::vec3 spotLightDir = -m_Player->getUp() + m_Player->getFront();
 		glm::mat4 viewMtrx = m_Camera->getViewMatrix();
 		glm::mat4 projectionMtrx = glm::perspective(glm::radians(m_Camera->getFOV()), (float)m_Window->getWidth() / (float)m_Window->getHeight(), 0.1f, 3000.0f);
+		if (m_Player->isDead()) { // Hide the spotlight when the player dies
+			spotLightPos = glm::vec3(0.0f, 10000.0f, 0.0f);
+		}
 
 		// Setup
 		m_OutlineShader.enable();

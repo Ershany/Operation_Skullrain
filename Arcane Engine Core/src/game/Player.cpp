@@ -25,6 +25,11 @@ namespace arcane { namespace game {
 	}
 
 	void Player::update(float deltaTime) {
+		// Check if the player is dead
+		if (m_IsDead) {
+			m_Velocity.x = 0.0f; m_Velocity.y = 0.0f; m_Velocity.z = 0.0f;
+		}
+
 		m_Renderable->addPosition(m_Velocity);
 		//m_Renderable->compositeRotation(glm::angleAxis(0.25f * deltaTime, glm::vec3(3.0f - m_MainTilt, 0.0f, 3.0f - m_SideTilt)));
 		m_Renderable->compositeRotation(glm::angleAxis(0.25f * deltaTime, glm::vec3(0.0f, 0.0f, 0.0f)));
@@ -76,6 +81,11 @@ namespace arcane { namespace game {
 		std::cout << "Current NPC Pickup Count: " << m_NPCPickupCount << std::endl;
 	}
 
+	void Player::killPlayer() {
+		m_IsDead = true;
+		m_Velocity.x = 0.0f; m_Velocity.y = 0.0f; m_Velocity.z = 0.0f;
+	}
+
 	void Player::buttonPressed(unsigned int keycode, float deltaTime) {
 		if (keycode == GLFW_KEY_SPACE) {
 			m_Velocity += (m_Orientation * m_InitialUp) * deltaTime;
@@ -108,7 +118,7 @@ namespace arcane { namespace game {
 
 		// Debug controls
 		if (keycode == GLFW_KEY_K) {
-			m_IsDead = true;
+			killPlayer();
 		}
 	}
 
