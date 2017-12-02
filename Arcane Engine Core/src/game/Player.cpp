@@ -13,6 +13,7 @@ namespace arcane { namespace game {
 		m_CurrentRotorRotationAmount = m_MaxRotorRotationAmount;
 
 		m_NPCPickupCount = 0;
+		m_Health, m_MaxHealth = 50.0f;
 		m_Tilt = 0.0f;
 		m_IsDead = false;
 

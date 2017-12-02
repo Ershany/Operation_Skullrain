@@ -54,6 +54,7 @@ namespace arcane { namespace game {
 		terrain::Terrain *m_Terrain;
 		bool m_IsGrounded, m_IsDead;
 		int m_NPCPickupCount;
+		float m_Health, m_MaxHealth;
 
 		graphics::Renderable3D *m_MainRotor, *m_BackRotor;
 	};

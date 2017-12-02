@@ -8,15 +8,20 @@ namespace arcane {
 
 	Scene3D::Scene3D(graphics::Window *window)
 		: m_TerrainShader("src/shaders/basic.vert", "src/shaders/terrain.frag"), m_ModelShader("src/shaders/basic.vert", "src/shaders/model.frag"), m_Window(window),
-		  m_OutlineShader("src/shaders/basic.vert", "src/shaders/basic.frag"), m_PlayerShader("src/shaders/player.vert", "src/shaders/player.frag", "src/shaders/player.geom")
+		m_OutlineShader("src/shaders/basic.vert", "src/shaders/basic.frag"), m_PlayerShader("src/shaders/player.vert", "src/shaders/player.frag", "src/shaders/player.geom")
 	{
+		m_UI = new ui::Canvas();
+
 		m_Camera = new graphics::Camera(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -90.0f, 0.0f);
 		m_Renderer = new graphics::Renderer(m_Camera);
 		m_Terrain = new terrain::Terrain(glm::vec3(-1280.0f, -20.0f, -1280.0f)); // Make it so the center of the terrain is on the origin
 
 		//Low poly heli
 		//graphics::Renderable3D *player_helicopter_body = new graphics::Renderable3D(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(4.0f, 4.0f, 4.0f), glm::vec3(1.0f, 0.0f, 0.0f), glm::radians(0.0f), new arcane::graphics::Model("res/3D_Models/Helicopter/body_low_poly.obj"), nullptr, false);
+
+		//Regular poly heli (loads slower)
 		graphics::Renderable3D *player_helicopter_body = new graphics::Renderable3D(glm::vec3(90.0f, -10.0f, 90.0f), glm::vec3(4.0f, 4.0f, 4.0f), glm::vec3(1.0f, 0.0f, 0.0f), glm::radians(0.0f), new arcane::graphics::Model("res/3D_Models/Helicopter/body.obj"), nullptr, false, true);
+
 		m_Player = new game::Player(player_helicopter_body,
 			new graphics::Renderable3D(glm::vec3(0.0f, 6.5f, 0.0f), glm::vec3(4.0f, 4.0f, 4.0f), glm::vec3(1.0f, 0.0f, 0.0f), glm::radians(0.0f), new arcane::graphics::Model("res/3D_Models/Helicopter/main_rotor.obj"), player_helicopter_body, false, false),
 			new graphics::Renderable3D(glm::vec3(0.0f, 9.8f, 42.0f), glm::vec3(4.0f, 4.0f, 4.0f), glm::vec3(1.0f, 0.0f, 0.0f), glm::radians(0.0f), new arcane::graphics::Model("res/3D_Models/Helicopter/back_rotor.obj"), player_helicopter_body, false, false), m_Terrain);
@@ -40,6 +45,7 @@ namespace arcane {
 		delete m_NPCSpawner;
 		delete m_Player;
 		delete m_Skybox;
+		delete m_UI;
 	}
 
 	void Scene3D::init() {
@@ -177,7 +183,7 @@ namespace arcane {
 
 		m_Camera->processMouseScroll(m_Window->getScrollY() * 6);
 		m_Window->resetScroll();
-		
+
 		m_Camera->updateCamera(m_Player);
 	}
 
@@ -223,7 +229,7 @@ namespace arcane {
 				m_Renderer->submitOpaque(curr);
 			}
 			(*iter)->onRender();
-			
+
 			iter++;
 		}
 
@@ -295,6 +301,8 @@ namespace arcane {
 			shaderToUse->setUniform1f("timer", animTimer);
 		}
 		m_Player->getRenderable()->draw(*shaderToUse);
+
+
 	}
 
 	void Scene3D::Add(game::Entity *entity) {
