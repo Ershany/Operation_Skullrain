@@ -28,9 +28,12 @@ namespace arcane { namespace game {
 		inline const glm::quat& getOrientation() { return m_Orientation; }
 		inline const glm::vec3& getVelocity() { return m_Velocity; }
 		inline bool isGrounded() { return m_IsGrounded; }
+		inline bool isDead() { return m_IsDead; }
 
 		inline graphics::Renderable3D* getMainRotor() { return m_MainRotor; }
 		inline graphics::Renderable3D* getBackRotor() { return m_BackRotor; }
+	private:
+		void killPlayer();
 	private:
 		glm::quat m_Orientation;
 
@@ -49,7 +52,7 @@ namespace arcane { namespace game {
 		glm::vec3 m_InitialFront, m_InitialUp;
 
 		terrain::Terrain *m_Terrain;
-		bool m_IsGrounded;
+		bool m_IsGrounded, m_IsDead;
 		int m_NPCPickupCount;
 
 		graphics::Renderable3D *m_MainRotor, *m_BackRotor;

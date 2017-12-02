@@ -8,7 +8,7 @@ namespace arcane {
 
 	Scene3D::Scene3D(graphics::Window *window)
 		: m_TerrainShader("src/shaders/basic.vert", "src/shaders/terrain.frag"), m_ModelShader("src/shaders/basic.vert", "src/shaders/model.frag"), m_Window(window),
-		  m_OutlineShader("src/shaders/basic.vert", "src/shaders/basic.frag"), m_PlayerShader("src/shaders/basic.vert", "src/shaders/player.frag")
+		  m_OutlineShader("src/shaders/basic.vert", "src/shaders/basic.frag"), m_PlayerShader("src/shaders/player.vert", "src/shaders/player.frag", "src/shaders/player.geom")
 	{
 		m_Camera = new graphics::Camera(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -90.0f, 0.0f);
 		m_Renderer = new graphics::Renderer(m_Camera);
@@ -26,6 +26,8 @@ namespace arcane {
 		firstMove = true;
 		lastX = m_Window->getMouseX();
 		lastY = m_Window->getMouseY();
+
+		m_PlayerRemoved = false;
 
 		init();
 	}
@@ -154,6 +156,12 @@ namespace arcane {
 
 		// Player update
 		m_Player->update(deltaTime);
+		if (m_Player->isDead() && !m_PlayerRemoved) {
+			Remove(m_Player->getMainRotor());
+			Remove(m_Player->getBackRotor());
+			m_DeathAnimTime.reset();
+			m_PlayerRemoved = true;
+		}
 
 		// Check to see if the mouse hasn't been moved yet
 		if (firstMove && (lastX != m_Window->getMouseX() || lastY != m_Window->getMouseY())) {
@@ -174,28 +182,36 @@ namespace arcane {
 	}
 
 	void Scene3D::onRender() {
+		glm::vec3 spotLightPos = m_Player->getPosition() + (m_Player->getFront() * 15.0f);
+		glm::vec3 spotLightDir = -m_Player->getUp() + m_Player->getFront();
+		glm::mat4 viewMtrx = m_Camera->getViewMatrix();
+		glm::mat4 projectionMtrx = glm::perspective(glm::radians(m_Camera->getFOV()), (float)m_Window->getWidth() / (float)m_Window->getHeight(), 0.1f, 3000.0f);
+		if (m_Player->isDead()) { // Hide the spotlight when the player dies
+			spotLightPos = glm::vec3(0.0f, 10000.0f, 0.0f);
+		}
+
 		// Setup
 		m_OutlineShader.enable();
-		m_OutlineShader.setUniformMat4("view", m_Camera->getViewMatrix());
-		m_OutlineShader.setUniformMat4("projection", glm::perspective(glm::radians(m_Camera->getFOV()), (float)m_Window->getWidth() / (float)m_Window->getHeight(), 0.1f, 3000.0f));
+		m_OutlineShader.setUniformMat4("view", viewMtrx);
+		m_OutlineShader.setUniformMat4("projection", projectionMtrx);
 
 		// Models
 		m_PlayerShader.enable();
 		m_PlayerShader.setUniform3f("pointLights[0].position", glm::vec3(200.0f, 215.0f, 100.0f));
-		m_PlayerShader.setUniform3f("spotLight.position", m_Player->getPosition() + (m_Player->getFront() * 15.0f));
-		m_PlayerShader.setUniform3f("spotLight.direction", -m_Player->getUp() + m_Player->getFront());
+		m_PlayerShader.setUniform3f("spotLight.position", spotLightPos);
+		m_PlayerShader.setUniform3f("spotLight.direction", spotLightDir);
 		m_PlayerShader.setUniform3f("viewPos", m_Camera->getPosition());
-		m_PlayerShader.setUniformMat4("view", m_Camera->getViewMatrix());
-		m_PlayerShader.setUniformMat4("projection", glm::perspective(glm::radians(m_Camera->getFOV()), (float)m_Window->getWidth() / (float)m_Window->getHeight(), 0.1f, 3000.0f));
+		m_PlayerShader.setUniformMat4("view", viewMtrx);
+		m_PlayerShader.setUniformMat4("projection", projectionMtrx);
 
 		// Models
 		m_ModelShader.enable();
 		m_ModelShader.setUniform3f("pointLights[0].position", glm::vec3(200.0f, 215.0f, 100.0f));
-		m_ModelShader.setUniform3f("spotLight.position", m_Player->getPosition() + (m_Player->getFront() * 15.0f));
-		m_ModelShader.setUniform3f("spotLight.direction", -m_Player->getUp() + m_Player->getFront());
+		m_ModelShader.setUniform3f("spotLight.position", spotLightPos);
+		m_ModelShader.setUniform3f("spotLight.direction", spotLightDir);
 		m_ModelShader.setUniform3f("viewPos", m_Camera->getPosition());
-		m_ModelShader.setUniformMat4("view", m_Camera->getViewMatrix());
-		m_ModelShader.setUniformMat4("projection", glm::perspective(glm::radians(m_Camera->getFOV()), (float)m_Window->getWidth() / (float)m_Window->getHeight(), 0.1f, 3000.0f));
+		m_ModelShader.setUniformMat4("view", viewMtrx);
+		m_ModelShader.setUniformMat4("projection", projectionMtrx);
 
 		auto iter = m_Entities.begin();
 		while (iter != m_Entities.end()) {
@@ -229,14 +245,14 @@ namespace arcane {
 		glEnable(GL_CULL_FACE);
 		m_TerrainShader.enable();
 		m_TerrainShader.setUniform3f("pointLight.position", glm::vec3(200.0f, 200.0f, 100.0f));
-		m_TerrainShader.setUniform3f("spotLight.position", m_Player->getPosition() + (m_Player->getFront() * 15.0f));
-		m_TerrainShader.setUniform3f("spotLight.direction", -m_Player->getUp() + m_Player->getFront());
+		m_TerrainShader.setUniform3f("spotLight.position", spotLightPos);
+		m_TerrainShader.setUniform3f("spotLight.direction", spotLightDir);
 		m_TerrainShader.setUniform3f("viewPos", m_Camera->getPosition());
 		glm::mat4 modelMatrix(1);
 		modelMatrix = glm::translate(modelMatrix, m_Terrain->getPosition());
 		m_TerrainShader.setUniformMat4("model", modelMatrix);
-		m_TerrainShader.setUniformMat4("view", m_Camera->getViewMatrix());
-		m_TerrainShader.setUniformMat4("projection", glm::perspective(glm::radians(m_Camera->getFOV()), (float)m_Window->getWidth() / (float)m_Window->getHeight(), 0.1f, 3000.0f));
+		m_TerrainShader.setUniformMat4("view", viewMtrx);
+		m_TerrainShader.setUniformMat4("projection", projectionMtrx);
 		m_Terrain->Draw(m_TerrainShader);
 
 		m_ModelShader.enable();
@@ -272,6 +288,11 @@ namespace arcane {
 			glActiveTexture(GL_TEXTURE4);
 			shaderToUse->setUniform1i("material.skyboxCubemap", 4);
 			glBindTexture(GL_TEXTURE_CUBE_MAP, m_Skybox->getSkyboxCubemap());
+			float animTimer = 0.0f;
+			if (m_Player->isDead()) {
+				animTimer = m_DeathAnimTime.elapsed();
+			}
+			shaderToUse->setUniform1f("timer", animTimer);
 		}
 		m_Player->getRenderable()->draw(*shaderToUse);
 	}
@@ -282,6 +303,28 @@ namespace arcane {
 
 	void Scene3D::Add(graphics::Renderable3D *renderable) {
 		m_Renderables.push_back(renderable);
+	}
+
+	void Scene3D::Remove(game::Entity *entity) {
+		auto iter = m_Entities.begin();
+		while (iter != m_Entities.end()) {
+			if ((*iter) == entity) {
+				m_Entities.erase(iter);
+				break;
+			}
+			iter++;
+		}
+	}
+
+	void Scene3D::Remove(graphics::Renderable3D *renderable) {
+		auto iter = m_Renderables.begin();
+		while (iter != m_Renderables.end()) {
+			if ((*iter) == renderable) {
+				m_Renderables.erase(iter);
+				break;
+			}
+			iter++;
+		}
 	}
 
 	void Scene3D::buttonPressed(unsigned int keycode, float deltaTime) {

@@ -28,6 +28,9 @@ namespace arcane {	namespace graphics {
 	}
 
 	void Camera::updateCamera(game::Player *player) {
+		if (player->isDead()) {
+			m_ThirdPerson = true;
+		}
 		if (m_ThirdPerson) {
 			m_Pitch = 0.0f;
 			m_Position = player->getPosition() - (player->getFront() * 54.0f) + (m_WorldUp * 34.0f);
