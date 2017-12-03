@@ -16,6 +16,8 @@ namespace arcane {
 
 			Rect();
 			Rect(int x, int y, int width, int height);
+
+			void draw();
 		};
 
 		struct HealthBar : public Rect {
