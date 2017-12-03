@@ -1,18 +1,22 @@
 #pragma once
 
-#include "graphics\renderer\Renderable3D.h"
-#include "graphics\camera\Camera.h"
-#include "graphics\renderer\Renderer.h"
-#include "terrain\Terrain.h"
-#include "graphics\Window.h"
-#include "graphics\MeshFactory.h"
-#include "graphics\Skybox.h"
-#include "game\Player.h"
-#include "terrain\VegetationSpawner.h"
-#include "game\spawner\NPCSpawner.h"
-#include "utils\Timer.h"
-#include "ui\Primitive.h"
-#include "ui\Canvas.h"
+//Dependancies
+#include "Dependancies.h"
+
+//Operation Skullrain Headers
+#include "graphics/renderer/Renderable3D.h"
+#include "graphics/camera/Camera.h"
+#include "graphics/renderer/Renderer.h"
+#include "terrain/Terrain.h"
+#include "graphics/Window.h"
+#include "graphics/MeshFactory.h"
+#include "graphics/Skybox.h"
+#include "game/Player.h"
+#include "terrain/VegetationSpawner.h"
+#include "game/spawner/NPCSpawner.h"
+#include "utils/Timer.h"
+#include "ui/Primitive.h"
+#include "ui/Canvas.h"
 
 namespace arcane {
 	

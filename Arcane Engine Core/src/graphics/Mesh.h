@@ -1,10 +1,13 @@
 #pragma once
 
-#include <glm/glm.hpp>
-#include <assimp\Importer.hpp>
+//Dependancies
+#include "../Dependancies.h"
+
+//STL Includes
 #include <string>
 #include <vector>
 
+//Operation Skullrain Headers
 #include "Shader.h"
 
 namespace arcane { namespace graphics {

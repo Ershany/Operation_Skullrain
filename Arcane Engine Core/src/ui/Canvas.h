@@ -1,10 +1,15 @@
 #pragma once
 
-#include <glm/glm.hpp>
-#include <assimp\Importer.hpp>
+//Dependancies
+#include "../Dependancies.h"
+
+//STL Includes
 #include <string>
 #include <vector>
+
+//Operation Skullrain Headers
 #include "Primitive.h"
+
 
 namespace arcane {
 	namespace ui {

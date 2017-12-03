@@ -1,9 +1,13 @@
 #pragma once
 
-#include <GL\glew.h>
-#include <GLFW\glfw3.h>
-#include "Buffer.h"
+//Dependancies
+#include "../../Dependancies.h"
+
+//STL Includes
 #include <vector>
+
+//Operation Skullrain Headers
+#include "Buffer.h"
 
 namespace arcane { namespace opengl {
 

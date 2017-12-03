@@ -1,11 +1,9 @@
 #pragma once
 
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <assimp/Importer.hpp>
-#include <assimp/scene.h>
-#include <assimp/postprocess.h>
+//Dependancies
+#include "../Dependancies.h"
 
+//Operation Skullrain Headers
 #include "Shader.h"
 #include "Mesh.h"
 

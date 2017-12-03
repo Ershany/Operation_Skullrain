@@ -1,7 +1,7 @@
 #pragma once
 
-#include <GLFW\glfw3.h>
-#include <gl\GL.h>
+//Dependancies
+#include "../Dependancies.h"
 
 namespace arcane {
 

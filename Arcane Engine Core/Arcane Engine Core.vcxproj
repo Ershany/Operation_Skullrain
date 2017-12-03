@@ -111,6 +111,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Defs.h" />
+    <ClInclude Include="src\Dependancies.h" />
     <ClInclude Include="src\game\Entity.h" />
     <ClInclude Include="src\game\NPC.h" />
     <ClInclude Include="src\game\Player.h" />

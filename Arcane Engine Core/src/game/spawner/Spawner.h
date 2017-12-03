@@ -1,9 +1,14 @@
 #pragma once
 
+//Dependancies
+#include "../../Dependancies.h"
+
+//STL Includes
+#include <vector>
+
+//Operation Skullrain Headers
 #include "../../terrain/Terrain.h"
 #include "../Entity.h"
-
-#include <vector>
 
 namespace arcane { namespace game {
 

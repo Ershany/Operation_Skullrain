@@ -1,7 +1,10 @@
 #pragma once
 
+//Dependancies
+#include "../../Dependancies.h"
+
+//Operation Skullrain Headers
 #include "../Model.h"
-#include <glm\glm.hpp>
 
 namespace arcane { namespace graphics {
 

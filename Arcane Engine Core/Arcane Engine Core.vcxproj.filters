@@ -200,6 +200,9 @@
     <ClInclude Include="src\ui\Primitive.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Dependancies.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="src\shaders\basic.vert" />

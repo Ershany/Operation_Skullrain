@@ -1,5 +1,9 @@
 #pragma once
 
+//Dependancies
+#include "../Dependancies.h"
+
+//Operation Skullrain Headers
 #include "Entity.h"
 
 namespace arcane { namespace game {
