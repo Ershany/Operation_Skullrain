@@ -10,7 +10,9 @@
 namespace arcane {
 	namespace ui {
 		struct Primative {
+			Primative();
 
+			virtual void draw();
 		};
 
 		struct Rect: public Primative {

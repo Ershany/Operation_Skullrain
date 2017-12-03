@@ -14,10 +14,11 @@
 namespace arcane {
 	namespace ui {
 		struct Canvas {
-			std::vector<ui::Primative> primitives;
+			std::vector<ui::Primative*> primitives;
 			Primative *health_bar;
 
 			Canvas();
+			void draw();
 		};
 
 	}
