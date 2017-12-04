@@ -1,6 +1,9 @@
 #pragma once
 
 #include "../Entity.h"
+#include "Projectile.h"
+
+#include <vector>
 
 namespace arcane {
 	namespace game {
@@ -12,8 +15,11 @@ namespace arcane {
 			public:
 				Tower(graphics::Renderable3D *renderable);
 
-				virtual void update(float deltaTime);
-				virtual void onRender();
+				void update(float deltaTime);
+				void onRender();
+				void shoot();
+
+				std::vector<Projectile> cannons;
 			};
 
 		}
