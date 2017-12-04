@@ -59,7 +59,9 @@ namespace arcane { namespace ui {
 	}
 
 	void HealthBar::draw(graphics::Shader &shader) {
-		shader.setUniformMat4("model", glm::scale(glm::mat4(1.0f), glm::vec3(m_Player->getHealth() / m_Player->getMaxHealth(), 1.0f, 1.0f)));
+		glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(m_Player->getHealth() / m_Player->getMaxHealth(), 1.0f, 1.0f));
+		glm::mat4 translate = glm::translate(glm::mat4(1.0f), glm::vec3(-1.0f * (1 - m_Player->getHealth() / m_Player->getMaxHealth()), 0.0f, 0.0f));
+		shader.setUniformMat4("model", translate * scale);
 
 		Rect::draw(shader);
 	}

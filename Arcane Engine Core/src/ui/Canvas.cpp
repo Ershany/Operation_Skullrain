@@ -17,6 +17,7 @@ namespace arcane { namespace ui {
 
 		auto iter = m_Primitives.begin();
 		while (iter != m_Primitives.end()) {
+			m_UIShader.setUniformMat4("model", glm::mat4(1.0f));
 			(*iter)->draw(m_UIShader);
 			iter++;
 		}
