@@ -84,8 +84,8 @@ namespace arcane {
 		m_TerrainShader.enable();
 		m_TerrainShader.setUniform1f("material.shininess", 128.0f);
 		m_TerrainShader.setUniform3f("dirLight.direction", glm::vec3(0.0f, -1.0f, 0.0f));
-		m_TerrainShader.setUniform3f("dirLight.ambient", glm::vec3(0.1f, 0.1f, 0.1f));
-		m_TerrainShader.setUniform3f("dirLight.diffuse", glm::vec3(0.4f, 0.4f, 0.4f));
+		m_TerrainShader.setUniform3f("dirLight.ambient", glm::vec3(0.2f, 0.05f, 0.05f));
+		m_TerrainShader.setUniform3f("dirLight.diffuse", glm::vec3(0.45f, 0.35f, 0.35f));
 		m_TerrainShader.setUniform3f("dirLight.specular", glm::vec3(0.1f, 0.1f, 0.1f));
 		m_TerrainShader.setUniform3f("spotLight.ambient", glm::vec3(0.2f, 0.2f, 0.2f));
 		m_TerrainShader.setUniform3f("spotLight.diffuse", glm::vec3(1.0f, 1.0f, 1.0f));
@@ -106,8 +106,8 @@ namespace arcane {
 		m_ModelShader.enable();
 		m_ModelShader.setUniform1f("material.shininess", 128.0f);
 		m_ModelShader.setUniform3f("dirLight.direction", glm::vec3(0.0f, -1.0f, 0.0f));
-		m_ModelShader.setUniform3f("dirLight.ambient", glm::vec3(0.1f, 0.1f, 0.1f));
-		m_ModelShader.setUniform3f("dirLight.diffuse", glm::vec3(0.4f, 0.4f, 0.4f));
+		m_ModelShader.setUniform3f("dirLight.ambient", glm::vec3(0.2f, 0.05f, 0.05f));
+		m_ModelShader.setUniform3f("dirLight.diffuse", glm::vec3(0.45f, 0.35f, 0.35f));
 		m_ModelShader.setUniform3f("dirLight.specular", glm::vec3(0.1f, 0.1f, 0.1f));
 		m_ModelShader.setUniform3f("spotLight.ambient", glm::vec3(0.2f, 0.2f, 0.2f));
 		m_ModelShader.setUniform3f("spotLight.diffuse", glm::vec3(1.0f, 1.0f, 1.0f));
@@ -127,8 +127,8 @@ namespace arcane {
 		m_PlayerShader.enable();
 		m_PlayerShader.setUniform1f("material.shininess", 128.0f);
 		m_PlayerShader.setUniform3f("dirLight.direction", glm::vec3(0.0f, -1.0f, 0.0f));
-		m_PlayerShader.setUniform3f("dirLight.ambient", glm::vec3(0.1f, 0.1f, 0.1f));
-		m_PlayerShader.setUniform3f("dirLight.diffuse", glm::vec3(0.4f, 0.4f, 0.4f));
+		m_PlayerShader.setUniform3f("dirLight.ambient", glm::vec3(0.2f, 0.05f, 0.05f));
+		m_PlayerShader.setUniform3f("dirLight.diffuse", glm::vec3(0.45f, 0.35f, 0.35f));
 		m_PlayerShader.setUniform3f("dirLight.specular", glm::vec3(0.1f, 0.1f, 0.1f));
 		m_PlayerShader.setUniform3f("spotLight.ambient", glm::vec3(0.2f, 0.2f, 0.2f));
 		m_PlayerShader.setUniform3f("spotLight.diffuse", glm::vec3(1.0f, 1.0f, 1.0f));

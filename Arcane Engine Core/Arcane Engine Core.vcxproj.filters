@@ -233,6 +233,9 @@
     <None Include="src\shaders\player.vert" />
     <None Include="src\shaders\UI.vert" />
     <None Include="src\shaders\UI.frag" />
+    <None Include="src\shaders\Particle.vert" />
+    <None Include="src\shaders\Particle.frag" />
+    <None Include="src\shaders\Particle.geom" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\container.jpg">
