@@ -51,6 +51,7 @@ namespace arcane {
 		graphics::MeshFactory m_meshFactory;
 		graphics::Skybox *m_Skybox;
 		ui::Canvas *m_UI;
+		arcane::graphics::Model *m_CannonBall;
 
 		arcane::Timer m_DeathAnimTime;
 		bool m_PlayerRemoved;

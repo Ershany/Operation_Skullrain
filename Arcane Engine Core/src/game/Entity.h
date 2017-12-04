@@ -10,6 +10,7 @@ namespace arcane { namespace game {
 
 	class Entity {
 	public:
+		Entity();
 		Entity(graphics::Renderable3D *renderable);
 		virtual ~Entity();
 

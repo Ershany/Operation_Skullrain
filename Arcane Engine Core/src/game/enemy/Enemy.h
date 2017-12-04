@@ -26,7 +26,7 @@ namespace arcane {
 				int x, y, width, height;
 				int m_NumTowers;
 
-				TowerSpawner(arcane::terrain::Terrain *terrain, int numTrees);
+				TowerSpawner(arcane::terrain::Terrain *terrain, int numTrees, arcane::graphics::Model* cannon);
 
 				void load();
 			};

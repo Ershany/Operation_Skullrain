@@ -2,6 +2,7 @@
 
 #include "../Entity.h"
 #include "Projectile.h"
+#include "../../graphics/Model.h"
 
 #include <vector>
 
@@ -19,7 +20,7 @@ namespace arcane {
 				void onRender();
 				void shoot();
 
-				std::vector<Projectile> cannons;
+				std::vector<Projectile> projectiles;
 			};
 
 		}
