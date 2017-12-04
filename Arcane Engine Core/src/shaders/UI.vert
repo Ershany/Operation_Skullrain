@@ -11,5 +11,5 @@ void main() {
 	gl_Position = model * vec4(position, 1.0);
 	TexCoords = texCoords;
 
-	gl_Position.z = 0.0;
+	gl_Position.z = -1.0;
 }

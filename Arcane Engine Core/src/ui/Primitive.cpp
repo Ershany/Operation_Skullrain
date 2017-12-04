@@ -18,17 +18,11 @@ namespace arcane { namespace ui {
 	Rect::Rect(graphics::Window *window, GLuint texture, GLfloat x, GLfloat y, GLfloat width, GLfloat height) : Primitive(window, texture) {
 		this->x = y; this->y = y; this->width = width; this->height = height;
 
-		//GLfloat positions[] = {
-		//	-xPos,			  yPos + uiHeight,  0.0f,
-		//	 xPos + uiWidth,  yPos + uiHeight,  0.0f,
-		//	-xPos,			 -yPos,				0.0f,
-		//	 xPos + uiWidth, -yPos,				0.0f
-		//};
 		GLfloat positions[] = {
-			x, y, 0.0f,
-			x + width, y, 0.0f,
-			x, y - height, 0.0f,
-			x + width, y - height, 0.0f
+			x,			y,			0.0f,
+			x + width,  y,			0.0f,
+			x,			y - height, 0.0f,
+			x + width,  y - height, 0.0f
 		};
 		GLfloat uvs[] = {
 			0.0f, 0.0f,
