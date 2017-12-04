@@ -8,6 +8,7 @@
 #include <vector>
 
 //Game Includes
+#include "../game/Player.h"
 #include "../graphics/Shader.h"
 #include "../graphics/Window.h"
 #include "../platform/OpenGL/VertexArray.h"
@@ -36,10 +37,12 @@ namespace arcane { namespace ui {
 		GLfloat x, y, width, height; // Should all be in screen coordinates [-1, 1], and X and Y represents the top left of the UI
 	};
 
-	//struct HealthBar : public Rect {
-	//	float max_health, curr_health;
-	//
-	//	HealthBar(graphics::Window *window, GLuint texture, int max_health, GLfloat x, GLfloat y, GLfloat width, GLfloat height);
-	//};
+	struct HealthBar : public Rect {
+		HealthBar(graphics::Window *window, game::Player *player, GLuint texture, GLfloat x, GLfloat y, GLfloat width, GLfloat height);
+
+		virtual void draw(graphics::Shader &shader) override;
+
+		game::Player *m_Player;
+	};
 
 } }

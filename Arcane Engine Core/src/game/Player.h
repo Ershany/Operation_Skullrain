@@ -18,6 +18,7 @@ namespace arcane { namespace game {
 		virtual void onRender();
 
 		void pickupNPC();
+		void hitPlayer(float damage);
 
 		void buttonPressed(unsigned int keycode, float deltaTime);
 
@@ -29,6 +30,8 @@ namespace arcane { namespace game {
 		inline const glm::vec3& getVelocity() { return m_Velocity; }
 		inline bool isGrounded() { return m_IsGrounded; }
 		inline bool isDead() { return m_IsDead; }
+		inline float getMaxHealth() { return m_MaxHealth; }
+		inline float getHealth() { return m_Health; }
 
 		inline graphics::Renderable3D* getMainRotor() { return m_MainRotor; }
 		inline graphics::Renderable3D* getBackRotor() { return m_BackRotor; }

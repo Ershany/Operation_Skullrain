@@ -43,13 +43,6 @@ namespace arcane { namespace ui {
 	}
 
 	void Rect::draw(graphics::Shader &shader) {
-		//This UI folder is meant to allow calls to be made so that any simple shapes can be made and rendered.
-		//The Canvas is the layer that has all of the shapes on it. I'll look into adding text later.
-
-		//The program gets to here just fine. How should the rendering be done?
-		//If you can get it to display a rectangle, I can take care of the rest of the
-		//healthbar implementation. :)
-
 		glActiveTexture(GL_TEXTURE0);
 		shader.setUniform1i("uiTexture", 0);
 		glBindTexture(GL_TEXTURE_2D, m_TextureID);
@@ -61,11 +54,14 @@ namespace arcane { namespace ui {
 		m_Vao.unbind();
 	}
 
-	//HealthBar::HealthBar(GLuint texture, int max_health, int x, int y, int width, int height) : Rect(texture) {
-	//	this->max_health = max_health;
-	//	this->curr_health = max_health;
-	//
-	//	this->x = y; this->y = y; this->width = width; this->height = height;
-	//}
+	HealthBar::HealthBar(graphics::Window *window, game::Player *player, GLuint texture, GLfloat x, GLfloat y, GLfloat width, GLfloat height) : Rect(window, texture, x, y, width, height) {
+		m_Player = player;
+	}
+
+	void HealthBar::draw(graphics::Shader &shader) {
+		shader.setUniformMat4("model", glm::scale(glm::mat4(1.0f), glm::vec3(m_Player->getHealth() / m_Player->getMaxHealth(), 1.0f, 1.0f)));
+
+		Rect::draw(shader);
+	}
 
 } }

@@ -13,7 +13,8 @@ namespace arcane { namespace game {
 		m_CurrentRotorRotationAmount = m_MaxRotorRotationAmount;
 
 		m_NPCPickupCount = 0;
-		m_Health, m_MaxHealth = 50.0f;
+		m_MaxHealth = 100.0f;
+		m_Health = m_MaxHealth;
 		m_Tilt = 0.0f;
 		m_IsDead = false;
 
@@ -82,6 +83,14 @@ namespace arcane { namespace game {
 		std::cout << "Current NPC Pickup Count: " << m_NPCPickupCount << std::endl;
 	}
 
+	void Player::hitPlayer(float damage) {
+		m_Health -= damage;
+		if (m_Health <= 0.0f) {
+			killPlayer();
+			m_Health = 0.0f;
+		}
+	}
+
 	void Player::killPlayer() {
 		m_IsDead = true;
 		m_Velocity.x = 0.0f; m_Velocity.y = 0.0f; m_Velocity.z = 0.0f;
@@ -119,7 +128,7 @@ namespace arcane { namespace game {
 
 		// Debug controls
 		if (keycode == GLFW_KEY_K) {
-			killPlayer();
+			hitPlayer(1.0f);
 		}
 	}
 

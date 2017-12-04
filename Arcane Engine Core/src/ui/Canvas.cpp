@@ -4,19 +4,21 @@
 
 namespace arcane { namespace ui {
 
-	Canvas::Canvas(graphics::Window *window) : m_UIShader("src/shaders/UI.vert", "src/shaders/UI.frag") {
+	Canvas::Canvas(graphics::Window *window, game::Player *player) : m_UIShader("src/shaders/UI.vert", "src/shaders/UI.frag") {
 		m_Window = window;
+		m_Player = player;
 
-		health_bar = new ui::Rect(window, opengl::Utility::loadTextureFromFile("res/textures/healthbar.png"), -1.0f, 1.0f, 1.0f, 0.2f); // Top left
-		primitives.push_back(health_bar);
+		m_HealthBar = new ui::HealthBar(window, player, opengl::Utility::loadTextureFromFile("res/textures/healthbar.png"), -1.0f, 1.0f, 1.0f, 0.05f); // Top left
+		m_Primitives.push_back(m_HealthBar);
 	}
 
 	void Canvas::draw() {
 		m_UIShader.enable();
 
-		std::vector<ui::Primitive*>::iterator itr;
-		for (int i = 0; i < primitives.size(); i++) {
-			primitives.at(i)->draw(m_UIShader);
+		auto iter = m_Primitives.begin();
+		while (iter != m_Primitives.end()) {
+			(*iter)->draw(m_UIShader);
+			iter++;
 		}
 	}
 
