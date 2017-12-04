@@ -11,7 +11,7 @@ namespace arcane {
 			Enemy::Enemy() {
 			}
 
-			TowerSpawner::TowerSpawner(arcane::terrain::Terrain *terrain, int numTowers) : game::Spawner(terrain) {
+			TowerSpawner::TowerSpawner(arcane::terrain::Terrain *terrain, int numTowers, arcane::graphics::Model* cannon) : game::Spawner(terrain) {
 				m_NumTowers = numTowers;
 				m_Entities.reserve(m_NumTowers);
 				srand(3);

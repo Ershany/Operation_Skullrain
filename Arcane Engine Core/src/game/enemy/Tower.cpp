@@ -17,7 +17,7 @@ namespace arcane {
 			}
 
 			void Tower::shoot() {
-
+				Projectile *new_projectile = new Cannon(this->getPosition, arcane::graphics::Model* cannon);
 			}
 
 		}

@@ -7,6 +7,7 @@ namespace arcane {
 		namespace enemy {
 			class Projectile : public Entity {
 			public:
+				Projectile();
 				Projectile(graphics::Renderable3D *renderable);
 
 				void update(float deltaTime);
@@ -17,8 +18,7 @@ namespace arcane {
 			class Cannon : public Projectile {
 			public:
 				Cannon();
-
-				void load();
+				Cannon(glm::vec3& origin, arcane::graphics::Model* cannon);
 			};
 
 		}

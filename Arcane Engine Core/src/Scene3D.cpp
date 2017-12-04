@@ -22,9 +22,11 @@ namespace arcane {
 			new graphics::Renderable3D(glm::vec3(0.0f, 6.5f, 0.0f), glm::vec3(4.0f, 4.0f, 4.0f), glm::vec3(1.0f, 0.0f, 0.0f), glm::radians(0.0f), new arcane::graphics::Model("res/3D_Models/Helicopter/main_rotor.obj"), player_helicopter_body, false, false),
 			new graphics::Renderable3D(glm::vec3(0.0f, 9.8f, 42.0f), glm::vec3(4.0f, 4.0f, 4.0f), glm::vec3(1.0f, 0.0f, 0.0f), glm::radians(0.0f), new arcane::graphics::Model("res/3D_Models/Helicopter/back_rotor.obj"), player_helicopter_body, false, false), m_Terrain);
 		
+		m_CannonBall = new arcane::graphics::Model("res/3D_Models/Tower/tower.obj");
+
 		m_VegSpawner = new terrain::VegetationSpawner(m_Terrain, 500);
 		m_NPCSpawner = new game::NPCSpawner(m_Terrain, 20, m_Player);
-		m_TowerSpawner = new game::enemy::TowerSpawner(m_Terrain, 5);
+		m_TowerSpawner = new game::enemy::TowerSpawner(m_Terrain, 5, m_CannonBall);
 
 		firstMove = true;
 		lastX = m_Window->getMouseX();

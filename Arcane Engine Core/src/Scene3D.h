@@ -45,6 +45,7 @@ namespace arcane {
 		game::enemy::TowerSpawner *m_TowerSpawner;
 		graphics::MeshFactory m_meshFactory;
 		graphics::Skybox *m_Skybox;
+		arcane::graphics::Model *m_CannonBall;
 
 		arcane::Timer m_DeathAnimTime;
 		bool m_PlayerRemoved;
