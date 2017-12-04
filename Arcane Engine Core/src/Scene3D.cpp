@@ -85,7 +85,7 @@ namespace arcane {
 		m_TerrainShader.setUniform1f("material.shininess", 128.0f);
 		m_TerrainShader.setUniform3f("dirLight.direction", glm::vec3(0.0f, -1.0f, 0.0f));
 		m_TerrainShader.setUniform3f("dirLight.ambient", glm::vec3(0.1f, 0.1f, 0.1f));
-		m_TerrainShader.setUniform3f("dirLight.diffuse", glm::vec3(0.3f, 0.3f, 0.3f));
+		m_TerrainShader.setUniform3f("dirLight.diffuse", glm::vec3(0.4f, 0.4f, 0.4f));
 		m_TerrainShader.setUniform3f("dirLight.specular", glm::vec3(0.1f, 0.1f, 0.1f));
 		m_TerrainShader.setUniform3f("spotLight.ambient", glm::vec3(0.2f, 0.2f, 0.2f));
 		m_TerrainShader.setUniform3f("spotLight.diffuse", glm::vec3(1.0f, 1.0f, 1.0f));
@@ -96,7 +96,7 @@ namespace arcane {
 		m_TerrainShader.setUniform1f("spotLight.cutOff", glm::cos(glm::radians(12.5f)));
 		m_TerrainShader.setUniform1f("spotLight.outerCutOff", glm::cos(glm::radians(15.0f)));
 		m_TerrainShader.setUniform3f("pointLight.ambient", glm::vec3(0.05f, 0.05f, 0.05f));
-		m_TerrainShader.setUniform3f("pointLight.diffuse", glm::vec3(0.85f, 0.85f, 0.85f));
+		m_TerrainShader.setUniform3f("pointLight.diffuse", glm::vec3(0.95f, 0.95f, 0.95f));
 		m_TerrainShader.setUniform3f("pointLight.specular", glm::vec3(1.0f, 1.0f, 1.0f));
 		m_TerrainShader.setUniform1f("pointLight.constant", 1.0f);
 		m_TerrainShader.setUniform1f("pointLight.linear", 0.007);
@@ -107,7 +107,7 @@ namespace arcane {
 		m_ModelShader.setUniform1f("material.shininess", 128.0f);
 		m_ModelShader.setUniform3f("dirLight.direction", glm::vec3(0.0f, -1.0f, 0.0f));
 		m_ModelShader.setUniform3f("dirLight.ambient", glm::vec3(0.1f, 0.1f, 0.1f));
-		m_ModelShader.setUniform3f("dirLight.diffuse", glm::vec3(0.3f, 0.3f, 0.3f));
+		m_ModelShader.setUniform3f("dirLight.diffuse", glm::vec3(0.4f, 0.4f, 0.4f));
 		m_ModelShader.setUniform3f("dirLight.specular", glm::vec3(0.1f, 0.1f, 0.1f));
 		m_ModelShader.setUniform3f("spotLight.ambient", glm::vec3(0.2f, 0.2f, 0.2f));
 		m_ModelShader.setUniform3f("spotLight.diffuse", glm::vec3(1.0f, 1.0f, 1.0f));
@@ -118,7 +118,7 @@ namespace arcane {
 		m_ModelShader.setUniform1f("spotLight.cutOff", glm::cos(glm::radians(12.5f)));
 		m_ModelShader.setUniform1f("spotLight.outerCutOff", glm::cos(glm::radians(15.0f)));
 		m_ModelShader.setUniform3f("pointLights[0].ambient", glm::vec3(0.05f, 0.05f, 0.05f));
-		m_ModelShader.setUniform3f("pointLights[0].diffuse", glm::vec3(0.85f, 0.85f, 0.85f));
+		m_ModelShader.setUniform3f("pointLights[0].diffuse", glm::vec3(0.6f, 0.1f, 0.1f));
 		m_ModelShader.setUniform3f("pointLights[0].specular", glm::vec3(1.0f, 1.0f, 1.0f));
 		m_ModelShader.setUniform1f("pointLights[0].constant", 1.0f);
 		m_ModelShader.setUniform1f("pointLights[0].linear", 0.007);
@@ -128,7 +128,7 @@ namespace arcane {
 		m_PlayerShader.setUniform1f("material.shininess", 128.0f);
 		m_PlayerShader.setUniform3f("dirLight.direction", glm::vec3(0.0f, -1.0f, 0.0f));
 		m_PlayerShader.setUniform3f("dirLight.ambient", glm::vec3(0.1f, 0.1f, 0.1f));
-		m_PlayerShader.setUniform3f("dirLight.diffuse", glm::vec3(0.3f, 0.3f, 0.3f));
+		m_PlayerShader.setUniform3f("dirLight.diffuse", glm::vec3(0.4f, 0.4f, 0.4f));
 		m_PlayerShader.setUniform3f("dirLight.specular", glm::vec3(0.1f, 0.1f, 0.1f));
 		m_PlayerShader.setUniform3f("spotLight.ambient", glm::vec3(0.2f, 0.2f, 0.2f));
 		m_PlayerShader.setUniform3f("spotLight.diffuse", glm::vec3(1.0f, 1.0f, 1.0f));
@@ -139,7 +139,7 @@ namespace arcane {
 		m_PlayerShader.setUniform1f("spotLight.cutOff", glm::cos(glm::radians(12.5f)));
 		m_PlayerShader.setUniform1f("spotLight.outerCutOff", glm::cos(glm::radians(15.0f)));
 		m_PlayerShader.setUniform3f("pointLights[0].ambient", glm::vec3(0.05f, 0.05f, 0.05f));
-		m_PlayerShader.setUniform3f("pointLights[0].diffuse", glm::vec3(0.85f, 0.85f, 0.85f));
+		m_PlayerShader.setUniform3f("pointLights[0].diffuse", glm::vec3(0.6f, 0.1f, 0.1f));
 		m_PlayerShader.setUniform3f("pointLights[0].specular", glm::vec3(1.0f, 1.0f, 1.0f));
 		m_PlayerShader.setUniform1f("pointLights[0].constant", 1.0f);
 		m_PlayerShader.setUniform1f("pointLights[0].linear", 0.007);
