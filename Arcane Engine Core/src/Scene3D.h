@@ -10,6 +10,7 @@
 #include "game\Player.h"
 #include "terrain\VegetationSpawner.h"
 #include "game\spawner\NPCSpawner.h"
+#include "game\enemy\Enemy.h"
 #include "utils\Timer.h"
 
 namespace arcane {
@@ -41,6 +42,7 @@ namespace arcane {
 		terrain::Terrain *m_Terrain;
 		terrain::VegetationSpawner *m_VegSpawner;
 		game::NPCSpawner *m_NPCSpawner;
+		game::enemy::TowerSpawner *m_TowerSpawner;
 		graphics::MeshFactory m_meshFactory;
 		graphics::Skybox *m_Skybox;
 

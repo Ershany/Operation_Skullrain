@@ -16,7 +16,6 @@ namespace arcane { namespace terrain {
 		VegetationSpawner(Terrain *terrain, int numTrees);
 	private:
 		virtual void load() override;
-	private:
 		int m_NumTrees;
 	};
 

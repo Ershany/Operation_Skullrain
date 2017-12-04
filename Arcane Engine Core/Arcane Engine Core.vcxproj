@@ -78,6 +78,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\game\enemy\Enemy.cpp" />
+    <ClCompile Include="src\game\enemy\Tower.cpp" />
     <ClCompile Include="src\game\Entity.cpp" />
     <ClCompile Include="src\game\NPC.cpp" />
     <ClCompile Include="src\game\Player.cpp" />
@@ -109,6 +111,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Defs.h" />
+    <ClInclude Include="src\game\enemy\Enemy.h" />
+    <ClInclude Include="src\game\enemy\Tower.h" />
     <ClInclude Include="src\game\Entity.h" />
     <ClInclude Include="src\game\NPC.h" />
     <ClInclude Include="src\game\Player.h" />
