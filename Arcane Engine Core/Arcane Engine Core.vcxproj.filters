@@ -231,6 +231,8 @@
     <None Include="src\shaders\player.frag" />
     <None Include="src\shaders\player.geom" />
     <None Include="src\shaders\player.vert" />
+    <None Include="src\shaders\UI.vert" />
+    <None Include="src\shaders\UI.frag" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\container.jpg">
@@ -375,6 +377,9 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="res\3D_Models\Overwatch\Reaper\Tex_1889_3.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\textures\healthbar.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

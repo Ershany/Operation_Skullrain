@@ -9,17 +9,23 @@
 
 //Operation Skullrain Headers
 #include "Primitive.h"
+#include "../graphics/Window.h"
+#include "../graphics/Shader.h"
+#include "../platform/OpenGL/Utility.h"
 
 
-namespace arcane {
-	namespace ui {
-		struct Canvas {
-			std::vector<ui::Primative*> primitives;
-			Primative *health_bar;
+namespace arcane { namespace ui {
+		
+	class Canvas {
+	public:
+		Canvas(graphics::Window *window);
+		void draw();
+	private:
+		std::vector<ui::Primitive*> primitives;
+		Primitive *health_bar;
 
-			Canvas();
-			void draw();
-		};
+		graphics::Shader m_UIShader;
+		graphics::Window *m_Window;
+	};
 
-	}
-}
+} }

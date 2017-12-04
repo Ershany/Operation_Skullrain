@@ -10,17 +10,17 @@ namespace arcane {
 		: m_TerrainShader("src/shaders/basic.vert", "src/shaders/terrain.frag"), m_ModelShader("src/shaders/basic.vert", "src/shaders/model.frag"), m_Window(window),
 		m_OutlineShader("src/shaders/basic.vert", "src/shaders/basic.frag"), m_PlayerShader("src/shaders/player.vert", "src/shaders/player.frag", "src/shaders/player.geom")
 	{
-		m_UI = new ui::Canvas();
+		m_UI = new ui::Canvas(window);
 
 		m_Camera = new graphics::Camera(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -90.0f, 0.0f);
 		m_Renderer = new graphics::Renderer(m_Camera);
 		m_Terrain = new terrain::Terrain(glm::vec3(-1280.0f, -20.0f, -1280.0f)); // Make it so the center of the terrain is on the origin
 
 		//Low poly heli
-		graphics::Renderable3D *player_helicopter_body = new graphics::Renderable3D(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(4.0f, 4.0f, 4.0f), glm::vec3(1.0f, 0.0f, 0.0f), glm::radians(0.0f), new arcane::graphics::Model("res/3D_Models/Helicopter/body_low_poly.obj"), nullptr, false);
+		//graphics::Renderable3D *player_helicopter_body = new graphics::Renderable3D(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(4.0f, 4.0f, 4.0f), glm::vec3(1.0f, 0.0f, 0.0f), glm::radians(0.0f), new arcane::graphics::Model("res/3D_Models/Helicopter/body_low_poly.obj"), nullptr, false);
 
 		//Regular poly heli (loads slower)
-		//graphics::Renderable3D *player_helicopter_body = new graphics::Renderable3D(glm::vec3(90.0f, -10.0f, 90.0f), glm::vec3(4.0f, 4.0f, 4.0f), glm::vec3(1.0f, 0.0f, 0.0f), glm::radians(0.0f), new arcane::graphics::Model("res/3D_Models/Helicopter/body.obj"), nullptr, false, true);
+		graphics::Renderable3D *player_helicopter_body = new graphics::Renderable3D(glm::vec3(90.0f, -10.0f, 90.0f), glm::vec3(4.0f, 4.0f, 4.0f), glm::vec3(1.0f, 0.0f, 0.0f), glm::radians(0.0f), new arcane::graphics::Model("res/3D_Models/Helicopter/body.obj"), nullptr, false, true);
 
 		m_Player = new game::Player(player_helicopter_body,
 			new graphics::Renderable3D(glm::vec3(0.0f, 6.5f, 0.0f), glm::vec3(4.0f, 4.0f, 4.0f), glm::vec3(1.0f, 0.0f, 0.0f), glm::radians(0.0f), new arcane::graphics::Model("res/3D_Models/Helicopter/main_rotor.obj"), player_helicopter_body, false, false),
@@ -85,8 +85,8 @@ namespace arcane {
 		m_TerrainShader.setUniform1f("material.shininess", 128.0f);
 		m_TerrainShader.setUniform3f("dirLight.direction", glm::vec3(0.0f, -1.0f, 0.0f));
 		m_TerrainShader.setUniform3f("dirLight.ambient", glm::vec3(0.1f, 0.1f, 0.1f));
-		m_TerrainShader.setUniform3f("dirLight.diffuse", glm::vec3(0.6f, 0.6f, 0.6f));
-		m_TerrainShader.setUniform3f("dirLight.specular", glm::vec3(0.5f, 0.5f, 0.5f));
+		m_TerrainShader.setUniform3f("dirLight.diffuse", glm::vec3(0.3f, 0.3f, 0.3f));
+		m_TerrainShader.setUniform3f("dirLight.specular", glm::vec3(0.1f, 0.1f, 0.1f));
 		m_TerrainShader.setUniform3f("spotLight.ambient", glm::vec3(0.2f, 0.2f, 0.2f));
 		m_TerrainShader.setUniform3f("spotLight.diffuse", glm::vec3(1.0f, 1.0f, 1.0f));
 		m_TerrainShader.setUniform3f("spotLight.specular", glm::vec3(1.0f, 1.0f, 1.0f));
@@ -107,8 +107,8 @@ namespace arcane {
 		m_ModelShader.setUniform1f("material.shininess", 128.0f);
 		m_ModelShader.setUniform3f("dirLight.direction", glm::vec3(0.0f, -1.0f, 0.0f));
 		m_ModelShader.setUniform3f("dirLight.ambient", glm::vec3(0.1f, 0.1f, 0.1f));
-		m_ModelShader.setUniform3f("dirLight.diffuse", glm::vec3(0.6f, 0.6f, 0.6f));
-		m_ModelShader.setUniform3f("dirLight.specular", glm::vec3(0.5f, 0.5f, 0.5f));
+		m_ModelShader.setUniform3f("dirLight.diffuse", glm::vec3(0.3f, 0.3f, 0.3f));
+		m_ModelShader.setUniform3f("dirLight.specular", glm::vec3(0.1f, 0.1f, 0.1f));
 		m_ModelShader.setUniform3f("spotLight.ambient", glm::vec3(0.2f, 0.2f, 0.2f));
 		m_ModelShader.setUniform3f("spotLight.diffuse", glm::vec3(1.0f, 1.0f, 1.0f));
 		m_ModelShader.setUniform3f("spotLight.specular", glm::vec3(1.0f, 1.0f, 1.0f));
@@ -128,8 +128,8 @@ namespace arcane {
 		m_PlayerShader.setUniform1f("material.shininess", 128.0f);
 		m_PlayerShader.setUniform3f("dirLight.direction", glm::vec3(0.0f, -1.0f, 0.0f));
 		m_PlayerShader.setUniform3f("dirLight.ambient", glm::vec3(0.1f, 0.1f, 0.1f));
-		m_PlayerShader.setUniform3f("dirLight.diffuse", glm::vec3(0.6f, 0.6f, 0.6f));
-		m_PlayerShader.setUniform3f("dirLight.specular", glm::vec3(0.5f, 0.5f, 0.5f));
+		m_PlayerShader.setUniform3f("dirLight.diffuse", glm::vec3(0.3f, 0.3f, 0.3f));
+		m_PlayerShader.setUniform3f("dirLight.specular", glm::vec3(0.1f, 0.1f, 0.1f));
 		m_PlayerShader.setUniform3f("spotLight.ambient", glm::vec3(0.2f, 0.2f, 0.2f));
 		m_PlayerShader.setUniform3f("spotLight.diffuse", glm::vec3(1.0f, 1.0f, 1.0f));
 		m_PlayerShader.setUniform3f("spotLight.specular", glm::vec3(1.0f, 1.0f, 1.0f));
@@ -188,12 +188,20 @@ namespace arcane {
 	}
 
 	void Scene3D::onRender() {
+		glEnable(GL_DEPTH_TEST);
+		glDisable(GL_BLEND);
+
+		//UI
+		m_UI->draw();
+
 		glm::vec3 spotLightPos = m_Player->getPosition() + (m_Player->getFront() * 15.0f);
 		glm::vec3 spotLightDir = -m_Player->getUp() + m_Player->getFront();
+		glm::vec3 pointLightPos = m_Player->getPosition();
 		glm::mat4 viewMtrx = m_Camera->getViewMatrix();
 		glm::mat4 projectionMtrx = glm::perspective(glm::radians(m_Camera->getFOV()), (float)m_Window->getWidth() / (float)m_Window->getHeight(), 0.1f, 3000.0f);
 		if (m_Player->isDead()) { // Hide the spotlight when the player dies
 			spotLightPos = glm::vec3(0.0f, 10000.0f, 0.0f);
+			pointLightPos = glm::vec3(0.0f, 10000.0f, 0.0f);
 		}
 
 		// Setup
@@ -203,7 +211,7 @@ namespace arcane {
 
 		// Models
 		m_PlayerShader.enable();
-		m_PlayerShader.setUniform3f("pointLights[0].position", glm::vec3(200.0f, 215.0f, 100.0f));
+		m_PlayerShader.setUniform3f("pointLights[0].position", pointLightPos);
 		m_PlayerShader.setUniform3f("spotLight.position", spotLightPos);
 		m_PlayerShader.setUniform3f("spotLight.direction", spotLightDir);
 		m_PlayerShader.setUniform3f("viewPos", m_Camera->getPosition());
@@ -212,7 +220,7 @@ namespace arcane {
 
 		// Models
 		m_ModelShader.enable();
-		m_ModelShader.setUniform3f("pointLights[0].position", glm::vec3(200.0f, 215.0f, 100.0f));
+		m_ModelShader.setUniform3f("pointLights[0].position", pointLightPos);
 		m_ModelShader.setUniform3f("spotLight.position", spotLightPos);
 		m_ModelShader.setUniform3f("spotLight.direction", spotLightDir);
 		m_ModelShader.setUniform3f("viewPos", m_Camera->getPosition());
@@ -250,7 +258,7 @@ namespace arcane {
 		glStencilMask(0x00); // Don't update the stencil buffer
 		glEnable(GL_CULL_FACE);
 		m_TerrainShader.enable();
-		m_TerrainShader.setUniform3f("pointLight.position", glm::vec3(200.0f, 200.0f, 100.0f));
+		m_TerrainShader.setUniform3f("pointLight.position", pointLightPos);
 		m_TerrainShader.setUniform3f("spotLight.position", spotLightPos);
 		m_TerrainShader.setUniform3f("spotLight.direction", spotLightDir);
 		m_TerrainShader.setUniform3f("viewPos", m_Camera->getPosition());
@@ -301,9 +309,6 @@ namespace arcane {
 			shaderToUse->setUniform1f("timer", animTimer);
 		}
 		m_Player->getRenderable()->draw(*shaderToUse);
-
-		//UI
-		m_UI->draw();
 	}
 
 	void Scene3D::Add(game::Entity *entity) {

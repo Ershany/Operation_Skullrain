@@ -170,6 +170,8 @@
     <None Include="src\shaders\basic.vert" />
     <None Include="src\shaders\basic.frag" />
     <None Include="src\shaders\terrain.frag" />
+    <None Include="src\shaders\UI.frag" />
+    <None Include="src\shaders\UI.vert" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\3D_Models\Helicopter\black.png" />
@@ -218,6 +220,7 @@
     <Image Include="res\terrain\stone.png" />
     <Image Include="res\textures\fullSpec.png" />
     <Image Include="res\textures\grass.png" />
+    <Image Include="res\textures\healthbar.png" />
     <Image Include="res\textures\noSpec.png" />
     <Image Include="res\textures\window.png" />
   </ItemGroup>

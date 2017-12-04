@@ -7,29 +7,39 @@
 #include <string>
 #include <vector>
 
-namespace arcane {
-	namespace ui {
-		struct Primative {
-			Primative();
+//Game Includes
+#include "../graphics/Shader.h"
+#include "../graphics/Window.h"
+#include "../platform/OpenGL/VertexArray.h"
+#include "../platform/OpenGL/IndexBuffer.h"
 
-			virtual void draw();
-		};
+namespace arcane { namespace ui {
 
-		struct Rect: public Primative {
-			int x, y, width, height;
+	struct Primitive {
+		Primitive(graphics::Window *window, GLuint texture);
+		virtual ~Primitive();
 
-			Rect();
-			Rect(int x, int y, int width, int height);
+		virtual void draw(graphics::Shader &shader) = 0;
+	protected:
+		opengl::VertexArray m_Vao;
+		opengl::IndexBuffer m_Ebo;
 
-			void draw();
-		};
+		GLuint m_TextureID;
+		graphics::Window *m_Window;
+	};
 
-		struct HealthBar : public Rect {
-			float max_health, curr_health;
+	struct Rect: public Primitive {
+		Rect(graphics::Window *window, GLuint texture, GLfloat x, GLfloat y, GLfloat width, GLfloat height);
 
-			HealthBar();
-			HealthBar(int max_health, int x, int y, int width, int height);
-		};
+		virtual void draw(graphics::Shader &shader) override;
 
-	}
-}
+		GLfloat x, y, width, height; // Should all be in screen coordinates [-1, 1], and X and Y represents the top left of the UI
+	};
+
+	//struct HealthBar : public Rect {
+	//	float max_health, curr_health;
+	//
+	//	HealthBar(graphics::Window *window, GLuint texture, int max_health, GLfloat x, GLfloat y, GLfloat width, GLfloat height);
+	//};
+
+} }
