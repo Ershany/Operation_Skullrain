@@ -1,10 +1,12 @@
 #pragma once
 
-#include <iostream>
-#include <GL/glew.h>
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
+//Dependancies
+#include "../../Dependancies.h"
 
+//STL Includes
+#include <iostream>
+
+//Operation Skullrain Headers
 #include "../../game/Player.h"
 
 namespace arcane { namespace graphics {

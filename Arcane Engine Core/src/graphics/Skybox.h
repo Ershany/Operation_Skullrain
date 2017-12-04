@@ -1,12 +1,18 @@
 #pragma once
 
+//Dependancies
+#include "../Dependancies.h"
+
+//STL Includes
 #include <vector>
+
+//Operation Skullrain Headers
 #include "../platform/OpenGL/VertexArray.h"
 #include "../platform/OpenGL/IndexBuffer.h"
 #include "../platform/OpenGL/Buffer.h"
 #include "../platform/OpenGL/Utility.h"
 #include "Shader.h"
-#include "camera\Camera.h"
+#include "camera/Camera.h"
 #include "Window.h"
 
 namespace arcane { namespace graphics {

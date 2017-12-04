@@ -1,5 +1,8 @@
 #pragma once
 
+//Dependancies
+#include "../Dependancies.h"
+
 namespace arcane { namespace utils {
 
 	class Singleton {

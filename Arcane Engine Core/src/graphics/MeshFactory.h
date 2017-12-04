@@ -1,6 +1,12 @@
 #pragma once
 
+//Dependancies
+#include "../Dependancies.h"
+
+//STL Includes
 #include <vector>
+
+//Operation Skullrain Headers
 #include "Mesh.h"
 #include "../platform/OpenGL/Utility.h"
 

@@ -1,9 +1,12 @@
 #pragma once
 
-#include <GL\glew.h>
-#include <GLFW\glfw3.h>
+//Dependancies
+#include "../Dependancies.h"
+
+//STL Includes
 #include <iostream>
 
+//Operation Skullrain Headers
 #include "../Defs.h"
 #include "../utils/Logger.h"
 #include "../Defs.h"

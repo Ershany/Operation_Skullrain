@@ -1,8 +1,14 @@
 #pragma once
 
+//Dependancies
+#include "../Dependancies.h"
+
+//STL Includes
 #include <iostream>
 #include <fstream>
 #include <vector>
+
+//Operation Skullrain Headers
 #include "Singleton.h"
 
 namespace arcane { namespace utils {

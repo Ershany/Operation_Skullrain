@@ -1,13 +1,14 @@
 #pragma once
 
+//Dependancies
+#include "../../Dependancies.h"
+
+//STL Includes
 #include <string>
-#include <GL\glew.h>
-#include <GLFW\glfw3.h>
-#include <SOIL.h>
 #include <iostream>
-#include <stb_image_aug.h>
 #include <vector>
-#include <glm\common.hpp>
+
+//Operation Skullrain Headers
 #include "../../utils/Logger.h"
 #include "../../Defs.h"
 

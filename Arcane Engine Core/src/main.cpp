@@ -1,20 +1,20 @@
 #include <iostream>
-#include "graphics\Window.h"
-#include "utils\Timer.h"
-#include "graphics\Shader.h"
+#include "graphics/Window.h"
+#include "utils/Timer.h"
+#include "graphics/Shader.h"
 #include <SOIL.h>
 #include <cmath>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
-#include "utils\Time.h"
-#include "graphics\camera\Camera.h"
-#include "utils\Logger.h"
-#include "graphics\Model.h"
-#include "terrain\Terrain.h"
+#include "utils/Time.h"
+#include "graphics/camera/Camera.h"
+#include "utils/Logger.h"
+#include "graphics/Model.h"
+#include "terrain/Terrain.h"
 #include "Scene3D.h"
-#include "platform\OpenGL\Framebuffer.h"
-#include "graphics\MeshFactory.h"
+#include "platform/OpenGL/Framebuffer.h"
+#include "graphics/MeshFactory.h"
 
 
 

@@ -1,5 +1,9 @@
 #pragma once
 
+//Dependancies
+#include "../../Dependancies.h"
+
+//Operation Skullrain Headers
 #include "Spawner.h"
 #include "../NPC.h"
 #include "../../terrain/Terrain.h"

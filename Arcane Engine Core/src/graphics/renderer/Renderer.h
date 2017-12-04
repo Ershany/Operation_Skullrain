@@ -1,10 +1,15 @@
 #pragma once
 
+//Dependancies
+#include "../../Dependancies.h"
+
+//STL Includes
+#include <deque>
+
+//Operation Skullrain Headers
 #include "../Model.h"
 #include "../camera/Camera.h"
 #include "Renderable3D.h"
-#include <deque>
-#include <glm\gtx\norm.hpp>
 
 namespace arcane { namespace graphics {
 	class Renderer {

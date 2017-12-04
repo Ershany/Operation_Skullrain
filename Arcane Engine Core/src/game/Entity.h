@@ -1,7 +1,9 @@
 #pragma once
 
-#include <glm\common.hpp>
+//Dependancies
+#include "../Dependancies.h"
 
+//Operation Skullrain Headers
 #include "../graphics/renderer/Renderable3D.h"
 
 namespace arcane { namespace game {

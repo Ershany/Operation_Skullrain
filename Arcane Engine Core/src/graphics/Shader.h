@@ -1,11 +1,14 @@
 #pragma once
 
-#include "../utils/FileUtils.h"
-#include <GL\glew.h>
+//Dependancies
+#include "../Dependancies.h"
+
+//STL Includes
 #include <iostream>
 #include <vector>
-#include <glm/glm.hpp>
-#include <glm/gtc/type_ptr.hpp>
+
+//Operation Skullrain Headers
+#include "../utils/FileUtils.h"
 
 namespace arcane { namespace graphics {
 

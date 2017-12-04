@@ -1,11 +1,11 @@
 #pragma once
 
+//Dependancies
+#include "../Dependancies.h"
+
+//Operation Skullrain Headers
 #include "Entity.h"
 #include "../terrain/Terrain.h"
-
-#include <GL\glew.h>
-#include <GLFW\glfw3.h>
-#include <glm\gtx\norm.hpp>
 
 namespace arcane { namespace game {
 
@@ -18,6 +18,7 @@ namespace arcane { namespace game {
 		virtual void onRender();
 
 		void pickupNPC();
+		void hitPlayer(float damage);
 
 		void buttonPressed(unsigned int keycode, float deltaTime);
 
@@ -29,6 +30,8 @@ namespace arcane { namespace game {
 		inline const glm::vec3& getVelocity() { return m_Velocity; }
 		inline bool isGrounded() { return m_IsGrounded; }
 		inline bool isDead() { return m_IsDead; }
+		inline float getMaxHealth() { return m_MaxHealth; }
+		inline float getHealth() { return m_Health; }
 
 		inline graphics::Renderable3D* getMainRotor() { return m_MainRotor; }
 		inline graphics::Renderable3D* getBackRotor() { return m_BackRotor; }
@@ -54,6 +57,7 @@ namespace arcane { namespace game {
 		terrain::Terrain *m_Terrain;
 		bool m_IsGrounded, m_IsDead;
 		int m_NPCPickupCount;
+		float m_Health, m_MaxHealth;
 
 		graphics::Renderable3D *m_MainRotor, *m_BackRotor;
 	};

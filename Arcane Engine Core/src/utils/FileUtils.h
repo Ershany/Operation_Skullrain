@@ -1,5 +1,9 @@
 #pragma once
 
+//Dependancies
+#include "../Dependancies.h"
+
+//STL Includes
 #include <string>
 
 namespace arcane { 
