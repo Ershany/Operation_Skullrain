@@ -47,6 +47,7 @@ namespace arcane {
 		terrain::Terrain *m_Terrain;
 		terrain::VegetationSpawner *m_VegSpawner;
 		game::NPCSpawner *m_NPCSpawner;
+		game::enemy::TowerSpawner *m_TowerSpawner;
 		graphics::MeshFactory m_meshFactory;
 		graphics::Skybox *m_Skybox;
 		ui::Canvas *m_UI;

@@ -7,26 +7,30 @@
 #include <string>
 #include <vector>
 
+#include "../../terrain/Terrain.h"
 #include "../spawner/Spawner.h"
+#include "../enemy/Tower.h"
 
 namespace arcane {
-	namespace ui {
-		struct Enemy {
-			Enemy();
+	namespace game {
+		namespace enemy {
+			class Enemy {
+			public:
+				Enemy();
 
-			virtual void draw();
-		};
+				//virtual void draw();
+			};
 
-		struct Tower : public Enemy, public game::Spawner {
-			int x, y, width, height;
-			int numTowers;
+			class TowerSpawner : public Enemy, public Spawner {
+			public:
+				int x, y, width, height;
+				int m_NumTowers;
 
-			Tower(Terrain *terrain, int numTrees);
-			Tower(int x, int y);
+				TowerSpawner(arcane::terrain::Terrain *terrain, int numTrees);
 
-			void draw();
-			void load();
-		};
+				void load();
+			};
 
+		}
 	}
 }
