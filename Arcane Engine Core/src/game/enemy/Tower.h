@@ -4,6 +4,7 @@
 #include "Projectile.h"
 #include "../../graphics/Model.h"
 #include "../Player.h"
+#include "../Entity.h"
 
 #include <vector>
 
@@ -15,7 +16,7 @@ namespace arcane {
 
 			class Tower : public Entity {
 			public:
-				Tower(graphics::Renderable3D *renderable, arcane::graphics::Model* cannon, arcane::game::Player* player);
+				Tower(graphics::Renderable3D *renderable, arcane::graphics::Model* cannon, arcane::game::Player* player, std::vector<game::Entity*>* m_Entities);
 
 				void update(float deltaTime);
 				void onRender();
@@ -24,6 +25,7 @@ namespace arcane {
 				std::vector<Projectile*> projectiles;
 				arcane::graphics::Model* m_CannonBall;
 				arcane::game::Player* m_Player;
+				std::vector<game::Entity*>* m_Entities;
 
 				float lastShotTime;
 				float shotDelay = 3.00f;

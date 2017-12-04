@@ -26,7 +26,7 @@ namespace arcane {
 
 		m_VegSpawner = new terrain::VegetationSpawner(m_Terrain, 500);
 		m_NPCSpawner = new game::NPCSpawner(m_Terrain, 20, m_Player);
-		m_TowerSpawner = new game::TowerSpawner(m_Terrain, 5, m_CannonBall, m_Player);
+		m_TowerSpawner = new game::TowerSpawner(m_Terrain, 5, m_CannonBall, m_Player, &m_Entities);
 
 		firstMove = true;
 		lastX = m_Window->getMouseX();
