@@ -16,6 +16,10 @@ namespace arcane {
 
 			}
 
+			void Tower::shoot() {
+
+			}
+
 		}
 	}
 }
