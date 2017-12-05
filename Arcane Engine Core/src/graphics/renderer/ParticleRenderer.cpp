@@ -3,7 +3,10 @@
 namespace arcane { namespace graphics{
 
 	ParticleRenderer::ParticleRenderer(graphics::Window *window, Camera *camera, game::Player *player) : m_Window(window), m_Camera(camera) {
-		m_ParticleQueue.push_back(ParticleFactory::CreateExplosion(opengl::Utility::loadTextureFromFile("res/textures/fire.png", true), 50000, 0.25f, player->getPosition() + glm::vec3(0.0f, 10.0f, 0.0f), false));
+	}
+
+	void ParticleRenderer::addParticle(Particle *p) {
+		m_ParticleQueue.push_back(p);
 	}
 
 	void ParticleRenderer::update(float deltaTime) {

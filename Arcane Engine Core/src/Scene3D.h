@@ -18,6 +18,7 @@
 #include "utils/Timer.h"
 #include "ui/Primitive.h"
 #include "ui/Canvas.h"
+#include "graphics/ParticleFactory.h"
 
 namespace arcane {
 	
@@ -56,6 +57,7 @@ namespace arcane {
 		arcane::Timer m_DeathAnimTime;
 		bool m_PlayerRemoved;
 		game::Player *m_Player;
+		graphics::Particle *m_PlayerDeathExplosion;
 
 		// List of entities and renderables. Entities are updated and rendered, but renderables are just rendered
 		std::vector<game::Entity*> m_Entities;

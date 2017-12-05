@@ -15,7 +15,7 @@ float speed = 200.0f;
 float gravity = 1.0f;
 
 void main() {
-	float t = timer - 4.0 * floor(timer / 4.0);
+	float t = timer;
 
 	vec3 pos = position + (normal * t * speed) - (gravity * speed * vec3(0.0, 1.0, 0.0) * t * t);
 	gl_Position = view * model * vec4(pos, 1.0);

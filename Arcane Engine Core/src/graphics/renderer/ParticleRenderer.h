@@ -21,6 +21,8 @@ namespace arcane { namespace graphics {
 
 		void update(float deltaTime);
 		void render(graphics::Shader &shader);
+
+		void addParticle(Particle *p);
 	private:
 		graphics::Window *m_Window;
 		Camera *m_Camera;
