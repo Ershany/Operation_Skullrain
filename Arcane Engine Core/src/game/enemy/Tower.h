@@ -31,7 +31,7 @@ namespace arcane {
 				std::vector<game::Entity*>* m_Entities;
 				arcane::terrain::Terrain* m_Terrain;
 
-				float lastShotTime;
+				float lastShotTime = glfwGetTime();
 				float shotDelay = 3.00f;
 				glm::vec3 m_Speed = glm::vec3(15.0f, 0.0f, 15.0f);
 			};

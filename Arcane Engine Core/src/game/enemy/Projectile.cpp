@@ -46,7 +46,7 @@ namespace arcane {
 				glm::vec3 worldSpacePos = m_Terrain->getPosition() - m_Renderable->getPosition();
 
 				float terrainHeight = m_Terrain->getVertexHeight(m_Renderable->getPosition().x / m_Terrain->getTerrainScale(), m_Renderable->getPosition().z / m_Terrain->getTerrainScale());
-				m_Renderable->addPosition(glm::vec3(m_DirectionToMove.x, 0.0f, m_DirectionToMove.z));
+				m_Renderable->addPosition(glm::vec3(m_DirectionToMove.x, m_DirectionToMove.y, m_DirectionToMove.z));
 			}
 		}
 

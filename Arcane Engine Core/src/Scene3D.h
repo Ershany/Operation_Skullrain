@@ -18,6 +18,7 @@
 #include "ui/Primitive.h"
 #include "ui/Canvas.h"
 #include "game/enemy/Enemy.h"
+#include "game/Entity.h"
 
 namespace arcane {
 	

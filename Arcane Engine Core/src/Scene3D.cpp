@@ -23,7 +23,7 @@ namespace arcane {
 			new graphics::Renderable3D(glm::vec3(0.0f, 6.5f, 0.0f), glm::vec3(4.0f, 4.0f, 4.0f), glm::vec3(1.0f, 0.0f, 0.0f), glm::radians(0.0f), new arcane::graphics::Model("res/3D_Models/Helicopter/main_rotor.obj"), player_helicopter_body, false, false),
 			new graphics::Renderable3D(glm::vec3(0.0f, 9.8f, 42.0f), glm::vec3(4.0f, 4.0f, 4.0f), glm::vec3(1.0f, 0.0f, 0.0f), glm::radians(0.0f), new arcane::graphics::Model("res/3D_Models/Helicopter/back_rotor.obj"), player_helicopter_body, false, false), m_Terrain);
 		
-		m_CannonBall = new arcane::graphics::Model("res/3D_Models/Tower/tower.obj");
+		m_CannonBall = new arcane::graphics::Model("res/3D_Models/Cannon/cannon.obj");
 
 		m_VegSpawner = new terrain::VegetationSpawner(m_Terrain, 500);
 		m_NPCSpawner = new game::NPCSpawner(m_Terrain, 20, m_Player);
@@ -156,16 +156,26 @@ namespace arcane {
 	}
 
 	void Scene3D::onUpdate(float deltaTime) {
-		// Entity update
-		auto iter = m_Entities.begin();
-		while (iter != m_Entities.end()) {
-			(*iter)->update(deltaTime);
-			if ((*iter)->getShouldRemove()) {
-				delete (*iter);
-				m_Entities.erase(iter);
-			}
-			else {
-				iter++;
+
+		//// Entity update
+		//auto iter = m_Entities.begin();
+		//while (iter != m_Entities.end()) {
+		//	(*iter)->update(deltaTime);
+		//	if ((*iter)->getShouldRemove()) {
+		//		m_Entities.erase(iter);
+		//		delete (*iter);
+		//	}
+		//	else {
+		//		iter++;
+		//	}
+		//}
+
+		for (int i = 0; i < m_Entities.size(); i++) {
+			arcane::game::Entity* this_entity = m_Entities.at(i);
+			this_entity->update(deltaTime);
+			if (this_entity->getShouldRemove()) {
+				m_Entities.erase(m_Entities.begin() + i);
+				delete (this_entity);
 			}
 		}
 

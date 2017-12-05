@@ -14,13 +14,17 @@ namespace arcane {
 			}
 
 			void Tower::update(float deltaTime) {
+				//std::cout << glfwGetTime() << std::endl;
 				if (glfwGetTime() - this->lastShotTime > this->shotDelay) {
 					shoot();
 				}
 
 				for (int i = 0; i < projectiles.size(); i++) {
 					Projectile* thisProjectile = projectiles.at(i);
-					//thisProjectile->update();
+					thisProjectile->update(1.0f);
+					if (thisProjectile->getShouldRemove()) {
+						projectiles.erase(projectiles.begin() + i);
+					}
 				}
 			}
 
