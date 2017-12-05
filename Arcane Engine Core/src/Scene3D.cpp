@@ -20,14 +20,16 @@ namespace arcane {
 
 		//Regular poly heli (loads slower)
 		graphics::Renderable3D *player_helicopter_body = new graphics::Renderable3D(glm::vec3(90.0f, -10.0f, 90.0f), glm::vec3(4.0f, 4.0f, 4.0f), glm::vec3(1.0f, 0.0f, 0.0f), glm::radians(0.0f), new arcane::graphics::Model("res/3D_Models/Helicopter/body.obj"), nullptr, false, true);
-
 		m_Player = new game::Player(player_helicopter_body,
 			new graphics::Renderable3D(glm::vec3(0.0f, 6.5f, 0.0f), glm::vec3(4.0f, 4.0f, 4.0f), glm::vec3(1.0f, 0.0f, 0.0f), glm::radians(0.0f), new arcane::graphics::Model("res/3D_Models/Helicopter/main_rotor.obj"), player_helicopter_body, false, false),
 			new graphics::Renderable3D(glm::vec3(0.0f, 9.8f, 42.0f), glm::vec3(4.0f, 4.0f, 4.0f), glm::vec3(1.0f, 0.0f, 0.0f), glm::radians(0.0f), new arcane::graphics::Model("res/3D_Models/Helicopter/back_rotor.obj"), player_helicopter_body, false, false), m_Terrain);
+		
+		m_CannonBall = new arcane::graphics::Model("res/3D_Models/Cannon/cannon.obj");
+
 		m_VegSpawner = new terrain::VegetationSpawner(m_Terrain, 500);
 		m_NPCSpawner = new game::NPCSpawner(m_Terrain, 20, m_Player);
 		m_PlayerDeathExplosion = graphics::ParticleFactory::CreateExplosion(opengl::Utility::loadTextureFromFile("res/textures/fire.png", true), 100000, 0.25f, m_Player->getPosition() + glm::vec3(0.0f, 10.0f, 0.0f), false);
-
+		m_TowerSpawner = new game::TowerSpawner(m_Terrain, 5, m_CannonBall, m_Player, &m_Entities);
 		m_UI = new ui::Canvas(m_Window, m_Player);
 		m_ParticleRenderer = new graphics::ParticleRenderer(window, m_Camera, m_Player);
 
@@ -49,6 +51,7 @@ namespace arcane {
 		delete m_Player;
 		delete m_Skybox;
 		delete m_UI;
+		delete m_TowerSpawner;
 	}
 
 	void Scene3D::init() {
@@ -81,6 +84,12 @@ namespace arcane {
 		while (npcIter != m_NPCSpawner->getEnd()) {
 			Add(*npcIter);
 			npcIter++;
+		}
+
+		auto towerIter = m_TowerSpawner->getBegin();
+		while (towerIter != m_TowerSpawner->getEnd()) {
+			Add(*towerIter);
+			towerIter++;
 		}
 
 		// Terrain shader
@@ -153,16 +162,26 @@ namespace arcane {
 	}
 
 	void Scene3D::onUpdate(float deltaTime) {
-		// Entity update
-		auto iter = m_Entities.begin();
-		while (iter != m_Entities.end()) {
-			(*iter)->update(deltaTime);
-			if ((*iter)->getShouldRemove()) {
-				delete (*iter);
-				m_Entities.erase(iter);
-			}
-			else {
-				iter++;
+
+		//// Entity update
+		//auto iter = m_Entities.begin();
+		//while (iter != m_Entities.end()) {
+		//	(*iter)->update(deltaTime);
+		//	if ((*iter)->getShouldRemove()) {
+		//		m_Entities.erase(iter);
+		//		delete (*iter);
+		//	}
+		//	else {
+		//		iter++;
+		//	}
+		//}
+
+		for (int i = 0; i < m_Entities.size(); i++) {
+			arcane::game::Entity* this_entity = m_Entities.at(i);
+			this_entity->update(deltaTime);
+			if (this_entity->getShouldRemove()) {
+				m_Entities.erase(m_Entities.begin() + i);
+				delete (this_entity);
 			}
 		}
 

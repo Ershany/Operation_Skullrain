@@ -13,7 +13,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{FDA7B389-08B8-4B2B-A0F9-1488FB7AAB92}</ProjectGuid>
     <RootNamespace>ArcaneEngineCore</RootNamespace>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -78,6 +78,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\game\enemy\Enemy.cpp" />
+    <ClCompile Include="src\game\enemy\Projectile.cpp" />
+    <ClCompile Include="src\game\enemy\Tower.cpp" />
     <ClCompile Include="src\game\Entity.cpp" />
     <ClCompile Include="src\game\NPC.cpp" />
     <ClCompile Include="src\game\Player.cpp" />
@@ -115,6 +118,9 @@
   <ItemGroup>
     <ClInclude Include="src\Defs.h" />
     <ClInclude Include="src\Dependancies.h" />
+    <ClInclude Include="src\game\enemy\Enemy.h" />
+    <ClInclude Include="src\game\enemy\Projectile.h" />
+    <ClInclude Include="src\game\enemy\Tower.h" />
     <ClInclude Include="src\game\Entity.h" />
     <ClInclude Include="src\game\NPC.h" />
     <ClInclude Include="src\game\Player.h" />

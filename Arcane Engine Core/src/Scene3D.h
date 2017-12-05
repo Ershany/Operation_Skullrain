@@ -19,6 +19,8 @@
 #include "ui/Primitive.h"
 #include "ui/Canvas.h"
 #include "graphics/ParticleFactory.h"
+#include "game/enemy/Enemy.h"
+#include "game/Entity.h"
 
 namespace arcane {
 	
@@ -37,11 +39,15 @@ namespace arcane {
 
 		inline graphics::Renderer* getRenderer() const { return m_Renderer; }
 		inline graphics::Camera* getCamera() const { return m_Camera; }
+		inline game::Player* getPlayer() const { return m_Player; }
+
+		arcane::graphics::Model *m_CannonBall;
 	private:
 		void init();
 
 		void Remove(game::Entity *entity);
 		void Remove(graphics::Renderable3D *renderable);
+
 	private:
 		graphics::Window *m_Window;
 		graphics::Camera *m_Camera;
@@ -50,7 +56,8 @@ namespace arcane {
 		terrain::Terrain *m_Terrain;
 		terrain::VegetationSpawner *m_VegSpawner;
 		game::NPCSpawner *m_NPCSpawner;
-		graphics::MeshFactory m_meshFactory;
+		game::Enemy *m_TowerSpawner;
+		graphics::MeshFactory m_MeshFactory;
 		graphics::Skybox *m_Skybox;
 		ui::Canvas *m_UI;
 
