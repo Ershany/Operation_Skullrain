@@ -79,6 +79,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\game\enemy\Enemy.cpp" />
+    <ClCompile Include="src\game\enemy\Projectile.cpp" />
     <ClCompile Include="src\game\enemy\Tower.cpp" />
     <ClCompile Include="src\game\Entity.cpp" />
     <ClCompile Include="src\game\NPC.cpp" />
@@ -115,6 +116,7 @@
     <ClInclude Include="src\Defs.h" />
     <ClInclude Include="src\Dependancies.h" />
     <ClInclude Include="src\game\enemy\Enemy.h" />
+    <ClInclude Include="src\game\enemy\Projectile.h" />
     <ClInclude Include="src\game\enemy\Tower.h" />
     <ClInclude Include="src\game\Entity.h" />
     <ClInclude Include="src\game\NPC.h" />
