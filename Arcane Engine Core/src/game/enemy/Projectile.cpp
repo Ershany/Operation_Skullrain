@@ -30,11 +30,12 @@ namespace arcane {
 
 		Cannon::Cannon(arcane::terrain::Terrain* terrain, graphics::Renderable3D *renderable, arcane::game::Player* player) {
 			m_Terrain = terrain;
-
+			m_Player = player;
+			m_Renderable = renderable;
 		}
 
 		void Cannon::update(float deltaTime) {
-			float playerToProjectileDistSquared = glm::length2(m_Player->getPosition - m_Renderable->getPosition());
+			float playerToProjectileDistSquared = glm::length2(m_Player->getPosition() - m_Renderable->getPosition());
 
 			if (playerToProjectileDistSquared < m_HullSize) {
 				m_ShouldRemove = true;

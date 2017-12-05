@@ -1,16 +1,15 @@
 #pragma once
 
-#include <GLFW\glfw3.h>
-#include <glm\gtx\norm.hpp>
+//Dependancies
+#include "../../Dependancies.h"
 
+//Operation Skullrain Headers
 #include "../Entity.h"
 #include "Projectile.h"
 #include "../../graphics/Model.h"
 #include "../Player.h"
 #include "../../terrain/Terrain.h"
 #include "../Entity.h"
-
-#include <vector>
 
 namespace arcane {
 	namespace game {

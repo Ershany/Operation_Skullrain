@@ -17,6 +17,7 @@
 #include "utils/Timer.h"
 #include "ui/Primitive.h"
 #include "ui/Canvas.h"
+#include "game/enemy/Enemy.h"
 
 namespace arcane {
 	
@@ -55,7 +56,6 @@ namespace arcane {
 		graphics::MeshFactory m_MeshFactory;
 		graphics::Skybox *m_Skybox;
 		ui::Canvas *m_UI;
-		arcane::graphics::Model *m_CannonBall;
 
 		arcane::Timer m_DeathAnimTime;
 		bool m_PlayerRemoved;

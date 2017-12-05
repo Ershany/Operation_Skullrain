@@ -1,8 +1,9 @@
 #pragma once
 
-#include <GLFW\glfw3.h>
-#include <glm\gtx\norm.hpp>
+//Dependancies
+#include "../../Dependancies.h"
 
+//Operation Skullrain Headers
 #include "../Entity.h"
 #include "../../graphics/renderer/Renderable3D.h"
 #include "../../terrain/Terrain.h"

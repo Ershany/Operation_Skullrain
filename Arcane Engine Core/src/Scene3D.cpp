@@ -19,11 +19,6 @@ namespace arcane {
 
 		//Regular poly heli (loads slower)
 		graphics::Renderable3D *player_helicopter_body = new graphics::Renderable3D(glm::vec3(90.0f, -10.0f, 90.0f), glm::vec3(4.0f, 4.0f, 4.0f), glm::vec3(1.0f, 0.0f, 0.0f), glm::radians(0.0f), new arcane::graphics::Model("res/3D_Models/Helicopter/body.obj"), nullptr, false, true);
-<<<<<<< HEAD
-
-=======
-		
->>>>>>> 97dede10fbdc678c38ff0081618f14e6578b6158
 		m_Player = new game::Player(player_helicopter_body,
 			new graphics::Renderable3D(glm::vec3(0.0f, 6.5f, 0.0f), glm::vec3(4.0f, 4.0f, 4.0f), glm::vec3(1.0f, 0.0f, 0.0f), glm::radians(0.0f), new arcane::graphics::Model("res/3D_Models/Helicopter/main_rotor.obj"), player_helicopter_body, false, false),
 			new graphics::Renderable3D(glm::vec3(0.0f, 9.8f, 42.0f), glm::vec3(4.0f, 4.0f, 4.0f), glm::vec3(1.0f, 0.0f, 0.0f), glm::radians(0.0f), new arcane::graphics::Model("res/3D_Models/Helicopter/back_rotor.obj"), player_helicopter_body, false, false), m_Terrain);
@@ -33,11 +28,7 @@ namespace arcane {
 		m_VegSpawner = new terrain::VegetationSpawner(m_Terrain, 500);
 		m_NPCSpawner = new game::NPCSpawner(m_Terrain, 20, m_Player);
 		m_TowerSpawner = new game::TowerSpawner(m_Terrain, 5, m_CannonBall, m_Player, &m_Entities);
-<<<<<<< HEAD
-
 		m_UI = new ui::Canvas(m_Window, m_Player);
-=======
->>>>>>> 97dede10fbdc678c38ff0081618f14e6578b6158
 
 		firstMove = true;
 		lastX = m_Window->getMouseX();
