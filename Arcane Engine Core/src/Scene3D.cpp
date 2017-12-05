@@ -8,7 +8,8 @@ namespace arcane {
 
 	Scene3D::Scene3D(graphics::Window *window)
 		: m_TerrainShader("src/shaders/basic.vert", "src/shaders/terrain.frag"), m_ModelShader("src/shaders/basic.vert", "src/shaders/model.frag"), m_Window(window),
-		m_OutlineShader("src/shaders/basic.vert", "src/shaders/basic.frag"), m_PlayerShader("src/shaders/player.vert", "src/shaders/player.frag", "src/shaders/player.geom")
+		m_OutlineShader("src/shaders/basic.vert", "src/shaders/basic.frag"), m_PlayerShader("src/shaders/player.vert", "src/shaders/player.frag", "src/shaders/player.geom"),
+		m_ParticleShader("src/shaders/Particle.vert", "src/shaders/Particle.frag", "src/shaders/Particle.geom")
 	{
 		m_Camera = new graphics::Camera(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -90.0f, 0.0f);
 		m_Renderer = new graphics::Renderer(m_Camera);
@@ -25,8 +26,10 @@ namespace arcane {
 			new graphics::Renderable3D(glm::vec3(0.0f, 9.8f, 42.0f), glm::vec3(4.0f, 4.0f, 4.0f), glm::vec3(1.0f, 0.0f, 0.0f), glm::radians(0.0f), new arcane::graphics::Model("res/3D_Models/Helicopter/back_rotor.obj"), player_helicopter_body, false, false), m_Terrain);
 		m_VegSpawner = new terrain::VegetationSpawner(m_Terrain, 500);
 		m_NPCSpawner = new game::NPCSpawner(m_Terrain, 20, m_Player);
+		m_PlayerDeathExplosion = graphics::ParticleFactory::CreateExplosion(opengl::Utility::loadTextureFromFile("res/textures/fire.png", true), 100000, 0.25f, m_Player->getPosition() + glm::vec3(0.0f, 10.0f, 0.0f), false);
 
 		m_UI = new ui::Canvas(m_Window, m_Player);
+		m_ParticleRenderer = new graphics::ParticleRenderer(window, m_Camera, m_Player);
 
 		firstMove = true;
 		lastX = m_Window->getMouseX();
@@ -84,8 +87,8 @@ namespace arcane {
 		m_TerrainShader.enable();
 		m_TerrainShader.setUniform1f("material.shininess", 128.0f);
 		m_TerrainShader.setUniform3f("dirLight.direction", glm::vec3(0.0f, -1.0f, 0.0f));
-		m_TerrainShader.setUniform3f("dirLight.ambient", glm::vec3(0.1f, 0.1f, 0.1f));
-		m_TerrainShader.setUniform3f("dirLight.diffuse", glm::vec3(0.4f, 0.4f, 0.4f));
+		m_TerrainShader.setUniform3f("dirLight.ambient", glm::vec3(0.2f, 0.15f, 0.15f));
+		m_TerrainShader.setUniform3f("dirLight.diffuse", glm::vec3(0.45f, 0.35f, 0.35f));
 		m_TerrainShader.setUniform3f("dirLight.specular", glm::vec3(0.1f, 0.1f, 0.1f));
 		m_TerrainShader.setUniform3f("spotLight.ambient", glm::vec3(0.2f, 0.2f, 0.2f));
 		m_TerrainShader.setUniform3f("spotLight.diffuse", glm::vec3(1.0f, 1.0f, 1.0f));
@@ -106,8 +109,8 @@ namespace arcane {
 		m_ModelShader.enable();
 		m_ModelShader.setUniform1f("material.shininess", 128.0f);
 		m_ModelShader.setUniform3f("dirLight.direction", glm::vec3(0.0f, -1.0f, 0.0f));
-		m_ModelShader.setUniform3f("dirLight.ambient", glm::vec3(0.1f, 0.1f, 0.1f));
-		m_ModelShader.setUniform3f("dirLight.diffuse", glm::vec3(0.4f, 0.4f, 0.4f));
+		m_ModelShader.setUniform3f("dirLight.ambient", glm::vec3(0.2f, 0.15f, 0.15f));
+		m_ModelShader.setUniform3f("dirLight.diffuse", glm::vec3(0.45f, 0.35f, 0.35f));
 		m_ModelShader.setUniform3f("dirLight.specular", glm::vec3(0.1f, 0.1f, 0.1f));
 		m_ModelShader.setUniform3f("spotLight.ambient", glm::vec3(0.2f, 0.2f, 0.2f));
 		m_ModelShader.setUniform3f("spotLight.diffuse", glm::vec3(1.0f, 1.0f, 1.0f));
@@ -127,8 +130,8 @@ namespace arcane {
 		m_PlayerShader.enable();
 		m_PlayerShader.setUniform1f("material.shininess", 128.0f);
 		m_PlayerShader.setUniform3f("dirLight.direction", glm::vec3(0.0f, -1.0f, 0.0f));
-		m_PlayerShader.setUniform3f("dirLight.ambient", glm::vec3(0.1f, 0.1f, 0.1f));
-		m_PlayerShader.setUniform3f("dirLight.diffuse", glm::vec3(0.4f, 0.4f, 0.4f));
+		m_PlayerShader.setUniform3f("dirLight.ambient", glm::vec3(0.2f, 0.15f, 0.15f));
+		m_PlayerShader.setUniform3f("dirLight.diffuse", glm::vec3(0.45f, 0.35f, 0.35f));
 		m_PlayerShader.setUniform3f("dirLight.specular", glm::vec3(0.1f, 0.1f, 0.1f));
 		m_PlayerShader.setUniform3f("spotLight.ambient", glm::vec3(0.2f, 0.2f, 0.2f));
 		m_PlayerShader.setUniform3f("spotLight.diffuse", glm::vec3(1.0f, 1.0f, 1.0f));
@@ -144,6 +147,9 @@ namespace arcane {
 		m_PlayerShader.setUniform1f("pointLights[0].constant", 1.0f);
 		m_PlayerShader.setUniform1f("pointLights[0].linear", 0.007);
 		m_PlayerShader.setUniform1f("pointLights[0].quadratic", 0.0002);
+
+		// Initialize particles
+		m_ParticleRenderer->addParticle(m_PlayerDeathExplosion);
 	}
 
 	void Scene3D::onUpdate(float deltaTime) {
@@ -167,6 +173,8 @@ namespace arcane {
 			Remove(m_Player->getBackRotor());
 			m_DeathAnimTime.reset();
 			m_PlayerRemoved = true;
+			m_PlayerDeathExplosion->setActive(true);
+			m_PlayerDeathExplosion->setPosition(m_Player->getPosition());
 		}
 
 		// Check to see if the mouse hasn't been moved yet
@@ -279,6 +287,9 @@ namespace arcane {
 		m_ModelShader.enable();
 		m_Renderer->flushTransparent(m_ModelShader, m_OutlineShader);
 
+		// Render particles
+		m_ParticleShader.enable();
+		m_ParticleRenderer->render(m_ParticleShader);
 
 		// Player rendering (assumes the 4th texture unit is never used. This code will need refactoring but not enough time before demo)
 		// Choose the shader depending if the camera is in 1st or 3rd person
