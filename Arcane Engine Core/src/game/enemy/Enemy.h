@@ -30,10 +30,11 @@ namespace arcane {
 			arcane::graphics::Model* m_CannonBall;
 			arcane::game::Player* m_Player;
 			std::vector<game::Entity*>* m_Entities;
+			arcane::terrain::Terrain* m_Terrain;
 
 			TowerSpawner(arcane::terrain::Terrain *terrain, int numTrees, arcane::graphics::Model* cannon, arcane::game::Player* player, std::vector<game::Entity*>* entities);
 
-			void update();
+			void update(float deltaTime);
 			void onRender();
 
 			void load();
