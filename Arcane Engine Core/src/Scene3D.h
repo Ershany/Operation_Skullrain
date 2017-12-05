@@ -7,6 +7,7 @@
 #include "graphics/renderer/Renderable3D.h"
 #include "graphics/camera/Camera.h"
 #include "graphics/renderer/Renderer.h"
+#include "graphics/renderer/ParticleRenderer.h"
 #include "terrain/Terrain.h"
 #include "graphics/Window.h"
 #include "graphics/MeshFactory.h"
@@ -44,6 +45,7 @@ namespace arcane {
 		graphics::Window *m_Window;
 		graphics::Camera *m_Camera;
 		graphics::Renderer *m_Renderer;
+		graphics::ParticleRenderer *m_ParticleRenderer;
 		terrain::Terrain *m_Terrain;
 		terrain::VegetationSpawner *m_VegSpawner;
 		game::NPCSpawner *m_NPCSpawner;
@@ -59,7 +61,7 @@ namespace arcane {
 		std::vector<game::Entity*> m_Entities;
 		std::vector<graphics::Renderable3D*> m_Renderables;
 
-		graphics::Shader m_TerrainShader, m_ModelShader, m_OutlineShader, m_PlayerShader;
+		graphics::Shader m_TerrainShader, m_ModelShader, m_OutlineShader, m_PlayerShader, m_ParticleShader;
 
 		// Camera variables
 		bool firstMove;

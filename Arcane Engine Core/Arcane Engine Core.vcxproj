@@ -88,6 +88,9 @@
     <ClCompile Include="src\graphics\Mesh.cpp" />
     <ClCompile Include="src\graphics\MeshFactory.cpp" />
     <ClCompile Include="src\graphics\Model.cpp" />
+    <ClCompile Include="src\graphics\Particle.cpp" />
+    <ClCompile Include="src\graphics\ParticleFactory.cpp" />
+    <ClCompile Include="src\graphics\renderer\ParticleRenderer.cpp" />
     <ClCompile Include="src\graphics\renderer\Renderable3D.cpp" />
     <ClCompile Include="src\graphics\renderer\Renderer.cpp" />
     <ClCompile Include="src\graphics\Shader.cpp" />
@@ -122,6 +125,9 @@
     <ClInclude Include="src\graphics\Mesh.h" />
     <ClInclude Include="src\graphics\MeshFactory.h" />
     <ClInclude Include="src\graphics\Model.h" />
+    <ClInclude Include="src\graphics\Particle.h" />
+    <ClInclude Include="src\graphics\ParticleFactory.h" />
+    <ClInclude Include="src\graphics\renderer\ParticleRenderer.h" />
     <ClInclude Include="src\graphics\renderer\Renderable3D.h" />
     <ClInclude Include="src\graphics\renderer\Renderer.h" />
     <ClInclude Include="src\graphics\Shader.h" />
@@ -221,6 +227,7 @@
     <Image Include="res\terrain\heightMap.png" />
     <Image Include="res\terrain\sand.png" />
     <Image Include="res\terrain\stone.png" />
+    <Image Include="res\textures\fire.png" />
     <Image Include="res\textures\fullSpec.png" />
     <Image Include="res\textures\grass.png" />
     <Image Include="res\textures\healthbar.png" />
