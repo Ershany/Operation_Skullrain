@@ -45,8 +45,8 @@ namespace arcane {
 
 				new_projectile->m_DirectionToMove = glm::normalize(m_Player->getPosition() - m_Renderable->getPosition()) * m_Speed;// *1.0f;
 
-				m_Entities->push_back(new_projectile);
-				this->projectiles.push_back(new_projectile);
+				//m_Entities->push_back(new_projectile);
+				//this->projectiles.push_back(new_projectile);
 			}
 
 		}

@@ -33,7 +33,7 @@ namespace arcane {
 
 				float lastShotTime = glfwGetTime();
 				float shotDelay = 3.00f;
-				glm::vec3 m_Speed = glm::vec3(15.0f, 0.0f, 15.0f);
+				glm::vec3 m_Speed = glm::vec3(1.0f, 1.0f, 1.0f);
 			};
 
 		}
