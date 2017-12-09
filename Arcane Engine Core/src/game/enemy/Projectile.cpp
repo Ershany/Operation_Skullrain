@@ -32,12 +32,14 @@ namespace arcane {
 			m_Terrain = terrain;
 			m_Player = player;
 			m_Renderable = renderable;
+			std::cout << "TEST" << std::endl;
 		}
 
 		void Cannon::update(float deltaTime) {
 			float playerToProjectileDistSquared = glm::length2(m_Player->getPosition() - m_Renderable->getPosition());
 
 			if (playerToProjectileDistSquared < m_HullSize) {
+				std::cout << "HERE" << std::endl;
 				m_ShouldRemove = true;
 				//TODO
 				//Player Takes Damage
