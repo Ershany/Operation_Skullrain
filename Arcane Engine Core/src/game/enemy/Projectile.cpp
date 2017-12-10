@@ -32,15 +32,24 @@ namespace arcane {
 			m_Terrain = terrain;
 			m_Player = player;
 			m_Renderable = renderable;
+			std::cout << "TEST" << std::endl;
+
+			m_LifeLength = 20.0f;
+			m_Born = glfwGetTime();
 		}
 
 		void Cannon::update(float deltaTime) {
 			float playerToProjectileDistSquared = glm::length2(m_Player->getPosition() - m_Renderable->getPosition());
 
 			if (playerToProjectileDistSquared < m_HullSize) {
+				m_Player->hitPlayer(10.0f);
+				std::cout << "HERE" << std::endl;
 				m_ShouldRemove = true;
 				//TODO
 				//Player Takes Damage
+			}
+			else if (glfwGetTime() > m_Born + m_LifeLength) {
+				m_ShouldRemove = true;
 			}
 			else {
 				glm::vec3 worldSpacePos = m_Terrain->getPosition() - m_Renderable->getPosition();

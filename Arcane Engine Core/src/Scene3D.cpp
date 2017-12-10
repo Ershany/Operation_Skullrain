@@ -15,6 +15,8 @@ namespace arcane {
 		m_Renderer = new graphics::Renderer(m_Camera);
 		m_Terrain = new terrain::Terrain(glm::vec3(-1280.0f, -20.0f, -1280.0f)); // Make it so the center of the terrain is on the origin
 
+
+		std::cout << "Loading Player Models" << std::endl;
 		//Low poly heli
 		//graphics::Renderable3D *player_helicopter_body = new graphics::Renderable3D(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(4.0f, 4.0f, 4.0f), glm::vec3(1.0f, 0.0f, 0.0f), glm::radians(0.0f), new arcane::graphics::Model("res/3D_Models/Helicopter/body_low_poly.obj"), nullptr, false);
 
@@ -24,14 +26,18 @@ namespace arcane {
 			new graphics::Renderable3D(glm::vec3(0.0f, 6.5f, 0.0f), glm::vec3(4.0f, 4.0f, 4.0f), glm::vec3(1.0f, 0.0f, 0.0f), glm::radians(0.0f), new arcane::graphics::Model("res/3D_Models/Helicopter/main_rotor.obj"), player_helicopter_body, false, false),
 			new graphics::Renderable3D(glm::vec3(0.0f, 9.8f, 42.0f), glm::vec3(4.0f, 4.0f, 4.0f), glm::vec3(1.0f, 0.0f, 0.0f), glm::radians(0.0f), new arcane::graphics::Model("res/3D_Models/Helicopter/back_rotor.obj"), player_helicopter_body, false, false), m_Terrain);
 		
+		std::cout << "Loading Projectiles" << std::endl;
 		m_CannonBall = new arcane::graphics::Model("res/3D_Models/Cannon/cannon.obj");
 
+		std::cout << "Preparing Scene" << std::endl;
 		m_VegSpawner = new terrain::VegetationSpawner(m_Terrain, 500);
-		m_NPCSpawner = new game::NPCSpawner(m_Terrain, 20, m_Player);
 		m_PlayerDeathExplosion = graphics::ParticleFactory::CreateExplosion(opengl::Utility::loadTextureFromFile("res/textures/fire.png", true), 100000, 0.25f, m_Player->getPosition() + glm::vec3(0.0f, 10.0f, 0.0f), false);
 		m_TowerSpawner = new game::TowerSpawner(m_Terrain, 5, m_CannonBall, m_Player, &m_Entities);
 		m_UI = new ui::Canvas(m_Window, m_Player);
 		m_ParticleRenderer = new graphics::ParticleRenderer(window, m_Camera, m_Player);
+		std::cout << "Loading NPCs" << std::endl;
+		m_NPCSpawner = new game::NPCSpawner(m_Terrain, 20, m_Player);
+		std::cout << "Finished Loading" << std::endl;
 
 		firstMove = true;
 		lastX = m_Window->getMouseX();

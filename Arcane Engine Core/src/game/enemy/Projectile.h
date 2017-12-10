@@ -27,6 +27,9 @@ namespace arcane {
 			arcane::game::Player* m_Player;
 			std::vector<game::Entity*>* m_Entities;
 			arcane::terrain::Terrain* m_Terrain;
+
+			float m_LifeLength;
+			float m_Born;
 		};
 
 		class Cannon : public Projectile {
@@ -35,7 +38,7 @@ namespace arcane {
 			Cannon(arcane::terrain::Terrain* terrain, graphics::Renderable3D *renderable, arcane::game::Player* player);
 			void update(float deltatime);
 
-			float m_HullSize = 10;
+			float m_HullSize = 200;
 			glm::vec3 m_DirectionToMove;
 		};
 
