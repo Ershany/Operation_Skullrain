@@ -27,6 +27,9 @@ namespace arcane {
 			arcane::game::Player* m_Player;
 			std::vector<game::Entity*>* m_Entities;
 			arcane::terrain::Terrain* m_Terrain;
+
+			float m_LifeLength;
+			float m_Born;
 		};
 
 		class Cannon : public Projectile {

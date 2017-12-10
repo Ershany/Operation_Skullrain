@@ -11,6 +11,10 @@ namespace arcane {
 				m_Player = player;
 				m_Entities = entities;
 				m_Terrain = terrain;
+
+				lastShotTime = glfwGetTime();
+				shotDelay = 1.00f;
+				health = 50.0f;
 			}
 
 			void Tower::update(float deltaTime) {
