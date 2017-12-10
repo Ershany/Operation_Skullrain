@@ -64,6 +64,15 @@ int main() {
 		if (window.isKeyPressed(GLFW_KEY_K)) {
 			scene.buttonPressed(GLFW_KEY_K, deltaTime.getDeltaTime());
 		}
+		if (window.isKeyPressed(GLFW_KEY_1)) {
+			scene.buttonPressed(GLFW_KEY_1, deltaTime.getDeltaTime());
+		}
+		if (window.isKeyPressed(GLFW_KEY_2)) {
+			scene.buttonPressed(GLFW_KEY_2, deltaTime.getDeltaTime());
+		}
+		if (window.isKeyPressed(GLFW_KEY_3)) {
+			scene.buttonPressed(GLFW_KEY_3, deltaTime.getDeltaTime());
+		}
 		
 		// Draw the scene to our custom multisampled framebuffer
 		framebuffer.bind();

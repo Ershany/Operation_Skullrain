@@ -15,8 +15,11 @@ namespace arcane { namespace game {
 		m_NPCPickupCount = 0;
 		m_MaxHealth = 100.0f;
 		m_Health = m_MaxHealth;
+		m_MaxInvincibleAmount = 10.0f;
+		m_InvincibleAmount = m_MaxInvincibleAmount;
 		m_Tilt = 0.0f;
 		m_IsDead = false;
+		m_IsInvincible = false;
 
 		m_MainRotor = main_rotor;
 		m_BackRotor = back_rotor;
@@ -32,6 +35,10 @@ namespace arcane { namespace game {
 			m_Velocity.x = 0.0f; m_Velocity.y = 0.0f; m_Velocity.z = 0.0f;
 		}
 
+		// Update invincibleAmount
+		updateInvincible(deltaTime);
+
+		// Apply rotations
 		m_Renderable->addPosition(m_Velocity);
 		//m_Renderable->compositeRotation(glm::angleAxis(0.25f * deltaTime, glm::vec3(3.0f - m_MainTilt, 0.0f, 3.0f - m_SideTilt)));
 		m_Renderable->compositeRotation(glm::angleAxis(0.25f * deltaTime, glm::vec3(0.0f, 0.0f, 0.0f)));
@@ -73,9 +80,7 @@ namespace arcane { namespace game {
 	}
 
 	void Player::onRender() {
-		//glActiveTexture(GL_TEXTURE4);
-		//m_PlayerShader.setUniform1i("material.skyboxCubemap", 4);
-		//glBindTexture(GL_TEXTURE_CUBE_MAP, m_Skybox->getSkyboxCubemap());
+		
 	}
 
 	void Player::pickupNPC() {
@@ -84,6 +89,10 @@ namespace arcane { namespace game {
 	}
 
 	void Player::hitPlayer(float damage) {
+		if (m_IsInvincible) {
+			return;
+		}
+
 		m_Health -= damage;
 		if (m_Health <= 0.0f) {
 			killPlayer();
@@ -94,6 +103,22 @@ namespace arcane { namespace game {
 	void Player::killPlayer() {
 		m_IsDead = true;
 		m_Velocity.x = 0.0f; m_Velocity.y = 0.0f; m_Velocity.z = 0.0f;
+	}
+
+	void Player::updateInvincible(float deltaTime) {
+		if (m_IsInvincible) {
+			m_InvincibleAmount -= deltaTime;
+			if (m_InvincibleAmount < 0.0f) {
+				m_InvincibleAmount = 0.0f;
+				m_IsInvincible = false;
+			}
+		}
+		else {
+			m_InvincibleAmount += deltaTime;
+			if (m_InvincibleAmount > m_MaxInvincibleAmount) {
+				m_InvincibleAmount = m_MaxInvincibleAmount;
+			}
+		}
 	}
 
 	void Player::buttonPressed(unsigned int keycode, float deltaTime) {
@@ -125,6 +150,10 @@ namespace arcane { namespace game {
 		m_MainTilt += (0.5f * m_MainTilt);
 		m_SideTilt += (0.5f * m_SideTilt);
 
+
+		if (keycode == GLFW_KEY_2 && m_InvincibleAmount > m_MaxInvincibleAmount * 0.1f) {
+			m_IsInvincible = true;
+		}
 
 		// Debug controls
 		if (keycode == GLFW_KEY_K) {

@@ -272,6 +272,7 @@
     <None Include="src\shaders\Particle.vert" />
     <None Include="src\shaders\Particle.frag" />
     <None Include="src\shaders\Particle.geom" />
+    <None Include="src\shaders\playerInvincible.frag" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\container.jpg">

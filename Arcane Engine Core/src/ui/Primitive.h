@@ -45,4 +45,12 @@ namespace arcane { namespace ui {
 		game::Player *m_Player;
 	};
 
+	struct InvincibleBar : public Rect {
+		InvincibleBar(graphics::Window *window, game::Player *player, GLuint texture, GLfloat x, GLfloat y, GLfloat width, GLfloat height);
+
+		virtual void draw(graphics::Shader &shader) override;
+
+		game::Player *m_Player;
+	};
+
 } }

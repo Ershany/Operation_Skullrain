@@ -9,7 +9,8 @@ namespace arcane {
 	Scene3D::Scene3D(graphics::Window *window)
 		: m_TerrainShader("src/shaders/basic.vert", "src/shaders/terrain.frag"), m_ModelShader("src/shaders/basic.vert", "src/shaders/model.frag"), m_Window(window),
 		m_OutlineShader("src/shaders/basic.vert", "src/shaders/basic.frag"), m_PlayerShader("src/shaders/player.vert", "src/shaders/player.frag", "src/shaders/player.geom"),
-		m_ParticleShader("src/shaders/Particle.vert", "src/shaders/Particle.frag", "src/shaders/Particle.geom")
+		m_ParticleShader("src/shaders/Particle.vert", "src/shaders/Particle.frag", "src/shaders/Particle.geom"),
+		m_PlayerInvincibleShader("src/shaders/player.vert", "src/shaders/playerInvincible.frag", "src/shaders/player.geom")
 	{
 		m_Camera = new graphics::Camera(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -90.0f, 0.0f);
 		m_Renderer = new graphics::Renderer(m_Camera);
@@ -163,6 +164,27 @@ namespace arcane {
 		m_PlayerShader.setUniform1f("pointLights[0].linear", 0.007);
 		m_PlayerShader.setUniform1f("pointLights[0].quadratic", 0.0002);
 
+		m_PlayerInvincibleShader.enable();
+		m_PlayerInvincibleShader.setUniform1f("material.shininess", 128.0f);
+		m_PlayerInvincibleShader.setUniform3f("dirLight.direction", glm::vec3(0.0f, -1.0f, 0.0f));
+		m_PlayerInvincibleShader.setUniform3f("dirLight.ambient", glm::vec3(0.2f, 0.15f, 0.15f));
+		m_PlayerInvincibleShader.setUniform3f("dirLight.diffuse", glm::vec3(0.45f, 0.35f, 0.35f));
+		m_PlayerInvincibleShader.setUniform3f("dirLight.specular", glm::vec3(0.1f, 0.1f, 0.1f));
+		m_PlayerInvincibleShader.setUniform3f("spotLight.ambient", glm::vec3(0.2f, 0.2f, 0.2f));
+		m_PlayerInvincibleShader.setUniform3f("spotLight.diffuse", glm::vec3(1.0f, 1.0f, 1.0f));
+		m_PlayerInvincibleShader.setUniform3f("spotLight.specular", glm::vec3(1.0f, 1.0f, 1.0f));
+		m_PlayerInvincibleShader.setUniform1f("spotLight.constant", 1.0f);
+		m_PlayerInvincibleShader.setUniform1f("spotLight.linear", 0.0014);
+		m_PlayerInvincibleShader.setUniform1f("spotLight.quadratic", 0.000007);
+		m_PlayerInvincibleShader.setUniform1f("spotLight.cutOff", glm::cos(glm::radians(12.5f)));
+		m_PlayerInvincibleShader.setUniform1f("spotLight.outerCutOff", glm::cos(glm::radians(15.0f)));
+		m_PlayerInvincibleShader.setUniform3f("pointLights[0].ambient", glm::vec3(0.05f, 0.05f, 0.05f));
+		m_PlayerInvincibleShader.setUniform3f("pointLights[0].diffuse", glm::vec3(0.6f, 0.1f, 0.1f));
+		m_PlayerInvincibleShader.setUniform3f("pointLights[0].specular", glm::vec3(1.0f, 1.0f, 1.0f));
+		m_PlayerInvincibleShader.setUniform1f("pointLights[0].constant", 1.0f);
+		m_PlayerInvincibleShader.setUniform1f("pointLights[0].linear", 0.007);
+		m_PlayerInvincibleShader.setUniform1f("pointLights[0].quadratic", 0.0002);
+
 		// Initialize particles
 		m_ParticleRenderer->addParticle(m_PlayerDeathExplosion);
 	}
@@ -251,6 +273,14 @@ namespace arcane {
 		m_PlayerShader.setUniformMat4("view", viewMtrx);
 		m_PlayerShader.setUniformMat4("projection", projectionMtrx);
 
+		m_PlayerInvincibleShader.enable();
+		m_PlayerInvincibleShader.setUniform3f("pointLights[0].position", pointLightPos);
+		m_PlayerInvincibleShader.setUniform3f("spotLight.position", spotLightPos);
+		m_PlayerInvincibleShader.setUniform3f("spotLight.direction", spotLightDir);
+		m_PlayerInvincibleShader.setUniform3f("viewPos", m_Camera->getPosition());
+		m_PlayerInvincibleShader.setUniformMat4("view", viewMtrx);
+		m_PlayerInvincibleShader.setUniformMat4("projection", projectionMtrx);
+
 		// Models
 		m_ModelShader.enable();
 		m_ModelShader.setUniform3f("pointLights[0].position", pointLightPos);
@@ -320,7 +350,12 @@ namespace arcane {
 		// Choose the shader depending if the camera is in 1st or 3rd person
 		graphics::Shader *shaderToUse = &m_ModelShader;
 		if (m_Camera->getThirdPerson()) {
-			shaderToUse = &m_PlayerShader;
+			if (m_Player->isInvincible()) {
+				shaderToUse = &m_PlayerInvincibleShader;
+			}
+			else {
+				shaderToUse = &m_PlayerShader;
+			}
 		}
 		shaderToUse->enable();
 		glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);

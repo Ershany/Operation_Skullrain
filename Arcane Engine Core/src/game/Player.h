@@ -30,13 +30,17 @@ namespace arcane { namespace game {
 		inline const glm::vec3& getVelocity() { return m_Velocity; }
 		inline bool isGrounded() { return m_IsGrounded; }
 		inline bool isDead() { return m_IsDead; }
+		inline bool isInvincible() { return m_IsInvincible; }
 		inline float getMaxHealth() { return m_MaxHealth; }
 		inline float getHealth() { return m_Health; }
+		inline float getMaxInvincibleAmount() { return m_MaxInvincibleAmount; }
+		inline float getInvincibleAmount() { return m_InvincibleAmount; }
 
 		inline graphics::Renderable3D* getMainRotor() { return m_MainRotor; }
 		inline graphics::Renderable3D* getBackRotor() { return m_BackRotor; }
 	private:
 		void killPlayer();
+		void updateInvincible(float deltaTime);
 	private:
 		glm::quat m_Orientation;
 
@@ -55,9 +59,10 @@ namespace arcane { namespace game {
 		glm::vec3 m_InitialFront, m_InitialUp;
 
 		terrain::Terrain *m_Terrain;
-		bool m_IsGrounded, m_IsDead;
+		bool m_IsGrounded, m_IsDead, m_IsInvincible;
 		int m_NPCPickupCount;
 		float m_Health, m_MaxHealth;
+		float m_InvincibleAmount, m_MaxInvincibleAmount;
 
 		graphics::Renderable3D *m_MainRotor, *m_BackRotor;
 	};

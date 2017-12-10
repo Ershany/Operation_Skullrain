@@ -23,7 +23,7 @@ namespace arcane { namespace ui {
 		void draw();
 	private:
 		std::vector<ui::Primitive*> m_Primitives;
-		Primitive *m_HealthBar;
+		Primitive *m_HealthBar, *m_InvincibleBar;
 
 		graphics::Shader m_UIShader;
 		graphics::Window *m_Window;

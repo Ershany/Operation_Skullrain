@@ -60,4 +60,16 @@ namespace arcane { namespace ui {
 		Rect::draw(shader);
 	}
 
+	InvincibleBar::InvincibleBar(graphics::Window *window, game::Player *player, GLuint texture, GLfloat x, GLfloat y, GLfloat width, GLfloat height) : Rect(window, texture, x, y, width, height) {
+		m_Player = player;
+	}
+
+	void InvincibleBar::draw(graphics::Shader &shader) {
+		glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(m_Player->getInvincibleAmount() / m_Player->getMaxInvincibleAmount(), 1.0f, 1.0f));
+		glm::mat4 translate = glm::mat4(1.0f);
+		shader.setUniformMat4("model", translate * scale);
+
+		Rect::draw(shader);
+	}
+
 } }

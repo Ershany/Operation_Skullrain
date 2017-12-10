@@ -10,6 +10,9 @@ namespace arcane { namespace ui {
 
 		m_HealthBar = new ui::HealthBar(window, player, opengl::Utility::loadTextureFromFile("res/textures/healthbar.png"), -1.0f, 1.0f, 1.0f, 0.05f); // Top left
 		m_Primitives.push_back(m_HealthBar);
+
+		m_InvincibleBar = new ui::InvincibleBar(window, player, opengl::Utility::loadTextureFromFile("res/textures/invinciblebar.png"), 0.0f, 1.0f, 1.0f, 0.05f); // Top right
+		m_Primitives.push_back(m_InvincibleBar);
 	}
 
 	void Canvas::draw() {

@@ -70,7 +70,7 @@ namespace arcane {
 		std::vector<game::Entity*> m_Entities;
 		std::vector<graphics::Renderable3D*> m_Renderables;
 
-		graphics::Shader m_TerrainShader, m_ModelShader, m_OutlineShader, m_PlayerShader, m_ParticleShader;
+		graphics::Shader m_TerrainShader, m_ModelShader, m_OutlineShader, m_PlayerShader, m_PlayerInvincibleShader, m_ParticleShader;
 
 		// Camera variables
 		bool firstMove;
