@@ -32,8 +32,8 @@ namespace arcane {
 				arcane::terrain::Terrain* m_Terrain;
 
 				float lastShotTime = glfwGetTime();
-				float shotDelay = 3.00f;
-				glm::vec3 m_Speed = glm::vec3(1.0f, 1.0f, 1.0f);
+				float shotDelay = 1.00f;
+				glm::vec3 m_Speed = glm::vec3(3.0f, 3.0f, 3.0f);
 			};
 
 		}

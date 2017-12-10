@@ -20,13 +20,13 @@ namespace arcane {
 					this->lastShotTime = glfwGetTime();
 				}
 
-				for (int i = 0; i < projectiles.size(); i++) {
+				/*for (int i = 0; i < projectiles.size(); i++) {
 					Projectile* thisProjectile = projectiles.at(i);
 					thisProjectile->update(1.0f);
 					if (thisProjectile->getShouldRemove()) {
 						projectiles.erase(projectiles.begin() + i);
 					}
-				}
+				}*/
 			}
 
 			void Tower::onRender() {

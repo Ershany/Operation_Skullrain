@@ -35,7 +35,7 @@ namespace arcane {
 			Cannon(arcane::terrain::Terrain* terrain, graphics::Renderable3D *renderable, arcane::game::Player* player);
 			void update(float deltatime);
 
-			float m_HullSize = 10;
+			float m_HullSize = 200;
 			glm::vec3 m_DirectionToMove;
 		};
 
