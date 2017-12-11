@@ -21,6 +21,7 @@
 #include "graphics/ParticleFactory.h"
 #include "game/enemy/Enemy.h"
 #include "game/Entity.h"
+#include "game/enemy/Projectile.h"
 
 namespace arcane {
 	
@@ -76,6 +77,12 @@ namespace arcane {
 		bool firstMove;
 		GLfloat lastX;
 		GLfloat lastY;
+
+		bool m_firing = false;
+		float m_lastFireStart = glfwGetTime();
+		float m_lastBulletTime = glfwGetTime();
+		float m_firingTime = 0.0f;
+		float m_fireRate = 0.2f;
 
 		//UI
 		//arcane::ui rect
