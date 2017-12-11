@@ -20,6 +20,7 @@ namespace arcane {
 			void Tower::update(float deltaTime) {
 				//std::cout << glfwGetTime() << std::endl;
 				if (glfwGetTime() - this->lastShotTime > this->shotDelay) {
+					//std::cout << "SHOOT" << std::endl;
 					shoot();
 					this->lastShotTime = glfwGetTime();
 				}
@@ -46,14 +47,12 @@ namespace arcane {
 
 				glm::vec3 pos(x, m_Terrain->getVertexHeight(x, z), z);
 				//pos += repositionVec;
-				std::cout << "CANNON" << std::endl;
 				Cannon *new_projectile = new Cannon(m_Terrain, new graphics::Renderable3D(pos, glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, m_CannonBall, nullptr), m_Player);
-				std::cout << "MADE CANNON" << std::endl;
 
 				new_projectile->m_DirectionToMove = glm::normalize(m_Player->getPosition() - m_Renderable->getPosition()) * m_Speed;// *1.0f;
 
 				m_Entities->push_back(new_projectile);
-				this->projectiles.push_back(new_projectile);
+				//this->projectiles.push_back(new_projectile);
 			}
 
 		}

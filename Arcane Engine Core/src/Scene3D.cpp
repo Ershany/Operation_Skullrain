@@ -203,6 +203,8 @@ namespace arcane {
 		//		iter++;
 		//	}
 		//}
+		//float time = glfwGetTime();
+		std::cout << glfwGetTime() << std::endl;
 
 		for (int i = 0; i < m_Entities.size(); i++) {
 			arcane::game::Entity* this_entity = m_Entities.at(i);

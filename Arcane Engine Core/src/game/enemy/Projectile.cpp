@@ -32,7 +32,7 @@ namespace arcane {
 			m_Terrain = terrain;
 			m_Player = player;
 			m_Renderable = renderable;
-			std::cout << "TEST" << std::endl;
+			//std::cout << "TEST" << std::endl;
 
 			m_LifeLength = 20.0f;
 			m_Born = glfwGetTime();
@@ -43,7 +43,7 @@ namespace arcane {
 
 			if (playerToProjectileDistSquared < m_HullSize) {
 				m_Player->hitPlayer(10.0f);
-				std::cout << "HERE" << std::endl;
+				//std::cout << "HERE" << std::endl;
 				m_ShouldRemove = true;
 				//TODO
 				//Player Takes Damage
