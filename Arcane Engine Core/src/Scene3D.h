@@ -21,6 +21,7 @@
 #include "graphics/ParticleFactory.h"
 #include "game/enemy/Enemy.h"
 #include "game/Entity.h"
+#include "game/enemy/Projectile.h"
 
 namespace arcane {
 	
@@ -42,6 +43,12 @@ namespace arcane {
 		inline game::Player* getPlayer() const { return m_Player; }
 
 		arcane::graphics::Model *m_CannonBall;
+
+		bool *m_firing = new bool;
+		float m_lastFireStart = glfwGetTime();
+		float m_lastBulletTime = glfwGetTime();
+		float m_firingTime = 0.0f;
+		float m_fireRate = 0.2f;
 	private:
 		void init();
 

@@ -2,6 +2,7 @@
 
 #include <iterator>
 #include <iostream>
+#include <string>
 #include <glm/glm.hpp>
 
 namespace arcane {
@@ -16,6 +17,8 @@ namespace arcane {
 		m_Renderer = new graphics::Renderer(m_Camera);
 		m_Terrain = new terrain::Terrain(glm::vec3(-1280.0f, -20.0f, -1280.0f)); // Make it so the center of the terrain is on the origin
 
+		std::cout << "Loading Projectiles" << std::endl;
+		m_CannonBall = new arcane::graphics::Model("res/3D_Models/Cannon/cannon.obj");
 
 		std::cout << "Loading Player Models" << std::endl;
 		//Low poly heli
@@ -25,10 +28,7 @@ namespace arcane {
 		graphics::Renderable3D *player_helicopter_body = new graphics::Renderable3D(glm::vec3(90.0f, -10.0f, 90.0f), glm::vec3(4.0f, 4.0f, 4.0f), glm::vec3(1.0f, 0.0f, 0.0f), glm::radians(0.0f), new arcane::graphics::Model("res/3D_Models/Helicopter/body.obj"), nullptr, false, true);
 		m_Player = new game::Player(player_helicopter_body,
 			new graphics::Renderable3D(glm::vec3(0.0f, 6.5f, 0.0f), glm::vec3(4.0f, 4.0f, 4.0f), glm::vec3(1.0f, 0.0f, 0.0f), glm::radians(0.0f), new arcane::graphics::Model("res/3D_Models/Helicopter/main_rotor.obj"), player_helicopter_body, false, false),
-			new graphics::Renderable3D(glm::vec3(0.0f, 9.8f, 42.0f), glm::vec3(4.0f, 4.0f, 4.0f), glm::vec3(1.0f, 0.0f, 0.0f), glm::radians(0.0f), new arcane::graphics::Model("res/3D_Models/Helicopter/back_rotor.obj"), player_helicopter_body, false, false), m_Terrain);
-		
-		std::cout << "Loading Projectiles" << std::endl;
-		m_CannonBall = new arcane::graphics::Model("res/3D_Models/Cannon/cannon.obj");
+			new graphics::Renderable3D(glm::vec3(0.0f, 9.8f, 42.0f), glm::vec3(4.0f, 4.0f, 4.0f), glm::vec3(1.0f, 0.0f, 0.0f), glm::radians(0.0f), new arcane::graphics::Model("res/3D_Models/Helicopter/back_rotor.obj"), player_helicopter_body, false, false), m_Terrain, m_firing);
 
 		std::cout << "Preparing Scene" << std::endl;
 		m_VegSpawner = new terrain::VegetationSpawner(m_Terrain, 500);
@@ -45,6 +45,7 @@ namespace arcane {
 		lastY = m_Window->getMouseY();
 
 		m_PlayerRemoved = false;
+		*m_firing = false;
 
 		init();
 	}
@@ -190,6 +191,31 @@ namespace arcane {
 	}
 
 	void Scene3D::onUpdate(float deltaTime) {
+		//Only let them fire again if it has been 5 seconds since the last time
+		if (*m_firing && glfwGetTime() - m_lastFireStart > 5.0f) {
+			m_lastFireStart = glfwGetTime();
+		}
+		//If it is greater than 3 seconds, reset m_firing
+		else if (*m_firing && glfwGetTime() - m_lastFireStart > 3.0f) {
+			*m_firing = false;
+		}
+
+		//Fire for the first 3 seconds
+		if (*m_firing && glfwGetTime() - m_lastFireStart < 2.0f) {
+			if (glfwGetTime() - m_lastBulletTime > m_fireRate) {
+				//std::cout << "Shooting" << std::endl;
+				int borderBoundary = 2;
+
+				glm::vec3 pos = m_Player->getPosition() + m_Player->getFront() * 20.0f;
+				//pos += repositionVec;
+				game::Cannon *new_projectile = new game::Cannon(m_Terrain, new graphics::Renderable3D(pos, glm::vec3(0.2f, 0.2f, 0.2f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, m_CannonBall, nullptr), m_Player);
+
+				new_projectile->m_DirectionToMove = glm::normalize(m_Player->getFront()) * glm::vec3(5.0f, 5.0f, 5.0f);// *1.0f;
+				//std::cout << new_projectile->m_DirectionToMove.x << ", " << new_projectile->m_DirectionToMove.y << ", " << new_projectile->m_DirectionToMove.z << std::endl;
+				new_projectile->m_LifeLength = 0.5f;
+				m_Entities.push_back(new_projectile);
+			}
+		}
 
 		//// Entity update
 		//auto iter = m_Entities.begin();
@@ -203,7 +229,7 @@ namespace arcane {
 		//		iter++;
 		//	}
 		//}
-		//float time = glfwGetTime();
+		//float time = glfwGetTime() * 2;
 		std::cout << glfwGetTime() << std::endl;
 
 		for (int i = 0; i < m_Entities.size(); i++) {

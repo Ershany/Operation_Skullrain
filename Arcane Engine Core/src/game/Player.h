@@ -11,7 +11,7 @@ namespace arcane { namespace game {
 
 	class Player : public Entity {
 	public:
-		Player(graphics::Renderable3D *renderable, graphics::Renderable3D *main_rotor, graphics::Renderable3D *back_rotor, terrain::Terrain *terrain);
+		Player(graphics::Renderable3D *renderable, graphics::Renderable3D *main_rotor, graphics::Renderable3D *back_rotor, terrain::Terrain *terrain, bool *firing);
 		~Player();
 
 		virtual void update(float deltaTime) override;
@@ -38,6 +38,9 @@ namespace arcane { namespace game {
 
 		inline graphics::Renderable3D* getMainRotor() { return m_MainRotor; }
 		inline graphics::Renderable3D* getBackRotor() { return m_BackRotor; }
+
+		bool *m_firing;
+
 	private:
 		void killPlayer();
 		void updateInvincible(float deltaTime);
