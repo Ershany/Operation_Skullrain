@@ -2,7 +2,7 @@
 
 namespace arcane { namespace game {
 
-	Player::Player(graphics::Renderable3D *renderable, graphics::Renderable3D *main_rotor, graphics::Renderable3D *back_rotor, terrain::Terrain *terrain, bool &firing)
+	Player::Player(graphics::Renderable3D *renderable, graphics::Renderable3D *main_rotor, graphics::Renderable3D *back_rotor, terrain::Terrain *terrain, bool *firing)
 			: Entity(renderable), m_Terrain(terrain), m_MaxRotorRotationAmount(0.4f), m_MinRotorRotationAmount(0.1f) {
 		m_Velocity = glm::vec3(0.0f, 0.0f, 0.0f);
 		m_TerminalVelocity = 10.0f;
@@ -163,7 +163,7 @@ namespace arcane { namespace game {
 		}
 
 		if (keycode == GLFW_KEY_1) {
-			m_firing = true;
+			*m_firing = true;
 		}
 	}
 

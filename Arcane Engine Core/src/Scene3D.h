@@ -43,6 +43,12 @@ namespace arcane {
 		inline game::Player* getPlayer() const { return m_Player; }
 
 		arcane::graphics::Model *m_CannonBall;
+
+		bool *m_firing = new bool;
+		float m_lastFireStart = glfwGetTime();
+		float m_lastBulletTime = glfwGetTime();
+		float m_firingTime = 0.0f;
+		float m_fireRate = 0.2f;
 	private:
 		void init();
 
@@ -77,12 +83,6 @@ namespace arcane {
 		bool firstMove;
 		GLfloat lastX;
 		GLfloat lastY;
-
-		bool m_firing = false;
-		float m_lastFireStart = glfwGetTime();
-		float m_lastBulletTime = glfwGetTime();
-		float m_firingTime = 0.0f;
-		float m_fireRate = 0.2f;
 
 		//UI
 		//arcane::ui rect

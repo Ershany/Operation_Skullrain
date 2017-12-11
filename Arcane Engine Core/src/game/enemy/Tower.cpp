@@ -50,6 +50,7 @@ namespace arcane {
 				Cannon *new_projectile = new Cannon(m_Terrain, new graphics::Renderable3D(pos, glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, m_CannonBall, nullptr), m_Player);
 
 				new_projectile->m_DirectionToMove = glm::normalize(m_Player->getPosition() - m_Renderable->getPosition()) * m_Speed;// *1.0f;
+				new_projectile->m_LifeLength = 20.0f;
 
 				m_Entities->push_back(new_projectile);
 				//this->projectiles.push_back(new_projectile);

@@ -45,6 +45,7 @@ namespace arcane {
 		lastY = m_Window->getMouseY();
 
 		m_PlayerRemoved = false;
+		*m_firing = false;
 
 		init();
 	}
@@ -191,30 +192,28 @@ namespace arcane {
 
 	void Scene3D::onUpdate(float deltaTime) {
 		//Only let them fire again if it has been 5 seconds since the last time
-		if (m_firing && glfwGetTime() - m_lastFireStart > 5.0f) {
+		if (*m_firing && glfwGetTime() - m_lastFireStart > 5.0f) {
 			m_lastFireStart = glfwGetTime();
 		}
 		//If it is greater than 3 seconds, reset m_firing
-		else if (m_firing && glfwGetTime() - m_lastFireStart > 3.0f) {
-			m_firing = false;
+		else if (*m_firing && glfwGetTime() - m_lastFireStart > 3.0f) {
+			*m_firing = false;
 		}
 
 		//Fire for the first 3 seconds
-		if (m_firing && glfwGetTime() - m_lastFireStart < 3.0f) {
+		if (*m_firing && glfwGetTime() - m_lastFireStart < 3.0f) {
 			if (glfwGetTime() - m_lastBulletTime > m_fireRate) {
+				std::cout << "Shooting" << std::endl;
 				int borderBoundary = 2;
 
-				float x = m_Player->getPosition().x;
-				float z = m_Player->getPosition().z;
-
-				glm::vec3 pos(x, m_Terrain->getVertexHeight(x, z), z);
+				glm::vec3 pos = m_Player->getPosition() + m_Player->getFront() * 20.0f;
 				//pos += repositionVec;
-				game::Cannon *new_projectile = new game::Cannon(m_Terrain, new graphics::Renderable3D(pos, glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, m_CannonBall, nullptr), m_Player);
+				game::Cannon *new_projectile = new game::Cannon(m_Terrain, new graphics::Renderable3D(pos, glm::vec3(0.2f, 0.2f, 0.2f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, m_CannonBall, nullptr), m_Player);
 
-				new_projectile->m_DirectionToMove = glm::normalize(m_Player->getFront()) * glm::vec3(3.0f, 3.0f, 3.0f);// *1.0f;
-
+				new_projectile->m_DirectionToMove = glm::normalize(m_Player->getFront()) * glm::vec3(5.0f, 5.0f, 5.0f);// *1.0f;
+				std::cout << new_projectile->m_DirectionToMove.x << ", " << new_projectile->m_DirectionToMove.y << ", " << new_projectile->m_DirectionToMove.z << std::endl;
+				new_projectile->m_LifeLength = 0.5f;
 				m_Entities.push_back(new_projectile);
-				//this->projectiles.push_back(new_projectile);
 			}
 		}
 
