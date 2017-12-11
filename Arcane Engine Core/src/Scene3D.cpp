@@ -201,9 +201,9 @@ namespace arcane {
 		}
 
 		//Fire for the first 3 seconds
-		if (*m_firing && glfwGetTime() - m_lastFireStart < 3.0f) {
+		if (*m_firing && glfwGetTime() - m_lastFireStart < 2.0f) {
 			if (glfwGetTime() - m_lastBulletTime > m_fireRate) {
-				std::cout << "Shooting" << std::endl;
+				//std::cout << "Shooting" << std::endl;
 				int borderBoundary = 2;
 
 				glm::vec3 pos = m_Player->getPosition() + m_Player->getFront() * 20.0f;
@@ -211,7 +211,7 @@ namespace arcane {
 				game::Cannon *new_projectile = new game::Cannon(m_Terrain, new graphics::Renderable3D(pos, glm::vec3(0.2f, 0.2f, 0.2f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, m_CannonBall, nullptr), m_Player);
 
 				new_projectile->m_DirectionToMove = glm::normalize(m_Player->getFront()) * glm::vec3(5.0f, 5.0f, 5.0f);// *1.0f;
-				std::cout << new_projectile->m_DirectionToMove.x << ", " << new_projectile->m_DirectionToMove.y << ", " << new_projectile->m_DirectionToMove.z << std::endl;
+				//std::cout << new_projectile->m_DirectionToMove.x << ", " << new_projectile->m_DirectionToMove.y << ", " << new_projectile->m_DirectionToMove.z << std::endl;
 				new_projectile->m_LifeLength = 0.5f;
 				m_Entities.push_back(new_projectile);
 			}
@@ -230,7 +230,7 @@ namespace arcane {
 		//	}
 		//}
 		//float time = glfwGetTime() * 2;
-		//std::cout << glfwGetTime() << std::endl;
+		std::cout << glfwGetTime() << std::endl;
 
 		for (int i = 0; i < m_Entities.size(); i++) {
 			arcane::game::Entity* this_entity = m_Entities.at(i);
